@@ -27,7 +27,7 @@ $(HEX_NAME_PATH) : $(NAME_PATH)
 	$(COPY) -O ihex $< $@
 
 $(NAME_PATH) : $(OBJPATHS)
-	$(CC) -o $@ $< $(MCUFLAGS) $(CFLAGS) $(LDFLAGS) $(HEADERS)
+	$(CC) -o $@ $^ $(MCUFLAGS) $(CFLAGS) $(LDFLAGS) $(HEADERS)
 
 $(OBJDIR)/%.c.o : $(SOURCEDIR)/%.c
 	$(CC) -c -o $@ $< $(MCUFLAGS) $(CFLAGS) $(LDFLAGS) $(HEADERS)

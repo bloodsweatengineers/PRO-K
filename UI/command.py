@@ -3,39 +3,7 @@
 # De Haagse Hogeschool
 # PRO-K: PWM Controller
 
-# syntax sender
-# start : 0x 24 ($)
-# end   : CRC (1 byte)
-# syntax: <start><command><value><end>
-# Value : 3 Byte integer
-
-# Commandlist sender
-# Info          : 0x 24 00 FF FF FF (CRC)
-# Ping          : 0x 24 FF FF FF FF (CRC)
-# Frequency     : 0x 24 01 XX XX XX (CRC) - [With XX XX XX being the frequency in mHz]
-# Amplitude     : 0x 24 1X 00 00 YY (CRC) - [With X being the channel and YY being the value]
-# KeyFrequency  : 0x 24 2X 00 YY YY (CRC) - [With X being the channel and YY YY being the value]
-# PhaseShift    : 0x 24 3X 00 YY YY (CRC) - [With X being the channel and YY YY being the value]
-# Prepare       : 0x 24 02 FF FF FF (CRC)
-# Execute       : 0x 24 03 FF FF FF (CRC)
-# Start         : 0x 24 04 FF FF FF (CRC)
-# Stop          : 0x 24 05 FF FF FF (CRC)
-# Gather        : 0x 24 4X 00 00 YY (CRC) - With X being the channel and YY being the amount of samples
-
-# Syntax receiver
-# syntax    : <ux_command><type><length_response><response><CRC>
-# type      : info <00>; Ping <FF>; Gather <40>; OK <01>; REJ <02>
-# Example receiver
-# 0x 24 01 00 00 00 (CRC) 01 00 00 (CRC) - [Frequency OK]
-# 0x 24 41 00 00 FF (CRC ) 40 02 00 (CRC
-from tkinter import Label, Entry, Button, Tk
-
-import serial
 import crc8
-
-#ser = serial.Serial('/dev/ttyACM0', 9600, timeout=.5)
-
-#todo: toevoegen commandovertalen en CRC check
 
 class command:
     command_type = {'frequency'     : [0x01,0],
@@ -82,6 +50,3 @@ class command:
         hash = crc8.crc8()
         hash.update(bytearray(message))
         return int.from_bytes(hash.digest(),'little')
-
-InfoA = command("frequency", 1000) 
-print(InfoA())
