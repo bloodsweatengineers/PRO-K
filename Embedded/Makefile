@@ -2,10 +2,10 @@ VERSION 	=0.01
 CC 			=avr-gcc
 COPY 		=avr-objcopy
 
-BUILDDIR 	=../build
-OBJDIR 		=./obj
-SOURCEDIR 	=./src
-HEADERDIR 	=./include
+BUILDDIR 	=build
+OBJDIR 		=obj
+SOURCEDIR 	=src
+HEADERDIR 	=include
 
 SOURCEPATHS :=$(shell find $(SOURCEDIR) -name '*.c')
 SOURCEFILES :=$(subst $(SOURCEDIR)/,,$(SOURCEPATHS))
@@ -18,7 +18,7 @@ NAME_PATH 	=$(BUILDDIR)/$(NAME)
 HEX_NAME_PATH =$(BUILDDIR)/$(NAME).hex
 
 HEADERS 	=-I$(HEADERDIR)
-CFLAGS 		=-DF_CPU=16000000UL
+CFLAGS 		=-Os -DF_CPU=16000000UL
 MCUFLAGS 	=-mmcu=atmega328p
 
 all : $(HEX_NAME_PATH)
@@ -34,3 +34,6 @@ $(OBJDIR)/%.c.o : $(SOURCEDIR)/%.c
 
 clean:
 	rm -rf $(OBJDIR)/* $(BUILDDIR)/*
+
+install:
+	avrdude -vvv -c arduino -P /dev/ttyACM0 -p m328p -U flash:w:$(HEX_NAME_PATH)
