@@ -15,7 +15,7 @@ import uart_connection
 
 class GUI:
     def __init__(self,master):
-        #self.connection = uart_connection.connection()
+        self.connection = uart_connection.connection()
         self.master = master
         self.master.title("PWM Controller")
            
@@ -160,10 +160,14 @@ class GUI:
         ttk.amp1info.configure(text="{} %".format(newamp1))
         return 0
 
+            
+
     def startbutton(self):
-        hallo = command.command("frequency",int(ttk.FreqEntry.get())*100)
-        print(hallo())
-        #self.connection.send(hallo)
+        hallo1 = command.command("frequency",int(ttk.FreqEntry.get())*100)
+        print(hallo1())
+        self.connection.send(hallo1)
+        hallo2 = command.command("amplitude",int(ttk.Amp1Entry.get()),0)
+        print(hallo2())
         #parameters = self.collectdata()
         #prepare = command.command("prepare")
         #frequencyupdate = command.command("frequency",parameters[0])
