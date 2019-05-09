@@ -14,7 +14,7 @@ enum tok_t {
 struct token {
 	enum tok_t	tok;
 	int32_t		value;
-	int32_t		channel;
+	int8_t		channel;
 };
 
 #endif

@@ -61,9 +61,24 @@ struct token parser(void) {
 					tok.tok = validate_parameter(buffer);
 					memset(buffer,0,30);
 					index = 0;
+				} else if (c == '_') {
+					parser_state = CHANNEL;
+					tok.tok = validate_parameter(buffer);
+					memset(buffer,0,30);
+					index = 0;
 				} else {
 					buffer[index] = c;
 					index++;
+				}
+				break;
+			case CHANNEL:
+				if(c >= '0' && c <= '9') {
+					tok.channel = (uint8_t)(c - '0');
+				} else if(c == ' ') {
+					parser_state = VALUE;
+				} else {
+					end_parse = true;
+					tok.tok = REJECT;
 				}
 				break;
 			case VALUE:

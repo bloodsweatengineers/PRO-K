@@ -7,6 +7,7 @@
 enum state {
 	BEGIN,
 	PARAMETER,
+	CHANNEL,
 	VALUE,
 	END
 };
