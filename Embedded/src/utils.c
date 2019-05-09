@@ -4,7 +4,12 @@ bool int32_to_str(char *buf, int32_t value) {
 	int index = 0;
 
 	if(value < 0) {
-		buf = "NAN";
+		buf[0] = 'N';
+		buf[1] = 'a';
+		buf[2] = 'N';
+		return true;
+	} else if(value == 0) {
+		buf[0] = '0';
 		return true;
 	}
 
@@ -12,13 +17,6 @@ bool int32_to_str(char *buf, int32_t value) {
 		buf[index] = (char) ((value % 10) + '0');
 		value /= 10;
 		index++;
-	}
-
-	int len = strlen(buf)>>2;
-	for(int i=0; i<len; i++) {
-		char c = buf[i];
-		buf[i] = buf[strlen(buf) - i];
-		buf[strlen(buf) - i] = c;
 	}
 
 	return true;
