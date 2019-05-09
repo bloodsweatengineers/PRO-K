@@ -25,7 +25,6 @@ class command:
         if self.type[1]:
             self.command += channel
 
-
     def __call__(self):
         packet = list()
         packet.append(ord("$"))
@@ -34,12 +33,11 @@ class command:
         packet.append(self.crc(packet))
         return packet
 
-
     def calc_value(self):
         value = self.value
         result = list()
         if not value:
-            return [0,0,0]
+            return [0xFF,0xFF,0xFF]
         for i in range(0,3):
             result.append(value % 256)
             value = int(value/256)
