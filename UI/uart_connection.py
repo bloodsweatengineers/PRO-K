@@ -9,7 +9,7 @@ class connection:
         message = bytearray(command())
         print(message)
         self.ser.write(message)
-        a = self.ser.read_until("\r\n")
+        a = self.ser.readline()
         print(a)
     def receive(self, message):
         return 0
