@@ -44,5 +44,5 @@ install:
 
 test:
 	$(CC) -o $(TEST_OBJ) $(TEST_SOURCE) $(MCUFLAGS) $(CFLAGS) $(LDFLAGS)
-	$(CC) -O ihex $(TEST) $(TEST_OBJ)
+	$(COPY) -O ihex $(TEST_OBJ) $(TEST)
 	avrdude -vvv -c arduino -P /dev/ttyACM0 -p m328p -U flash:w:$(TEST)
