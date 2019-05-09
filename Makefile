@@ -21,6 +21,10 @@ HEADERS 	=-I$(HEADERDIR)
 CFLAGS 		=-Os -DF_CPU=16000000UL
 MCUFLAGS 	=-mmcu=atmega328p
 
+TEST_SOURCE =Test/test.c
+TEST_OBJ 	=build/test 
+TEST 		=build/test.hex
+
 all : $(HEX_NAME_PATH)
 
 $(HEX_NAME_PATH) : $(NAME_PATH)
@@ -37,3 +41,8 @@ clean:
 
 install:
 	avrdude -vvv -c arduino -P /dev/ttyACM0 -p m328p -U flash:w:$(HEX_NAME_PATH)
+
+test:
+	$(CC) -o $(TEST_OBJ) $(TEST_SOURCE) $(MCUFLAGS) $(CFLAGS) $(LDFLAGS)
+	$(CC) -O ihex $(TEST) $(TEST_OBJ)
+	avrdude -vvv -c arduino -P /dev/ttyACM0 -p m328p -U flash:w:$(TEST)
