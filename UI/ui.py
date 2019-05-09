@@ -161,8 +161,8 @@ class GUI:
         return 0
 
     def startbutton(self):
-        #hallo = command.command("frequency",int(self.FreqEntry.get())*100)
-        #print(hallo())
+        hallo = command.command("frequency",int(ttk.FreqEntry.get())*100)
+        print(hallo())
         #self.connection.send(hallo)
         #parameters = self.collectdata()
         #prepare = command.command("prepare")

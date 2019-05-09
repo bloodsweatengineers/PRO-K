@@ -3,9 +3,9 @@ CC 			=avr-gcc
 COPY 		=avr-objcopy
 
 BUILDDIR 	=build
-OBJDIR 		=obj
-SOURCEDIR 	=src
-HEADERDIR 	=include
+OBJDIR 		=Embedded/obj
+SOURCEDIR 	=Embedded/src
+HEADERDIR 	=Embedded/include
 
 SOURCEPATHS :=$(shell find $(SOURCEDIR) -name '*.c')
 SOURCEFILES :=$(subst $(SOURCEDIR)/,,$(SOURCEPATHS))
