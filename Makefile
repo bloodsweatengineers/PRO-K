@@ -7,6 +7,8 @@ OBJDIR 		=Embedded/obj
 SOURCEDIR 	=Embedded/src
 HEADERDIR 	=Embedded/include
 
+MKDIR 		=mkdir -p
+
 SOURCEPATHS :=$(shell find $(SOURCEDIR) -name '*.c')
 SOURCEFILES :=$(subst $(SOURCEDIR)/,,$(SOURCEPATHS))
 
@@ -25,7 +27,11 @@ TEST_SOURCE =Test/test.c
 TEST_OBJ 	=build/test 
 TEST 		=build/test.hex
 
-all : $(HEX_NAME_PATH)
+all : directories $(HEX_NAME_PATH)
+
+directories:
+	$(MKDIR) $(BUILDDIR)
+	$(MKDIR) $(OBJDIR)
 
 $(HEX_NAME_PATH) : $(NAME_PATH)
 	$(COPY) -O ihex $< $@
