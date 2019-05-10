@@ -27,7 +27,7 @@ class GUI:
         #Tab 2: Settings Leg 1
         tab2 = ttk.Frame(tabControl)
         tabControl.add(tab2, text='Leg 1')
-        tabControl.pack(expand=1, fill="both")
+        #tabControl.pack(expand=1, fill="both")
         #tab 3: Settings Leg 2
         tab3 = ttk.Frame(tabControl)
         tabControl.add(tab3, text='leg 2')
@@ -51,13 +51,19 @@ class GUI:
         PWMfrequency_row = 6
         amplitude_row = 7
         blankline3_row = 8
-        current_frequency_row = 9
-        current_PWMfrequency_row = 10
-        current_amplitude_row = 11
-        current_phase1_row = 12
-        current_phase2_row = 13
-        current_phase3_row = 14
-        current_phase4_row = 15
+        phase1_row = 9
+        phase2_row = 10
+        phase3_row = 11
+        phase4_row = 12
+        blankline4_row = 13
+        current_frequency_row = 14
+        current_PWMfrequency_row = 15
+        current_amplitude_row = 16
+        blankline5_row = 17
+        current_phase1_row = 18
+        current_phase2_row = 19
+        current_phase3_row = 20
+        current_phase4_row = 21
 
 
         ttk.titletab1Label = Label(tab1, text="PWM Controller general settings", font = "Helvetica 16 bold italic").grid(row=title_row, column=0, columnspan = 4)
@@ -106,7 +112,24 @@ class GUI:
         
         #Blank line
         ttk.witregel = Label(tab1,text = "").grid(row = blankline3_row, column=0, columnspan=4)
-        
+        #Phase1
+        ttk.phase1Label = Label(tab1, text="phase shift leg 1:").grid(row=phase1_row,column=0)
+        ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
+        ttk.phase1Entry.grid(row=phase1_row,column=2)
+        #phase2
+        ttk.phase1Label = Label(tab1, text="phase shift leg 2:").grid(row=phase2_row,column=0)
+        ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
+        ttk.phase1Entry.grid(row=phase2_row,column=2)
+        #Phase3
+        ttk.phase1Label = Label(tab1, text="phase shift leg 3:").grid(row=phase3_row,column=0)
+        ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
+        ttk.phase1Entry.grid(row=phase3_row,column=2)
+        #Phase4
+        ttk.phase1Label = Label(tab1, text="phase shift leg 4:").grid(row=phase4_row,column=0)
+        ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
+        ttk.phase1Entry.grid(row=phase4_row,column=2)
+        #blank line
+        ttk.witregel = Label(tab1,text = "").grid(row = blankline4_row, column=0, columnspan=4)
         #Current frequency setting
         ttk.setfrequencyLabel = Label(tab1, text="Current Frequency:").grid(row=current_frequency_row, column = 0)
         ttk.currentfrequencyLabel = Label(tab1, text="- Hz")
@@ -119,6 +142,8 @@ class GUI:
         ttk.setAmplitudeLabel = Label(tab1, text="Current amplitude:").grid(row = current_amplitude_row, column=0)
         ttk.ampinfo = Label(tab1, text="- %")
         ttk.ampinfo.grid(row=current_amplitude_row,column=2)
+        #blank line
+        ttk.blankLine5 = Label(tab1, text="").grid(row=blankline5_row,column=0)
         #Current phase Leg 1
         ttk.phase1 = Label(tab1, text="Current phase shift leg 1:").grid(row=current_phase1_row,column=0)
         ttk.phase1info = Label(tab1, text="- °")
@@ -137,13 +162,13 @@ class GUI:
         ttk.phase4info.grid(row=current_phase4_row,column=2)
 
         #Tab 2 Layout
-        ttk.titletab2Label = Label(tab2, text="Leg 1 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 2)
+        ttk.titletab2Label = Label(tab2, text="Leg 1 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 3)
         #Update leg 1
-        leg1_button = Button(tab2, text="Update Leg 1").grid(row=0, column=2)
+        leg1_button = Button(tab2, text="Update Leg 1").grid(row=0, column=4)
         #Leg 1 Phase setting
-        ttk.Phase1Label = Label(tab2, text="Phaseshift:").grid(row=3, column=0)
+        ttk.Phase1Label = Label(tab2, text="Phaseshift:").grid(row=1, column=0)
         ttk.Phase1Entry = Entry(tab2, bd=5)
-        ttk.Phase1Entry.grid(row=3, column=1)
+        ttk.Phase1Entry.grid(row=1, column=1)
 
         #Tab 3 Layout
         ttk.titletab3Label = Label(tab3, text="Leg 2 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 2)
