@@ -15,19 +15,23 @@ import uart_connection
 
 class GUI:
     def __init__(self,master):
-        self.connection = uart_connection.connection()
+        #self.connection = uart_connection.connection()
         self.master = master
         self.master.title("PWM Controller")
         
         #Creation of tabs
         tabControl = ttk.Notebook(self.master)
+        #tab_names = ["General", "Leg 1", "Leg 2", "Leg 3", "Leg 4"]
+
+        #for i in range(0
+
         #Tab 1: General settings  
         tab1 = ttk.Frame(tabControl)
         tabControl.add(tab1, text='General')
         #Tab 2: Settings Leg 1
         tab2 = ttk.Frame(tabControl)
         tabControl.add(tab2, text='Leg 1')
-        #tabControl.pack(expand=1, fill="both")
+        tabControl.pack(expand=1, fill="both")
         #tab 3: Settings Leg 2
         tab3 = ttk.Frame(tabControl)
         tabControl.add(tab3, text='leg 2')
@@ -162,16 +166,29 @@ class GUI:
         ttk.phase4info.grid(row=current_phase4_row,column=2)
 
         #Tab 2 Layout
-        ttk.titletab2Label = Label(tab2, text="Leg 1 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 3)
-        #Update leg 1
-        leg1_button = Button(tab2, text="Update Leg 1").grid(row=0, column=4)
-        #Leg 1 Phase setting
-        ttk.Phase1Label = Label(tab2, text="Phaseshift:").grid(row=1, column=0)
-        ttk.Phase1Entry = Entry(tab2, bd=5)
-        ttk.Phase1Entry.grid(row=1, column=1)
+        ttk.titletab2Label = Label(tab2, text="Leg 1 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 4)
+        #Leg settings
+        #Current frequency setting
+        ttk.setfrequencyLabel = Label(tab2, text="Current Frequency:").grid(row=1, column = 0)
+        ttk.currentfrequencyLabel = Label(tab2, text="- Hz")
+        ttk.currentfrequencyLabel.grid(row=1, column = 3)
+        #Current PWM frequency setting
+        ttk.setPWMfrequencyLabel = Label(tab2, text="Current PWM Frequency:").grid(row=2, column = 0)
+        ttk.currentPWMfrequencyLabel = Label(tab2, text="- Hz")
+        ttk.currentPWMfrequencyLabel.grid(row=2, column=3)
+        #Current amplitude setting
+        ttk.setAmplitudeLabel = Label(tab2, text="Current amplitude:").grid(row = 3, column=0)
+        ttk.ampinfo = Label(tab2, text="- %")
+        ttk.ampinfo.grid(row=3,column=3)
+        ttk.blankLine5 = Label(tab2, text="").grid(row=blankline5_row,column=0)
+        #Current phase Leg 1
+        ttk.phase1 = Label(tab2, text="Current phase shift leg 1:").grid(row=4,column=0)
+        ttk.phase1info = Label(tab2, text="- °")
+        ttk.phase1info.grid(row=4,column=3)
+
 
         #Tab 3 Layout
-        ttk.titletab3Label = Label(tab3, text="Leg 2 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 2)
+        ttk.titletab3Label = Label(tab3, text="Leg 2 settings", font = "Helvetica 16 bold italic").grid(row=0, column=0, columnspan = 4)
         #Update leg 2
         leg2_button = Button(tab3, text="Update Leg 2").grid(row=0, column=2)
         #Leg 2 phase setting
@@ -227,7 +244,7 @@ class GUI:
 
         start_command = command.command("start")
         print(start_command())
-        self.connection.send(start_command)
+        #self.connection.send(start_command)
 
     def stopbutton(self):
         self.start_button.configure(bg = 'red')
