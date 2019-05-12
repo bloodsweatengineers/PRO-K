@@ -47,22 +47,17 @@ class GUI:
         #Tab 1 Layout
         title_row = 0
         checkbutton_row = 1
-        blankline1_row = 2
         button_row = 3
-        blankline2_row = 4
         frequency_row = 5
         PWMfrequency_row = 6
         amplitude_row = 7
-        blankline3_row = 8
         phase1_row = 9
         phase2_row = 10
         phase3_row = 11
         phase4_row = 12
-        blankline4_row = 13
         current_frequency_row = 14
         current_PWMfrequency_row = 15
         current_amplitude_row = 16
-        blankline5_row = 17
         current_phase1_row = 18
         current_phase2_row = 19
         current_phase3_row = 20
@@ -73,37 +68,33 @@ class GUI:
         #Enable Leg 1
         ttk.var1 = IntVar()
         ttk.EnableLeg1 = Checkbutton(tab1, text="Enable Leg 1", variable = ttk.var1)
-        ttk.EnableLeg1.grid(row=checkbutton_row, column=0)
+        ttk.EnableLeg1.grid(row=checkbutton_row, column=0,pady=(10,10))
         #Enable Leg 2
         ttk.var2 = IntVar()
         ttk.EnableLeg2 = Checkbutton(tab1, text="Enable Leg 2", variable = ttk.var2)
-        ttk.EnableLeg2.grid(row=checkbutton_row,column=1)
+        ttk.EnableLeg2.grid(row=checkbutton_row,column=1,pady=(10,10))
         #Enable Leg 3
         ttk.var3 = IntVar()
         ttk.EnableLeg3 = Checkbutton(tab1, text="Enable Leg 3", variable = ttk.var3)
-        ttk.EnableLeg3.grid(row=checkbutton_row,column=2)
+        ttk.EnableLeg3.grid(row=checkbutton_row,column=2,pady=(10,10))
         #Enable Leg 4
         ttk.var4 = IntVar()
         ttk.EnableLeg4 = Checkbutton(tab1, text="Enable Leg 4", variable = ttk.var4)
-        ttk.EnableLeg4.grid(row=checkbutton_row,column=3)
-        #Blank Line
-        ttk.blankLine1 = Label(tab1,text="").grid(row=blankline1_row,column=0)
+        ttk.EnableLeg4.grid(row=checkbutton_row,column=3, pady=(10,10))
+        
         #Start button        
         ttk.start_button = Button(tab1, text="START", command = self.startbutton, bg = 'red')
-        ttk.start_button.grid(row=button_row, column=0)
+        ttk.start_button.grid(row=button_row, column=0,pady=(10,10))
         #General update button
-        update_general = Button(tab1, text="Update", command = self.updategeneral).grid(row=button_row, column=1, columnspan=2)
+        update_general = Button(tab1, text="Update", command = self.updategeneral).grid(row=button_row, column=1, columnspan=2,pady=(10,10))
         #Stop button
         ttk.stop_button  = Button(tab1, text='STOP', command = self.stopbutton)
-        ttk.stop_button.grid(row=button_row,column=3)
-        
-        #Blank line
-        ttk.blankLine2 = Label(tab1, text="").grid(row=blankline2_row,column=0)
+        ttk.stop_button.grid(row=button_row,column=3,pady=(10,10))
         
         #Frequency
-        ttk.FreqLabel = Label(tab1, text="Frequency:").grid(row=frequency_row, column=0)
+        ttk.FreqLabel = Label(tab1, text="Frequency:").grid(row=frequency_row, column=0,pady=(10,0))
         ttk.FreqEntry = Entry(tab1, bd=5, state = 'disabled')
-        ttk.FreqEntry.grid(row=frequency_row, column=2)
+        ttk.FreqEntry.grid(row=frequency_row, column=2,pady=(10,1))
         #PWM Frequency
         ttk.PWMFreqLabel = Label(tab1, text="PWM Frequency:").grid(row=PWMfrequency_row, column=0)
         ttk.PWMFreqEntry = Entry(tab1, bd=5, state = 'disabled')
@@ -113,12 +104,10 @@ class GUI:
         ttk.AmpEntry = Entry(tab1, bd=5, state = 'disabled')
         ttk.AmpEntry.grid(row=amplitude_row, column=2)
         
-        #Blank line
-        ttk.witregel = Label(tab1,text = "").grid(row = blankline3_row, column=0, columnspan=4)
         #Phase1
-        ttk.phase1Label = Label(tab1, text="phase shift leg 1:").grid(row=phase1_row,column=0)
+        ttk.phase1Label = Label(tab1, text="phase shift leg 1:").grid(row=phase1_row,column=0,pady=(25,0))
         ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
-        ttk.phase1Entry.grid(row=phase1_row,column=2)
+        ttk.phase1Entry.grid(row=phase1_row,column=2,pady=(25,0))
         #phase2
         ttk.phase2Label = Label(tab1, text="phase shift leg 2:").grid(row=phase2_row,column=0)
         ttk.phase2Entry = Entry(tab1, bd=5, state='disabled')
@@ -131,12 +120,10 @@ class GUI:
         ttk.phase4Label = Label(tab1, text="phase shift leg 4:").grid(row=phase4_row,column=0)
         ttk.phase4Entry = Entry(tab1, bd=5, state='disabled')
         ttk.phase4Entry.grid(row=phase4_row,column=2)
-        #blank line
-        ttk.witregel = Label(tab1,text = "").grid(row = blankline4_row, column=0, columnspan=4)
         #Current frequency setting
-        ttk.setfrequencyLabel = Label(tab1, text="Current Frequency:").grid(row=current_frequency_row, column = 0)
+        ttk.setfrequencyLabel = Label(tab1, text="Current Frequency:").grid(row=current_frequency_row, column = 0,pady=(25,0))
         ttk.currentfrequencyLabel = Label(tab1, text="- Hz")
-        ttk.currentfrequencyLabel.grid(row=current_frequency_row, column = 2)
+        ttk.currentfrequencyLabel.grid(row=current_frequency_row, column = 2,pady=(25,0))
         #Current PWM frequency setting
         ttk.setPWMfrequencyLabel = Label(tab1, text="Current PWM Frequency:").grid(row=current_PWMfrequency_row, column = 0)
         ttk.currentPWMfrequencyLabel = Label(tab1, text="- Hz")
@@ -145,12 +132,10 @@ class GUI:
         ttk.setAmplitudeLabel = Label(tab1, text="Current amplitude:").grid(row = current_amplitude_row, column=0)
         ttk.ampinfo = Label(tab1, text="- %")
         ttk.ampinfo.grid(row=current_amplitude_row,column=2)
-        #blank line
-        ttk.blankLine5 = Label(tab1, text="").grid(row=blankline5_row,column=0)
         #Current phase Leg 1
-        ttk.phase1 = Label(tab1, text="Current phase shift leg 1:").grid(row=current_phase1_row,column=0)
+        ttk.phase1 = Label(tab1, text="Current phase shift leg 1:").grid(row=current_phase1_row,column=0,pady=(25,0))
         ttk.phase1info = Label(tab1, text="- °")
-        ttk.phase1info.grid(row=current_phase1_row,column=2)
+        ttk.phase1info.grid(row=current_phase1_row,column=2,pady=(25,0))
         #Current Phase Leg 2
         ttk.phase2 = Label(tab1, text="Current phase shift leg 2:").grid(row=current_phase2_row,column=0)
         ttk.phase2info = Label(tab1, text="- °")
@@ -167,137 +152,127 @@ class GUI:
 
 
         #Tab 2 Layout
-        frame1 = Frame(tab2)
-        frame1.pack()
-        frame2 = Frame(tab2)
-        frame2.pack()
-        frame3 = Frame(tab2)
-        frame3.pack()
-        frame4 = Frame(tab2)
-        frame4.pack()
-        frame5 = Frame(tab2)
-        frame5.pack()
-        frame6 = Frame(tab2)
-        frame6.pack()
-        ttk.titleLabel = Label(frame1, text="Leg 1 settings", font = "Helvetica 16 bold italic").pack()
+        frame = []
+        for i in range(6):
+            frame.append(Frame(tab2))
+            frame[i].pack()
+
+        ttk.titleLabel = Label(frame[0], text="Leg 1 settings", font = "Helvetica 16 bold italic").pack()
         #Leg settings
         #Current frequency setting
-        ttk.tab2setfrequencyLabel = Label(frame2, text="current Frequency:").pack(side=LEFT)
-        ttk.tab2currentfrequencyLabel = Label(frame2, text="- Hz")
+        ttk.tab2setfrequencyLabel = Label(frame[1], text="current Frequency:").pack(side=LEFT)
+        ttk.tab2currentfrequencyLabel = Label(frame[1], text="- Hz")
         ttk.tab2currentfrequencyLabel.pack(side=LEFT)
         #Current PWM frequency setting
-        ttk.tab2setPWMfrequencyLabel = Label(frame3, text="Current PWM Frequency:").pack(side=LEFT)
-        ttk.tab2currentPWMfrequencyLabel = Label(frame3, text="- Hz")
+        ttk.tab2setPWMfrequencyLabel = Label(frame[2], text="Current PWM Frequency:").pack(side=LEFT)
+        ttk.tab2currentPWMfrequencyLabel = Label(frame[2], text="- Hz")
         ttk.tab2currentPWMfrequencyLabel.pack(side=LEFT)
         #Current amplitude setting
-        ttk.tab2setAmplitudeLabel = Label(frame4, text="Current amplitude:").pack(side=LEFT)
-        ttk.tab2ampinfo = Label(frame4, text="- %")
+        ttk.tab2setAmplitudeLabel = Label(frame[3], text="Current amplitude:").pack(side=LEFT)
+        ttk.tab2ampinfo = Label(frame[3], text="- %")
         ttk.tab2ampinfo.pack(side=LEFT)
         #Current phase Leg 1
-        ttk.tab2phase1 = Label(frame5, text="Current phase shift:").pack(side=LEFT)
-        ttk.tab2phase1info = Label(frame5, text="- °")
+        ttk.tab2phase1 = Label(frame[4], text="Current phase shift:").pack(side=LEFT)
+        ttk.tab2phase1info = Label(frame[4], text="- °")
         ttk.tab2phase1info.pack(side=LEFT)
 
 
         #Tab 3 Layout
-        frame1 = Frame(tab3)
-        frame1.pack()
-        frame2 = Frame(tab3)
-        frame2.pack()
-        frame3 = Frame(tab3)
-        frame3.pack()
-        frame4 = Frame(tab3)
-        frame4.pack()
-        frame5 = Frame(tab3)
-        frame5.pack()
-        frame6 = Frame(tab3)
-        frame6.pack()
-        ttk.titleLabel = Label(frame1, text="Leg 2 settings", font = "Helvetica 16 bold italic").pack()
+        frame = []
+        for i in range(6):
+            frame.append(Frame(tab3))
+            frame[i].pack(
+                    )
+        ttk.titleLabel = Label(frame[0], text="Leg 2 settings", font = "Helvetica 16 bold italic").pack()
         #Leg settings
         #Current frequency setting
-        ttk.tab3setfrequencyLabel = Label(frame2, text="Current Frequency:").pack(side=LEFT)
-        ttk.tab3currentfrequencyLabel = Label(frame2, text="- Hz")
+        ttk.tab3setfrequencyLabel = Label(frame[1], text="Current Frequency:").pack(side=LEFT)
+        ttk.tab3currentfrequencyLabel = Label(frame[1], text="- Hz")
         ttk.tab3currentfrequencyLabel.pack(side=LEFT)
         #Current PWM frequency setting
-        ttk.tab3setPWMfrequencyLabel = Label(frame3, text="Current PWM Frequency:").pack(side=LEFT)
-        ttk.tab3currentPWMfrequencyLabel = Label(frame3, text="- Hz")
+        ttk.tab3setPWMfrequencyLabel = Label(frame[2], text="Current PWM Frequency:").pack(side=LEFT)
+        ttk.tab3currentPWMfrequencyLabel = Label(frame[2], text="- Hz")
         ttk.tab3currentPWMfrequencyLabel.pack(side=LEFT)
         #Current amplitude setting
-        ttk.tab3setAmplitudeLabel = Label(frame4, text="Current amplitude:").pack(side=LEFT)
-        ttk.tab3ampinfo = Label(frame4, text="- %")
+        ttk.tab3setAmplitudeLabel = Label(frame[3], text="Current amplitude:").pack(side=LEFT)
+        ttk.tab3ampinfo = Label(frame[3], text="- %")
         ttk.tab3ampinfo.pack(side=LEFT)
         #Current phase Leg 1
-        ttk.tab3phase2 = Label(frame5, text="Current phase shift:").pack(side=LEFT)
-        ttk.tab3phase2info = Label(frame5, text="- °")
+        ttk.tab3phase2 = Label(frame[4], text="Current phase shift:").pack(side=LEFT)
+        ttk.tab3phase2info = Label(frame[4], text="- °")
         ttk.tab3phase2info.pack(side=LEFT)
 
 
         #Tab 4 Layout
-        frame1 = Frame(tab4)
-        frame1.pack()
-        frame2 = Frame(tab4)
-        frame2.pack()
-        frame3 = Frame(tab4)
-        frame3.pack()
-        frame4 = Frame(tab4)
-        frame4.pack()
-        frame5 = Frame(tab4)
-        frame5.pack()
-        frame6 = Frame(tab4)
-        frame6.pack()
-        ttk.titleLabel = Label(frame1, text="Leg 3 settings", font = "Helvetica 16 bold italic").pack()
+        frame = []
+        for i in range(6):
+            frame.append(Frame(tab4))
+            frame[i].pack()
+
+        ttk.titleLabel = Label(frame[0], text="Leg 3 settings", font = "Helvetica 16 bold italic").pack()
         #Leg settings
         #Current frequency setting
-        ttk.tab4setfrequencyLabel = Label(frame2, text="Current Frequency:").pack(side=LEFT)
-        ttk.tab4currentfrequencyLabel = Label(frame2, text="- Hz")
+        ttk.tab4setfrequencyLabel = Label(frame[1], text="Current Frequency:").pack(side=LEFT)
+        ttk.tab4currentfrequencyLabel = Label(frame[1], text="- Hz")
         ttk.tab4currentfrequencyLabel.pack(side=LEFT)
         #Current PWM frequency setting
-        ttk.tab4setPWMfrequencyLabel = Label(frame3, text="Current PWM Frequency:").pack(side=LEFT)
-        ttk.tab4currentPWMfrequencyLabel = Label(frame3, text="- Hz")
+        ttk.tab4setPWMfrequencyLabel = Label(frame[2], text="Current PWM Frequency:").pack(side=LEFT)
+        ttk.tab4currentPWMfrequencyLabel = Label(frame[2], text="- Hz")
         ttk.tab4currentPWMfrequencyLabel.pack(side=LEFT)
         #Current amplitude setting
-        ttk.tab4setAmplitudeLabel = Label(frame4, text="Current amplitude:").pack(side=LEFT)
-        ttk.tab4ampinfo = Label(frame4, text="- %")
+        ttk.tab4setAmplitudeLabel = Label(frame[3], text="Current amplitude:").pack(side=LEFT)
+        ttk.tab4ampinfo = Label(frame[3], text="- %")
         ttk.tab4ampinfo.pack(side=LEFT)
         #Current phase Leg 1
-        ttk.tab4phase3 = Label(frame5, text="Current phase shift:").pack(side=LEFT)
-        ttk.tab4phase3info = Label(frame5, text="- °")
+        ttk.tab4phase3 = Label(frame[4], text="Current phase shift:").pack(side=LEFT)
+        ttk.tab4phase3info = Label(frame[4], text="- °")
         ttk.tab4phase3info.pack(side=LEFT)
 
 
         #Tab 5 Layout
-        frame1 = Frame(tab5)
-        frame1.pack()
-        frame2 = Frame(tab5)
-        frame2.pack()
-        frame3 = Frame(tab5)
-        frame3.pack()
-        frame4 = Frame(tab5)
-        frame4.pack()
-        frame5 = Frame(tab5)
-        frame5.pack()
-        frame6 = Frame(tab5)
-        frame6.pack()
+        frame = []
+        for i in range(6):
+            frame.append(Frame(tab5))
+            frame[i].pack()
 
-        ttk.titleLabel = Label(frame1, text="Leg 4 settings", font = "Helvetica 16 bold italic").pack()
+        ttk.titleLabel = Label(frame[0], text="Leg 4 settings", font = "Helvetica 16 bold italic").pack()
         #Leg settings
         #Current frequency setting
-        ttk.tab5setfrequencyLabel = Label(frame2, text="Current Frequency:").pack(side=LEFT)
-        ttk.tab5currentfrequencyLabel = Label(frame2, text="- Hz")
-        ttk.tab5currentfrequencyLabel.pack(side=LEFT)
+        ttk.tab5setfrequencyLabel = Label(frame[1], text="Current Frequency:").pack(side=LEFT)
+        ttk.tab5currentfrequencyLabel = Label(frame[1], text="- Hz")
+        ttk.tab4currentfrequencyLabel.pack(side=LEFT)
         #Current PWM frequency setting
-        ttk.tab5setPWMfrequencyLabel = Label(frame3, text="Current PWM Frequency:").pack(side=LEFT)
-        ttk.tab5currentPWMfrequencyLabel = Label(frame3, text="- Hz")
+        ttk.tab5setPWMfrequencyLabel = Label(frame[2], text="Current PWM Frequency:").pack(side=LEFT)
+        ttk.tab5currentPWMfrequencyLabel = Label(frame[2], text="- Hz")
         ttk.tab5currentPWMfrequencyLabel.pack(side=LEFT)
         #Current amplitude setting
-        ttk.tab5setAmplitudetab2Label = Label(frame4, text="Current amplitude:").pack(side=LEFT)
-        ttk.tab5ampinfo = Label(frame4, text="- %")
+        ttk.tab5setAmplitudetab2Label = Label(frame[3], text="Current amplitude:").pack(side=LEFT)
+        ttk.tab5ampinfo = Label(frame[3], text="- %")
         ttk.tab5ampinfo.pack(side=LEFT)
+        #show_current_data(tab5)
         #Current phase Leg 4
-        ttk.tab5phase4 = Label(frame5, text="Current phase shift:").pack(side=LEFT)
-        ttk.tab5phase4info = Label(frame5, text="- °")
+        ttk.tab5phase4 = Label(frame[4], text="Current phase shift:").pack(side=LEFT)
+        ttk.tab5phase4info = Label(frame[4], text="- °")
         ttk.tab5phase4info.pack(side=LEFT)
 
+    def show_current_data(self,tabnr):
+        frame = []
+        for i in range(1,3):
+            frame.append(Frame(tabnr))
+            frame[i].pack()
+        
+        ttk.tabsetfrequencyLabel = Label(frame[1], text="Current Frequency:").pack(side=LEFT)
+        ttk.tabcurrentfrequencyLabel = Label(frame[1], text="- Hz")
+        ttk.tabcurrentfrequencyLabel.pack(side=LEFT)
+        #Current PWM frequency setting
+        ttk.tabsetPWMfrequencyLabel = Label(frame[2], text="Current PWM Frequency:").pack(side=LEFT)
+        ttk.tabcurrentPWMfrequencyLabel = Label(frame[2], text="- Hz")
+        ttk.tabcurrentPWMfrequencyLabel.pack(side=LEFT)
+        #Current amplitude setting
+        ttk.tabsetAmplitudetab2Label = Label(frame[3], text="Current amplitude:").pack(side=LEFT)
+        ttk.tabampinfo = Label(frame[3], text="- %")
+        ttk.tabampinfo.pack(side=LEFT)
+        return 0
 
     def updategeneral(self):
         newfrequency = int(ttk.FreqEntry.get())
