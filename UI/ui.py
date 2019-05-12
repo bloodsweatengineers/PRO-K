@@ -461,12 +461,3 @@ class GUI:
         #self.connection.send(stop_command)
         return 0
 
-        
-
-
-root = Tk()
-this_gui = GUI(root)
-
-while True:
-    root.update_idletasks()
-    root.update()
