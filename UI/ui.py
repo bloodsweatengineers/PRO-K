@@ -9,26 +9,25 @@ from tkinter import messagebox
 import tkinter
 from random import randint
 
-
+import serial
 import command
 import uart_connection
+import serial.tools.list_ports
+
 
 class GUI:
     def __init__(self,master):
+            
         self.connection = uart_connection.connection()
+        
         self.master = master
         self.master.title("PWM Controller")
         
         #Creation of tabs
         tabControl = ttk.Notebook(self.master)
-        #tab_names = ["General", "Leg 1", "Leg 2", "Leg 3", "Leg 4"]
-
-        #for i in range(0
 
         #Tab 1: General settings  
         tab1 = ttk.Frame(tabControl)
-        #tabControl.pack(expand=1, fill= 'both'
-
         tabControl.add(tab1, text='General')
         #Tab 2: Settings Leg 1
         tab2 = ttk.Frame(tabControl)
@@ -51,6 +50,7 @@ class GUI:
         frequency_row = 5
         PWMfrequency_row = 6
         amplitude_row = 7
+        amplitude_leg4_row = 8
         phase1_row = 9
         phase2_row = 10
         phase3_row = 11
@@ -58,13 +58,15 @@ class GUI:
         current_frequency_row = 14
         current_PWMfrequency_row = 15
         current_amplitude_row = 16
+        current_leg4_amplitude_row = 17
         current_phase1_row = 18
         current_phase2_row = 19
         current_phase3_row = 20
         current_phase4_row = 21
 
-
+        #--Tab 1 layout--
         ttk.titletab1Label = Label(tab1, text="PWM Controller general settings", font = "Helvetica 16 bold italic").grid(row=title_row, column=0, columnspan = 4)
+        
         #Enable Leg 1
         ttk.var1 = IntVar()
         ttk.EnableLeg1 = Checkbutton(tab1, text="Enable Leg 1", variable = ttk.var1)
@@ -95,31 +97,42 @@ class GUI:
         ttk.FreqLabel = Label(tab1, text="Frequency:").grid(row=frequency_row, column=0,pady=(10,0), sticky='E')
         ttk.FreqEntry = Entry(tab1, bd=5, state = 'disabled')
         ttk.FreqEntry.grid(row=frequency_row, column=2,pady=(10,1))
+        
         #PWM Frequency
         ttk.PWMFreqLabel = Label(tab1, text="PWM Frequency:").grid(row=PWMfrequency_row, column=0,sticky='E')
         ttk.PWMFreqEntry = Entry(tab1, bd=5, state = 'disabled')
         ttk.PWMFreqEntry.grid(row=PWMfrequency_row, column=2)
-        #Amplitude
-        ttk.AmpLabel = Label(tab1, text="Amplitude:").grid(row=amplitude_row,column=0,sticky='E')
+        
+        #Three phase amplitude leg 1-3
+        ttk.AmpLabel = Label(tab1, text="Amplitude Leg 1 - 3:").grid(row=amplitude_row,column=0,sticky='E')
         ttk.AmpEntry = Entry(tab1, bd=5, state = 'disabled')
         ttk.AmpEntry.grid(row=amplitude_row, column=2)
+        
+        #Amplitude leg 4
+        ttk.leg4AmpLabel = Label(tab1, text="Amplitude Leg 4:").grid(row=amplitude_leg4_row,column=0,sticky='E')
+        ttk.leg4AmpEntry = Entry(tab1,bd=5, state='disabled')
+        ttk.leg4AmpEntry.grid(row=amplitude_leg4_row, column=2)
         
         #Phase1
         ttk.phase1Label = Label(tab1, text="phase shift leg 1:").grid(row=phase1_row,column=0,pady=(25,0),sticky='E')
         ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
         ttk.phase1Entry.grid(row=phase1_row,column=2,pady=(25,0))
+        
         #phase2
         ttk.phase2Label = Label(tab1, text="phase shift leg 2:").grid(row=phase2_row,column=0,sticky='E')
         ttk.phase2Entry = Entry(tab1, bd=5, state='disabled')
         ttk.phase2Entry.grid(row=phase2_row,column=2)
+        
         #Phase3
         ttk.phase3Label = Label(tab1, text="phase shift leg 3:").grid(row=phase3_row,column=0,sticky='E')
         ttk.phase3Entry = Entry(tab1, bd=5, state='disabled')
         ttk.phase3Entry.grid(row=phase3_row,column=2)
+        
         #Phase4
         ttk.phase4Label = Label(tab1, text="phase shift leg 4:").grid(row=phase4_row,column=0,sticky='E')
         ttk.phase4Entry = Entry(tab1, bd=5, state='disabled')
         ttk.phase4Entry.grid(row=phase4_row,column=2)
+        
         #Current frequency setting
         ttk.setfrequencyLabel = Label(tab1, text="Current Frequency:").grid(row=current_frequency_row, column = 0,pady=(25,0),sticky='EW')
         ttk.currentfrequencyLabel = Label(tab1, text="- Hz")
@@ -128,22 +141,32 @@ class GUI:
         ttk.setPWMfrequencyLabel = Label(tab1, text="Current PWM Frequency:").grid(row=current_PWMfrequency_row, column = 0,sticky='EW')
         ttk.currentPWMfrequencyLabel = Label(tab1, text="- Hz")
         ttk.currentPWMfrequencyLabel.grid(row=current_PWMfrequency_row, column=2,sticky='EW')
-        #Current amplitude setting
-        ttk.setAmplitudeLabel = Label(tab1, text="Current amplitude:").grid(row = current_amplitude_row, column=0,sticky='EW')
+        
+        #Current amplitude setting leg 1 - 3
+        ttk.setAmplitudeLabel = Label(tab1, text="Current amplitude leg 1 - 3:").grid(row = current_amplitude_row, column=0,sticky='EW')
         ttk.ampinfo = Label(tab1, text="- %")
         ttk.ampinfo.grid(row=current_amplitude_row,column=2,sticky='EW')
+        
+        #Current amplitude setting leg 4
+        ttk.leg4setAmplitudeLabel = Label(tab1, text="Current amplitude leg 4:").grid(row = current_leg4_amplitude_row, column=0,sticky='EW')
+        ttk.leg4ampinfo = Label(tab1, text="- %")
+        ttk.leg4ampinfo.grid(row=current_leg4_amplitude_row, column=2,sticky='EW')
+
         #Current phase Leg 1
         ttk.phase1 = Label(tab1, text="Current phase shift leg 1:").grid(row=current_phase1_row,column=0,pady=(25,0),sticky='EW')
         ttk.phase1info = Label(tab1, text="- °")
         ttk.phase1info.grid(row=current_phase1_row,column=2,pady=(25,0),sticky='EW')
+        
         #Current Phase Leg 2
         ttk.phase2 = Label(tab1, text="Current phase shift leg 2:").grid(row=current_phase2_row,column=0,sticky='EW')
         ttk.phase2info = Label(tab1, text="- °")
         ttk.phase2info.grid(row=current_phase2_row,column=2,sticky='EW')
+        
         #Current Phase Leg 3
         ttk.phase3 = Label(tab1, text="Current phase shift leg 3:").grid(row=current_phase3_row,column=0,sticky='EW')
         ttk.phase3info = Label(tab1, text="- °")
         ttk.phase3info.grid(row=current_phase3_row,column=2,sticky='EW')
+        
         #Current Phase Leg 4
         ttk.phase4 = Label(tab1, text="Current phase shift leg 4:").grid(row=current_phase4_row,column=0,sticky='EW')
         ttk.phase4info = Label(tab1, text="- °")
@@ -151,7 +174,7 @@ class GUI:
 
 
 
-        #Tab 2 Layout
+        #--Tab 2 Layout--
         frame = []
         for i in range(6):
             frame.append(Frame(tab2))
@@ -308,16 +331,36 @@ class GUI:
                 ttk.tab2ampinfo.configure(text="{} %".format(newamplitude))
                 ttk.tab3ampinfo.configure(text="{} %".format(newamplitude))
                 ttk.tab4ampinfo.configure(text="{} %".format(newamplitude))
-                ttk.tab5ampinfo.configure(text="{} %".format(newamplitude))
 
-                amplitude_command = command.command("amplitude", newamplitude)
-                print(amplitude_command())
-                #self.connection.send(keyfreq_command)
+                amplitude_command_leg1 = command.command("amplitude", newamplitude,0)
+                amplitude_command_leg2 = command.command("amplitude", newamplitude,1)
+                amplitude_command_leg3 = command.command("amplitude", newamplitude,2)
+                print(amplitude_command_leg1())
+                print(amplitude_command_leg2())
+                print(amplitude_command_leg3())
+                #self.connection.send(amplitude_command_leg1)
+                #self.connection.send(amplitude_command_leg2)
+                #self.connection.send(amplitude_command_leg3)
                 ttk.AmpEntry.delete(0,'end')
             else:
                 raise
         except:
             messagebox.showerror(error,message)
+
+        try:
+            newamplitudeleg4 = int(ttk.leg4AmpEntry.get())
+            if( newamplitudeleg4 >= 0 and newamplitudeleg4 <= 100):
+                ttk.leg4ampinfo.configure(text="{} %".format(newamplitudeleg4))
+                ttk.tab5ampinfo.configure(text="{} %".format(newamplitudeleg4))
+                amplitude_command_leg4 = command.command("amplitude", newamplitudeleg4,3)
+                print(amplitude_command_leg4())
+                #self.connection.send(amplitude_command_leg4)
+                ttk.leg4AmpEntry.delete(0,'end')
+            else:
+                raise
+        except:
+            messagebox.showerror(error,message)
+
 
         if (ttk.var1.get()):
             try:
@@ -369,35 +412,43 @@ class GUI:
         print(execute_command())
         #self.connection.send(execute_command)
         return 0
-
             
 
     def startbutton(self):
-        ttk.start_button.configure(bg = 'green')
-        ttk.FreqEntry['state'] = NORMAL
-        ttk.PWMFreqEntry['state'] = NORMAL
-        ttk.AmpEntry['state'] = NORMAL
-       
-        ttk.EnableLeg1['state'] = DISABLED
-        ttk.EnableLeg2['state'] = DISABLED
-        ttk.EnableLeg3['state'] = DISABLED
-        ttk.EnableLeg4['state'] = DISABLED
+        if((ttk.var1.get()) or ttk.var2.get() or ttk.var3.get() or ttk.var4.get()):  
+            ttk.start_button.configure(bg = 'green')
+            ttk.FreqEntry['state'] = NORMAL
+            ttk.PWMFreqEntry['state'] = NORMAL
+            ttk.AmpEntry['state'] = NORMAL
+            ttk.leg4AmpEntry['state'] = NORMAL
 
-        if (ttk.var1.get()):
-            ttk.phase1Entry['state'] = NORMAL
-        if (ttk.var2.get()):
-            ttk.phase2Entry['state'] = NORMAL
-        if (ttk.var3.get()):
-            ttk.phase3Entry['state'] = NORMAL
-        if (ttk.var4.get()):
-            ttk.phase4Entry['state'] = NORMAL
+            ttk.EnableLeg1['state'] = DISABLED
+            ttk.EnableLeg2['state'] = DISABLED
+            ttk.EnableLeg3['state'] = DISABLED
+            ttk.EnableLeg4['state'] = DISABLED
 
-        start_command = command.command("start")
-        print(start_command())
-        #self.connection.send(start_command)
+            if (ttk.var1.get()):
+                ttk.phase1Entry['state'] = NORMAL
+            if (ttk.var2.get()):
+                ttk.phase2Entry['state'] = NORMAL
+            if (ttk.var3.get()):
+                ttk.phase3Entry['state'] = NORMAL
+            if (ttk.var4.get()):
+                ttk.phase4Entry['state'] = NORMAL
+
+            start_command = command.command("start")
+            print(start_command())
+            #self.connection.send(start_command)
+
 
     def stopbutton(self):
         ttk.start_button.configure(bg = 'red')
+        
+        #Enable buttons
+        ttk.EnableLeg1['state'] = NORMAL
+        ttk.EnableLeg2['state'] = NORMAL
+        ttk.EnableLeg3['state'] = NORMAL
+        ttk.EnableLeg4['state'] = NORMAL
 
         ttk.FreqEntry.delete(0,'end')
         ttk.FreqEntry['state'] = DISABLED
@@ -406,6 +457,7 @@ class GUI:
         ttk.tab3currentfrequencyLabel.configure(text="- Hz")
         ttk.tab4currentfrequencyLabel.configure(text="- Hz")
         ttk.tab5currentfrequencyLabel.configure(text="- Hz")
+        ttk.currentPWMfrequencyLabel.configure(text="- Hz")
 
         ttk.PWMFreqEntry.delete(0,'end')
         ttk.PWMFreqEntry['state'] = DISABLED
@@ -421,6 +473,9 @@ class GUI:
         ttk.tab3ampinfo.configure(text="- %")
         ttk.tab4ampinfo.configure(text="- %")
         ttk.tab5ampinfo.configure(text="- %")
+        
+        ttk.leg4AmpEntry['state'] = DISABLED
+        ttk.leg4ampinfo.configure(text="- %")
 
         ttk.phase1Entry.delete(0,'end')
         ttk.phase1Entry['state'] = DISABLED

@@ -7,7 +7,7 @@ import crc8
 
 class command:
     command_type = {'frequency'     : [0x01,0],
-                    'amplitude'     : [0x10,0],
+                    'amplitude'     : [0x10,1],
                     'keyfrequency'  : [0x20,0],
                     'phaseshift'    : [0x30,1],
                     'info'          : [0x00,0],
