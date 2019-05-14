@@ -13,171 +13,163 @@ import serial
 import command
 import uart_connection
 import serial.tools.list_ports
-
-
+from array import array
+           
 class GUI:
     def __init__(self,master):
-            
         self.connection = uart_connection.connection()
         
         self.master = master
         self.master.title("PWM Controller")
         
-        #Creation of tabs
-        tabControl = ttk.Notebook(self.master)
-
-        #Tab 1: General settings  
-        tab1 = ttk.Frame(tabControl)
-        tabControl.add(tab1, text='General')
-        #Tab 2: Settings Leg 1
-        tab2 = ttk.Frame(tabControl)
-        tabControl.add(tab2, text='Leg 1')
-        #tab 3: Settings Leg 2
-        tab3 = ttk.Frame(tabControl)
-        tabControl.add(tab3, text='leg 2')
-        #tab 4: Settings Leg 3
-        tab4 = ttk.Frame(tabControl)
-        tabControl.add(tab4, text='leg 3')
-        #tab 5: Settings Leg 4
-        tab5 = ttk.Frame(tabControl)
-        tabControl.add(tab5, text='leg 4')
-        tabControl.pack(expand=1, fill='both')
+        #creation of tabs
+        tab_control = ttk.Notebook(self.master)
+        tabs = []
+        tabnames = ['General', 'Leg 1', 'Leg 2', 'Leg 3', 'Leg 4']
+        for x in range(5):
+            tabs.append(ttk.Frame(tab_control))
+            tab_control.add(tabs[x],text = tabnames[x])
+        tab_control.pack(expand=1, fill='both')
+        
 
         #Tab 1 Layout
-        title_row = 0
-        checkbutton_row = 1
-        button_row = 3
-        frequency_row = 5
-        PWMfrequency_row = 6
-        amplitude_row = 7
-        amplitude_leg4_row = 8
-        phase1_row = 9
-        phase2_row = 10
-        phase3_row = 11
-        phase4_row = 12
-        current_frequency_row = 14
-        current_PWMfrequency_row = 15
-        current_amplitude_row = 16
-        current_leg4_amplitude_row = 17
-        current_phase1_row = 18
-        current_phase2_row = 19
-        current_phase3_row = 20
-        current_phase4_row = 21
+        row_numbers = {
+                "title_row"                     : 0,
+                "check_button_row"              : 1,
+                "button_row"                    : 2,
+                "frequency_row"                 : 3,
+                "pwmfrequency_row"              : 4,
+                "amplitude_row"                 : 5,
+                "amplitude_leg4_row"            : 6,
+                "phase1_row"                    : 7,
+                "phase2_row"                    : 8,
+                "phase3_row"                    : 9,
+                "phase4_row"                    : 10,
+                "current_frequency_row"         : 11,
+                "current_pwmfrequency_row"      : 12,
+                "current_amplitude_row"         : 13,
+                "current_leg4_amplitude_row"    : 14,
+                "current_phase1_row"            : 15,
+                "current_phase2_row"            : 16,
+                "current_phase3_row"            : 17,
+                "current_phase4_row"            : 18
+                }
 
-        #--Tab 1 layout--
-        ttk.titletab1Label = Label(tab1, text="PWM Controller general settings", font = "Helvetica 16 bold italic").grid(row=title_row, column=0, columnspan = 4)
+        #Tab 1 title
+        ttk.titletab1Label = Label(tabs[0], text="PWM Controller general settings", font = "Helvetica 16 bold italic").grid(row=row_numbers["title_row"], column=0, columnspan = 4)
         
         #Enable Leg 1
         ttk.var1 = IntVar()
-        ttk.EnableLeg1 = Checkbutton(tab1, text="Enable Leg 1", variable = ttk.var1)
-        ttk.EnableLeg1.grid(row=checkbutton_row, column=0,pady=(10,10))
+        ttk.EnableLeg1 = Checkbutton(tabs[0], text="Enable Leg 1", variable = ttk.var1)
+        ttk.EnableLeg1.grid(row=row_numbers["check_button_row"], column=0,pady=(10,10))
         #Enable Leg 2
         ttk.var2 = IntVar()
-        ttk.EnableLeg2 = Checkbutton(tab1, text="Enable Leg 2", variable = ttk.var2)
-        ttk.EnableLeg2.grid(row=checkbutton_row,column=1,pady=(10,10))
+        ttk.EnableLeg2 = Checkbutton(tabs[0], text="Enable Leg 2", variable = ttk.var2)
+        ttk.EnableLeg2.grid(row=row_numbers["check_button_row"],column=1,pady=(10,10))
         #Enable Leg 3
         ttk.var3 = IntVar()
-        ttk.EnableLeg3 = Checkbutton(tab1, text="Enable Leg 3", variable = ttk.var3)
-        ttk.EnableLeg3.grid(row=checkbutton_row,column=2,pady=(10,10))
+        ttk.EnableLeg3 = Checkbutton(tabs[0], text="Enable Leg 3", variable = ttk.var3)
+        ttk.EnableLeg3.grid(row=row_numbers["check_button_row"],column=2,pady=(10,10))
         #Enable Leg 4
         ttk.var4 = IntVar()
-        ttk.EnableLeg4 = Checkbutton(tab1, text="Enable Leg 4", variable = ttk.var4)
-        ttk.EnableLeg4.grid(row=checkbutton_row,column=3, pady=(10,10))
+        ttk.EnableLeg4 = Checkbutton(tabs[0], text="Enable Leg 4", variable = ttk.var4)
+        ttk.EnableLeg4.grid(row=row_numbers["check_button_row"],column=3, pady=(10,10))
         
         #Start button        
-        ttk.start_button = Button(tab1, text="START", command = self.startbutton, bg = 'red')
-        ttk.start_button.grid(row=button_row, column=0,pady=(10,10))
+        ttk.start_button = Button(tabs[0], text="START", command = self.startbutton, bg = 'red')
+        ttk.start_button.grid(row=row_numbers["button_row"], column=0,pady=(10,10))
         #General update button
-        update_general = Button(tab1, text="Update", command = self.updategeneral).grid(row=button_row, column=1, columnspan=2,pady=(10,10))
+        update_general = Button(tabs[0], text="Update", command = self.updategeneral).grid(row=row_numbers["button_row"], column=1, columnspan=2,pady=(10,10))
         #Stop button
-        ttk.stop_button  = Button(tab1, text='STOP', command = self.stopbutton)
-        ttk.stop_button.grid(row=button_row,column=3,pady=(10,10))
-        
+        ttk.stop_button  = Button(tabs[0], text='STOP', command = self.stopbutton)
+        ttk.stop_button.grid(row=row_numbers["button_row"],column=3,pady=(10,10))
+       
+
         #Frequency
-        ttk.FreqLabel = Label(tab1, text="Frequency:").grid(row=frequency_row, column=0,pady=(10,0), sticky='E')
-        ttk.FreqEntry = Entry(tab1, bd=5, state = 'disabled')
-        ttk.FreqEntry.grid(row=frequency_row, column=2,pady=(10,1))
+        ttk.FreqLabel = Label(tabs[0], text="Frequency:").grid(row=row_numbers["frequency_row"], column=0,pady=(10,0), sticky='E')
+        ttk.FreqEntry = Entry(tabs[0], bd=5, state = 'disabled')
+        ttk.FreqEntry.grid(row=row_numbers["frequency_row"], column=2,pady=(10,1))
         
         #PWM Frequency
-        ttk.PWMFreqLabel = Label(tab1, text="PWM Frequency:").grid(row=PWMfrequency_row, column=0,sticky='E')
-        ttk.PWMFreqEntry = Entry(tab1, bd=5, state = 'disabled')
-        ttk.PWMFreqEntry.grid(row=PWMfrequency_row, column=2)
+        ttk.PWMFreqLabel = Label(tabs[0], text="PWM Frequency:").grid(row=row_numbers["pwmfrequency_row"], column=0,sticky='E')
+        ttk.PWMFreqEntry = Entry(tabs[0], bd=5, state = 'disabled')
+        ttk.PWMFreqEntry.grid(row=row_numbers["pwmfrequency_row"], column=2)
         
         #Three phase amplitude leg 1-3
-        ttk.AmpLabel = Label(tab1, text="Amplitude Leg 1 - 3:").grid(row=amplitude_row,column=0,sticky='E')
-        ttk.AmpEntry = Entry(tab1, bd=5, state = 'disabled')
-        ttk.AmpEntry.grid(row=amplitude_row, column=2)
+        ttk.AmpLabel = Label(tabs[0], text="Amplitude Leg 1 - 3:").grid(row=row_numbers["amplitude_row"],column=0,sticky='E')
+        ttk.AmpEntry = Entry(tabs[0], bd=5, state = 'disabled')
+        ttk.AmpEntry.grid(row=row_numbers["amplitude_row"], column=2)
         
         #Amplitude leg 4
-        ttk.leg4AmpLabel = Label(tab1, text="Amplitude Leg 4:").grid(row=amplitude_leg4_row,column=0,sticky='E')
-        ttk.leg4AmpEntry = Entry(tab1,bd=5, state='disabled')
-        ttk.leg4AmpEntry.grid(row=amplitude_leg4_row, column=2)
+        ttk.leg4AmpLabel = Label(tabs[0], text="Amplitude Leg 4:").grid(row=row_numbers["amplitude_leg4_row"],column=0,sticky='E')
+        ttk.leg4AmpEntry = Entry(tabs[0],bd=5, state='disabled')
+        ttk.leg4AmpEntry.grid(row=row_numbers["amplitude_leg4_row"], column=2)
         
         #Phase1
-        ttk.phase1Label = Label(tab1, text="phase shift leg 1:").grid(row=phase1_row,column=0,pady=(25,0),sticky='E')
-        ttk.phase1Entry = Entry(tab1, bd=5, state='disabled')
-        ttk.phase1Entry.grid(row=phase1_row,column=2,pady=(25,0))
+        ttk.phase1Label = Label(tabs[0], text="phase shift leg 1:").grid(row=row_numbers["phase1_row"],column=0,pady=(25,0),sticky='E')
+        ttk.phase1Entry = Entry(tabs[0], bd=5, state='disabled')
+        ttk.phase1Entry.grid(row=row_numbers["phase1_row"],column=2,pady=(25,0))
         
         #phase2
-        ttk.phase2Label = Label(tab1, text="phase shift leg 2:").grid(row=phase2_row,column=0,sticky='E')
-        ttk.phase2Entry = Entry(tab1, bd=5, state='disabled')
-        ttk.phase2Entry.grid(row=phase2_row,column=2)
+        ttk.phase2Label = Label(tabs[0], text="phase shift leg 2:").grid(row=row_numbers["phase2_row"],column=0,sticky='E')
+        ttk.phase2Entry = Entry(tabs[0], bd=5, state='disabled')
+        ttk.phase2Entry.grid(row=row_numbers["phase2_row"],column=2)
         
         #Phase3
-        ttk.phase3Label = Label(tab1, text="phase shift leg 3:").grid(row=phase3_row,column=0,sticky='E')
-        ttk.phase3Entry = Entry(tab1, bd=5, state='disabled')
-        ttk.phase3Entry.grid(row=phase3_row,column=2)
+        ttk.phase3Label = Label(tabs[0], text="phase shift leg 3:").grid(row=row_numbers["phase3_row"],column=0,sticky='E')
+        ttk.phase3Entry = Entry(tabs[0], bd=5, state='disabled')
+        ttk.phase3Entry.grid(row=row_numbers["phase3_row"],column=2)
         
         #Phase4
-        ttk.phase4Label = Label(tab1, text="phase shift leg 4:").grid(row=phase4_row,column=0,sticky='E')
-        ttk.phase4Entry = Entry(tab1, bd=5, state='disabled')
-        ttk.phase4Entry.grid(row=phase4_row,column=2)
+        ttk.phase4Label = Label(tabs[0], text="phase shift leg 4:").grid(row=row_numbers["phase4_row"],column=0,sticky='E')
+        ttk.phase4Entry = Entry(tabs[0], bd=5, state='disabled')
+        ttk.phase4Entry.grid(row=row_numbers["phase4_row"],column=2)
         
         #Current frequency setting
-        ttk.setfrequencyLabel = Label(tab1, text="Current Frequency:").grid(row=current_frequency_row, column = 0,pady=(25,0),sticky='EW')
-        ttk.currentfrequencyLabel = Label(tab1, text="- Hz")
-        ttk.currentfrequencyLabel.grid(row=current_frequency_row, column = 2,pady=(25,0),sticky='EW')
+        ttk.setfrequencyLabel = Label(tabs[0], text="Current Frequency:").grid(row=row_numbers["current_frequency_row"], column = 0,pady=(25,0),sticky='EW')
+        ttk.currentfrequencyLabel = Label(tabs[0], text="- Hz")
+        ttk.currentfrequencyLabel.grid(row=row_numbers["current_frequency_row"], column = 2,pady=(25,0),sticky='EW')
         #Current PWM frequency setting
-        ttk.setPWMfrequencyLabel = Label(tab1, text="Current PWM Frequency:").grid(row=current_PWMfrequency_row, column = 0,sticky='EW')
-        ttk.currentPWMfrequencyLabel = Label(tab1, text="- Hz")
-        ttk.currentPWMfrequencyLabel.grid(row=current_PWMfrequency_row, column=2,sticky='EW')
+        ttk.setPWMfrequencyLabel = Label(tabs[0], text="Current PWM Frequency:").grid(row=row_numbers["current_pwmfrequency_row"], column = 0,sticky='EW')
+        ttk.currentPWMfrequencyLabel = Label(tabs[0], text="- Hz")
+        ttk.currentPWMfrequencyLabel.grid(row=row_numbers["current_pwmfrequency_row"], column=2,sticky='EW')
         
         #Current amplitude setting leg 1 - 3
-        ttk.setAmplitudeLabel = Label(tab1, text="Current amplitude leg 1 - 3:").grid(row = current_amplitude_row, column=0,sticky='EW')
-        ttk.ampinfo = Label(tab1, text="- %")
-        ttk.ampinfo.grid(row=current_amplitude_row,column=2,sticky='EW')
+        ttk.setAmplitudeLabel = Label(tabs[0], text="Current amplitude leg 1 - 3:").grid(row = row_numbers["current_amplitude_row"], column=0,sticky='EW')
+        ttk.ampinfo = Label(tabs[0], text="- %")
+        ttk.ampinfo.grid(row=row_numbers["current_amplitude_row"],column=2,sticky='EW')
         
         #Current amplitude setting leg 4
-        ttk.leg4setAmplitudeLabel = Label(tab1, text="Current amplitude leg 4:").grid(row = current_leg4_amplitude_row, column=0,sticky='EW')
-        ttk.leg4ampinfo = Label(tab1, text="- %")
-        ttk.leg4ampinfo.grid(row=current_leg4_amplitude_row, column=2,sticky='EW')
+        ttk.leg4setAmplitudeLabel = Label(tabs[0], text="Current amplitude leg 4:").grid(row = row_numbers["current_leg4_amplitude_row"], column=0,sticky='EW')
+        ttk.leg4ampinfo = Label(tabs[0], text="- %")
+        ttk.leg4ampinfo.grid(row=row_numbers["current_leg4_amplitude_row"], column=2,sticky='EW')
 
         #Current phase Leg 1
-        ttk.phase1 = Label(tab1, text="Current phase shift leg 1:").grid(row=current_phase1_row,column=0,pady=(25,0),sticky='EW')
-        ttk.phase1info = Label(tab1, text="- °")
-        ttk.phase1info.grid(row=current_phase1_row,column=2,pady=(25,0),sticky='EW')
+        ttk.phase1 = Label(tabs[0], text="Current phase shift leg 1:").grid(row=row_numbers["current_phase1_row"],column=0,pady=(25,0),sticky='EW')
+        ttk.phase1info = Label(tabs[0], text="- °")
+        ttk.phase1info.grid(row=row_numbers["current_phase1_row"],column=2,pady=(25,0),sticky='EW')
         
         #Current Phase Leg 2
-        ttk.phase2 = Label(tab1, text="Current phase shift leg 2:").grid(row=current_phase2_row,column=0,sticky='EW')
-        ttk.phase2info = Label(tab1, text="- °")
-        ttk.phase2info.grid(row=current_phase2_row,column=2,sticky='EW')
+        ttk.phase2 = Label(tabs[0], text="Current phase shift leg 2:").grid(row=row_numbers["current_phase2_row"],column=0,sticky='EW')
+        ttk.phase2info = Label(tabs[0], text="- °")
+        ttk.phase2info.grid(row=row_numbers["current_phase2_row"],column=2,sticky='EW')
         
         #Current Phase Leg 3
-        ttk.phase3 = Label(tab1, text="Current phase shift leg 3:").grid(row=current_phase3_row,column=0,sticky='EW')
-        ttk.phase3info = Label(tab1, text="- °")
-        ttk.phase3info.grid(row=current_phase3_row,column=2,sticky='EW')
+        ttk.phase3 = Label(tabs[0], text="Current phase shift leg 3:").grid(row=row_numbers["current_phase3_row"],column=0,sticky='EW')
+        ttk.phase3info = Label(tabs[0], text="- °")
+        ttk.phase3info.grid(row=row_numbers["current_phase3_row"],column=2,sticky='EW')
         
         #Current Phase Leg 4
-        ttk.phase4 = Label(tab1, text="Current phase shift leg 4:").grid(row=current_phase4_row,column=0,sticky='EW')
-        ttk.phase4info = Label(tab1, text="- °")
-        ttk.phase4info.grid(row=current_phase4_row,column=2,sticky='EW')
+        ttk.phase4 = Label(tabs[0], text="Current phase shift leg 4:").grid(row=row_numbers["current_phase4_row"],column=0,sticky='EW')
+        ttk.phase4info = Label(tabs[0], text="- °")
+        ttk.phase4info.grid(row=row_numbers["current_phase4_row"],column=2,sticky='EW')
 
 
 
         #--Tab 2 Layout--
         frame = []
         for i in range(6):
-            frame.append(Frame(tab2))
+            frame.append(Frame(tabs[1]))
             frame[i].pack()
 
         ttk.titleLabel = Label(frame[0], text="Leg 1 settings", font = "Helvetica 16 bold italic").pack()
@@ -203,7 +195,7 @@ class GUI:
         #Tab 3 Layout
         frame = []
         for i in range(6):
-            frame.append(Frame(tab3))
+            frame.append(Frame(tabs[2]))
             frame[i].pack(
                     )
         ttk.titleLabel = Label(frame[0], text="Leg 2 settings", font = "Helvetica 16 bold italic").pack()
@@ -229,7 +221,7 @@ class GUI:
         #Tab 4 Layout
         frame = []
         for i in range(6):
-            frame.append(Frame(tab4))
+            frame.append(Frame(tabs[3]))
             frame[i].pack()
 
         ttk.titleLabel = Label(frame[0], text="Leg 3 settings", font = "Helvetica 16 bold italic").pack()
@@ -255,7 +247,7 @@ class GUI:
         #Tab 5 Layout
         frame = []
         for i in range(6):
-            frame.append(Frame(tab5))
+            frame.append(Frame(tabs[4]))
             frame[i].pack()
 
         ttk.titleLabel = Label(frame[0], text="Leg 4 settings", font = "Helvetica 16 bold italic").pack()
@@ -277,7 +269,8 @@ class GUI:
         ttk.tab5phase4 = Label(frame[4], text="Current phase shift:").pack(side=LEFT)
         ttk.tab5phase4info = Label(frame[4], text="- °")
         ttk.tab5phase4info.pack(side=LEFT)
-    
+   
+
     def updategeneral(self):
         error = "ERROR"
         message = "One or more incorrect inputs"
