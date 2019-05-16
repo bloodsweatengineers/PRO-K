@@ -7,7 +7,7 @@ import crc8
 
 class command:
     command_type = {'frequency'     : [0x01,0],
-                    'amplitude'     : [0x10,0],
+                    'amplitude'     : [0x10,1],
                     'keyfrequency'  : [0x20,0],
                     'phaseshift'    : [0x30,1],
                     'info'          : [0x00,0],
@@ -15,7 +15,8 @@ class command:
                     'prepare'       : [0x02,0],
                     'execute'       : [0x03,0],
                     'start'         : [0x04,0],
-                    'gather'        : [0x40,1]
+                    'gather'        : [0x40,1],
+                    'stop'          : [0x05,0]
                     }
 
     def __init__(self, com, value=0, channel=0):
