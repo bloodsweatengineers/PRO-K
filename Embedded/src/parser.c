@@ -1,5 +1,107 @@
 #include "parser.h"
 
+void parser_init(struct parser *parser, enum command_type *command_type) {
+	parser->command_type = command_type;
+	memset(parser->bin_old_buffer, 0, 6);
+	parser->bin_index = 0;
+}
+
+void parser_switch(struct parser *parser, enum command_type *command_type) {
+	parser->command_type = command_type;
+}
+
+struct token parser_parse_command(struct parser *parser) {
+	switch(*(parser->command_type)) {
+		case BINARY:
+			return parser_parse_bin_command(parser);
+		case STRING:
+			return parser_parse_str_command(parser);
+	}
+}
+
+struct token_parser_parse_bin_command(struct parser *parser) {
+	unsigned char c;
+	unsigned char buffer[6];
+	uint8_t buffer_index = 0;
+	struct token tok;
+
+	c = uart_recieve();
+	if(c != 0x24) {
+		return Token_Reject();
+	}
+
+	buffer[buffer_index] = c;
+	buffer_index++;
+
+	c = uart_recieve();
+	token.tok = retrieve_bin_command(c);
+	token.channel = retrieve_bin_channel(c);
+
+	if(token.tok == REJECT || token.channel > 4) {
+		return Token_Reject();
+	}
+
+	buffer[buffer_index] = c;
+	buffer_index++;
+
+	int32_t value = 0;
+	for(int i=0; i<3; i++) {
+		c = uart_recieve();
+		buffer[buffer_index] = c;
+		buffer_index++;
+		value += c
+		value <<= 8;
+	}
+
+	if(value < -1) {
+		return Token_Reject();
+	}
+
+	token.value = value;
+
+	unsigned char crc = calc_crc8(buffer, buffer_index);
+	c = uart_recieve();
+	if(c != crc) {
+		return Token_Reject();
+	}
+
+	buffer[buffer_index] = c;
+	buffer_index++;
+
+	uart_flush();
+
+	return token;
+}
+
+struct token_parser_parse_str_command(struct parser *parser) {
+	return {REJECT, -1, -1};
+	/*
+	bool end_parse = false;
+	struct token token;
+	enum parser_state state;
+
+	char c;
+	while(!end_parse) {
+		c = uart_recieve();
+		switch(state) {
+			case BEGIN:
+				if(c == '%') {
+					state = PARAMETER;
+				} else {
+					return Token_Reject();
+				}
+				break;
+			case PARAMETER:
+
+		}
+	}
+
+	uart_flush();
+	return token;
+	*/
+}
+
+/*
 enum tok_t validate_parameter(char *c) {
 	if(strcmp(c, "frequency") == 0) {
 		return FREQUENCY;
@@ -107,3 +209,4 @@ struct token parser(void) {
 	uart_flush();
 	return tok;
 }
+*/
