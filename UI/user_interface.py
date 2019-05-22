@@ -21,7 +21,11 @@ class FIELD(object):
         self.tab_nr = tab_nr
         self.field_type = field_type
         self.padding = padding
-        unit = {'Frequency': 'Hz', 'PWM frequency': 'Hz', 'Amplitude legs': '%', 'Amplitude leg 4': '%', 'Phaseshift': '°'}
+        unit = {'Frequency': 'Hz', 'PWM frequency': 'Hz', 'Amplitude legs 1-3': '%', 'Amplitude leg 4': '%', 
+                'Phaseshift 1': '°',
+                'Phaseshift 2': '°',
+                'Phaseshift 3': '°',
+                'Phaseshift 4': '°'}
         self.value = unit[self.parameter]
         
         if (field_type == 'entry'):
@@ -106,21 +110,21 @@ class GUI:
 
         self.frequency_entry = FIELD(3,'Frequency',tabs[0],'entry',(10,0))
         self.pwm_frequency_entry = FIELD(4,'PWM frequency',tabs[0],'entry')
-        self.amplitude_entry = FIELD(5,'Amplitude legs',tabs[0],'entry')
+        self.amplitude_entry = FIELD(5,'Amplitude legs 1-3',tabs[0],'entry')
         self.amplitude_leg_4_entry = FIELD(6, 'Amplitude leg 4', tabs[0], 'entry')
-        self.phase_1_entry = FIELD(7,'Phaseshift',tabs[0],'entry',(25,0))
-        self.phase_2_entry = FIELD(8,'Phaseshift',tabs[0],'entry')
-        self.phase_3_entry = FIELD(9,'Phaseshift',tabs[0],'entry')
-        self.phase_4_entry = FIELD(10, 'Phaseshift',tabs[0],'entry')
+        self.phase_1_entry = FIELD(7,'Phaseshift 1',tabs[0],'entry',(25,0))
+        self.phase_2_entry = FIELD(8,'Phaseshift 2',tabs[0],'entry')
+        self.phase_3_entry = FIELD(9,'Phaseshift 3',tabs[0],'entry')
+        self.phase_4_entry = FIELD(10, 'Phaseshift 4',tabs[0],'entry')
 
         self.frequency_display = FIELD(11, 'Frequency',tabs[0],'display',(25,0))
         self.pwm_frequency_display = FIELD(12,'PWM frequency',tabs[0],'display')
-        self.amplitude_display = FIELD(13,'Amplitude legs',tabs[0],'display')
+        self.amplitude_display = FIELD(13,'Amplitude legs 1-3',tabs[0],'display')
         self.amplitude_leg_4_display = FIELD(14,'Amplitude leg 4',tabs[0],'display')
-        self.phase_1_display = FIELD(15,'Phaseshift',tabs[0],'display',(25,0))
-        self.phase_2_display = FIELD(16,'Phaseshift',tabs[0],'display')
-        self.phase_3_display = FIELD(17,'Phaseshift',tabs[0],'display')
-        self.phase_4_display = FIELD(18,'Phaseshift',tabs[0],'display')
+        self.phase_1_display = FIELD(15,'Phaseshift 1',tabs[0],'display',(25,0))
+        self.phase_2_display = FIELD(16,'Phaseshift 2',tabs[0],'display')
+        self.phase_3_display = FIELD(17,'Phaseshift 3',tabs[0],'display')
+        self.phase_4_display = FIELD(18,'Phaseshift 4',tabs[0],'display')
 
         #tab 2
         
