@@ -12,6 +12,8 @@ struct token {
 
 struct token token_reject();
 
+int check_bin_value(uint8_t command, int32_t value);
+
 enum tok_t retrieve_bin_command(unsigned char c);
 int8_t retrieve_bin_channel(unsigned char c);
 

@@ -2,8 +2,6 @@
 
 void parser_init(struct parser *parser, enum command_type *command_type) {
 	parser->command_type = command_type;
-	memset(parser->bin_old_buffer, 0, 6);
-	parser->bin_index = 0;
 }
 
 void parser_switch(struct parser *parser, enum command_type *command_type) {
@@ -19,26 +17,31 @@ struct token parser_parse_command(struct parser *parser) {
 	}
 }
 
-struct token_parser_parse_bin_command(struct parser *parser) {
+unsigned char calc_crc8(unsigned char *buffer, int buffer_index) {
+	return 0x00;
+}
+
+struct token parser_parse_bin_command(struct parser *parser) {
 	unsigned char c;
 	unsigned char buffer[6];
 	uint8_t buffer_index = 0;
-	struct token tok = Token_Reject();
+	struct token token = token_reject();
 
 	c = uart_recieve();
 	if(c != 0x24) {
-		return Token_Reject();
+		return token_reject();
 	}
 
 	buffer[buffer_index] = c;
 	buffer_index++;
 
 	c = uart_recieve();
+	uint8_t command = (uint8_t) command;
 	token.tok = retrieve_bin_command(c);
 	token.channel = retrieve_bin_channel(c);
 
 	if(token.tok == REJECT || token.channel > 3) {
-		return Token_Reject();
+		return token_reject();
 	}
 
 	buffer[buffer_index] = c;
@@ -49,12 +52,12 @@ struct token_parser_parse_bin_command(struct parser *parser) {
 		c = uart_recieve();
 		buffer[buffer_index] = c;
 		buffer_index++;
-		value += c
+		value += c;
 		value <<= 8;
 	}
 
-	if(check_value(command, value) == -1) {
-		return Token_Reject();
+	if(check_bin_value(command, value) == -1) {
+		return token_reject();
 	}
 
 	token.value = value;
@@ -62,7 +65,7 @@ struct token_parser_parse_bin_command(struct parser *parser) {
 	unsigned char crc = calc_crc8(buffer, buffer_index);
 	c = uart_recieve();
 	if(c != crc) {
-		return Token_Reject();
+		return token_reject();
 	}
 
 	buffer[buffer_index] = c;
@@ -73,8 +76,8 @@ struct token_parser_parse_bin_command(struct parser *parser) {
 	return token;
 }
 
-struct token_parser_parse_str_command(struct parser *parser) {
-	return {REJECT, -1, -1};
+struct token parser_parse_str_command(struct parser *parser) {
+	return (struct token) {REJECT, -1, -1};
 	/*
 	bool end_parse = false;
 	struct token token;
