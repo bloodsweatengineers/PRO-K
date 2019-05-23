@@ -26,7 +26,7 @@ class ERROR_HANDLER:
             return self.phase_error()
         if self.parameter == 'Phaseshift 4':
             return self.phase_error()
-
+        
     def frequency_error(self):
         error_handler = False
         try:
@@ -36,8 +36,7 @@ class ERROR_HANDLER:
             else:
                 raise
         except:
-            messagebox.showerror(self.error,self.message)
-
+            error_handler = False
         return error_handler
 
     def pwm_frequency_error(self):
@@ -49,8 +48,7 @@ class ERROR_HANDLER:
             else:
                 raise
         except:
-            messagebox.showerror(self.error,self.message)
-
+            error_handler = False
         return error_handler
 
     def amplitude_error(self):
@@ -62,7 +60,7 @@ class ERROR_HANDLER:
             else:
                 raise
         except:
-            messagebox.showerror(self.error,self.message)
+            error_handler = False
         return error_handler
 
     def phase_error(self):
@@ -75,5 +73,9 @@ class ERROR_HANDLER:
             else:
                 raise
         except:
-            messagebox.showerror(self.error,self.message)
+            error_handler = False    
         return error_handler
+
+    def show_error_message(self):
+            messagebox.showerror(self.error,self.message)
+

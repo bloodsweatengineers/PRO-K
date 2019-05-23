@@ -34,12 +34,15 @@ class ENTRY_FIELD(FIELD):
             self.parameter_entry['state'] = NORMAL
     def get_data(self):
         self.new_data = self.parameter_entry.get()
-        #error_handler_obj = ERROR_HANDLER(self.parameter, self.new_data)
+        if self.new_data == '':
+            self.new_data = 0
         error_handler_obj = error_handler.ERROR_HANDLER(self.parameter,self.new_data)
 
         self.parameter_entry.delete(0,'end')
         if error_handler_obj():
             return self.new_data
+        else:
+            error_handler_obj.show_error_message()
 
     def stop(self):
         self.parameter_entry.delete(0,'end')
@@ -56,7 +59,10 @@ class DISPLAY_FIELD(FIELD):
 
     def update(self,new_parameter):
         self.new_parameter = new_parameter
-        self.set_parameter_label.configure(text = "{} {}".format(self.new_parameter,self.parameter_unit))
+        if self.new_parameter == 0 or self.new_parameter == None:
+            self.set_parameter_label.configure(text = "- {}".format(self.parameter_unit))
+        else:
+            self.set_parameter_label.configure(text = "{} {}".format(self.new_parameter,self.parameter_unit))
     def stop(self):
         self.set_parameter_label.configure(text = "- {}".format(self.parameter_unit))
 
