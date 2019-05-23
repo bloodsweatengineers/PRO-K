@@ -68,9 +68,27 @@ def retrieve_bin_channel(binary, channel):
     string += "\t}"
     return string
 
-def token_file(token, command, channel):
+def retrieve_str_command(token, String):
+    string = "\tenum tok_t retrieve_str_command(char *buffer) {\n"
+    string += '\t\tif(strcmp(buffer, "{}") == 0)'.format(String[0])
+    string += " {\n"
+    string += "\t\t\treturn {};\n".format(token[0])
+    for i in range(1, len(String)):
+        string += "\t\t} "
+        string += 'else if(strcmp(buffer,"{}") == 0)'.format(String[i])
+        string += " {\n"
+        string += "\t\t\treturn {};\n".format(token[i])
+    string += "\t\t} else {\n"
+    string += "\t\t\treturn REJECT;\n"
+    string += "\t\t}\n"
+    string += "\t}\n"
+    return string
+
+def token_file(token, command, channel, String):
     string = '#include "token.h"\n\n'
     string += retrieve_bin_command(token, command, channel)
+    string += "\n"
+    string += retrieve_str_command(token, String)
     string += "\n"
     string += retrieve_bin_channel(command,channel)
     return string
@@ -79,16 +97,18 @@ def main():
     token = list()
     command = list()
     channel = list()
+    string =list()
     with open("{}/{}".format(sys.argv[1], sys.argv[2]), "r") as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             token.append(row['token'])
+            string.append(row['string'])
             command.append(row['binary'])
             channel.append(row['channel'])
     with open("{}/token_table.h".format(sys.argv[1]),"w") as File:
         File.write(token_table(token))
     with open("{}/token.c".format(sys.argv[1]), "w") as File:
-        File.write(token_file(token, command, channel))
+        File.write(token_file(token, command, channel, string))
     #with open("token_retrieve.c", "r") as File:
     #    File.write(retrieve_bin_command())
     #    File.write(retrieve_bin_channel())
