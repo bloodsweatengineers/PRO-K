@@ -6,6 +6,10 @@ BUILDDIR 	=build
 OBJDIR 		=Embedded/obj
 SOURCEDIR 	=Embedded/src
 HEADERDIR 	=Embedded/include
+GENDIR 		=Gen
+GENFILE 	=generate.py
+GENERATED_H =token_table.h
+GENERATED_C =token.c
 
 MKDIR 		=mkdir -p
 
@@ -27,7 +31,12 @@ TEST_SOURCE =Test/test.c
 TEST_OBJ 	=build/test 
 TEST 		=build/test.hex
 
-all : directories $(HEX_NAME_PATH)
+all : directories generator $(HEX_NAME_PATH)
+
+generator:
+	python3 $(GENDIR)/$(GENFILE) $(GENDIR) token.csv
+	mv $(GENDIR)/$(GENERATED_C) $(SOURCEDIR)/
+	mv $(GENDIR)/$(GENERATED_H) $(HEADERDIR)/
 
 directories:
 	$(MKDIR) $(BUILDDIR)
