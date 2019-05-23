@@ -15,7 +15,7 @@ struct token token_reject();
 enum tok_t retrieve_bin_command(unsigned char c);
 int8_t retrieve_bin_channel(unsigned char c);
 
-enum tok_t retrieve_str_command(char *buffer);
-int32_t retrieve_str_value(char *buffer);
+//enum tok_t retrieve_str_command(char *buffer);
+//int32_t retrieve_str_value(char *buffer);
 
 #endif

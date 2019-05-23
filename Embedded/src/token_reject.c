@@ -1,5 +1,5 @@
 #include "token.h"
 
 struct token token_reject() {
-	return {REJECT, -1, -1};
+	return (struct token) {REJECT, -1, -1};
 }
