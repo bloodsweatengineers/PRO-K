@@ -3,18 +3,18 @@
 
 #include "token.h"
 #include "uart.h"
+#include "command_type.h"
 
-enum state {
-	BEGIN,
-	PARAMETER,
-	CHANNEL,
-	VALUE,
-	END
-};
+struct parser {
+	enum command_type *command_type;
+}; 
 
-enum tok_t validate_parameter(char *c);
-int32_t validate_value(char *c);
+void parser_init(struct parser *parser, enum command_type *command_type);
 
-struct token parser(void);
+void parser_switch(struct parser *parser, enum command_type *command_type);
+
+struct token parser_parse_command(struct parser *parser);
+struct token parser_parse_str_command(struct parser *parser);
+struct token parser_parse_bin_command(struct parser *parser);
 
 #endif

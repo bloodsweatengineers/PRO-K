@@ -1,20 +1,43 @@
-# Kerim Kilic
-# 16024141
-# De Haagse Hogeschool
-# PRO-K: PWM Controller
+#   Kerim Kilic
+#   16024141
+#   De Haagse Hogeschool
+#   PRO-K: PWM Controller
 
 from tkinter import Label, Entry, Button, Tk, ttk
 from tkinter import*
 from tkinter import messagebox
 import tkinter
-from random import randint
 
 import serial
 import command
 import uart_connection
 import serial.tools.list_ports
-from array import array
-           
+
+
+
+class Field(object):
+    def __init__(self, tab_nr, parameter_type, row_nr, column_nr):
+        label = Label(tab_nr, text=parameter_type)
+        label.grid(row=row_nr,column=column_nr,pady=(10,0),sticky='E')
+        self.entry = Entry(tab_nr, bd=5)
+        self.entry.grid(row=row_nr,column=2)
+        
+        setfrequencyLabel = Label(tab_nr, text="Current {}".format(parameter_type)).grid(row=row_nr, column = column_nr,pady=(25,0),sticky='EW')
+        self.currentfrequencyLabel = Label(tabnr, text="- Hz")
+        self.currentfrequencyLabel.grid(row=row_nr, column = column_nr,pady=(25,0),sticky='EW')
+
+
+    def update(self):
+
+        newfrequency = float(self.entry.get())
+        self.currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
+        newfrequency = int(newfrequency*100)
+        self.entry.delete(0,'end')
+        return newfrequency
+    
+
+
+
 class GUI:
     def __init__(self,master):
         self.connection = uart_connection.connection()
@@ -86,10 +109,14 @@ class GUI:
        
 
         #Frequency
-        ttk.FreqLabel = Label(tabs[0], text="Frequency:").grid(row=row_numbers["frequency_row"], column=0,pady=(10,0), sticky='E')
-        ttk.FreqEntry = Entry(tabs[0], bd=5, state = 'disabled')
-        ttk.FreqEntry.grid(row=row_numbers["frequency_row"], column=2,pady=(10,1))
+        #ttk.FreqLabel = Label(tabs[0], text="Frequency:").grid(row=row_numbers["frequency_row"], column=0,pady=(10,0), sticky='E')
+        #ttk.FreqEntry = Entry(tabs[0], bd=5, state = 'disabled')
+        #ttk.FreqEntry.grid(row=row_numbers["frequency_row"], column=2,pady=(10,1))
         
+        global A 
+        A = Field(tabs[0])
+        print(type(A)) 
+
         #PWM Frequency
         ttk.PWMFreqLabel = Label(tabs[0], text="PWM Frequency:").grid(row=row_numbers["pwmfrequency_row"], column=0,sticky='E')
         ttk.PWMFreqEntry = Entry(tabs[0], bd=5, state = 'disabled')
@@ -126,9 +153,9 @@ class GUI:
         ttk.phase4Entry.grid(row=row_numbers["phase4_row"],column=2)
         
         #Current frequency setting
-        ttk.setfrequencyLabel = Label(tabs[0], text="Current Frequency:").grid(row=row_numbers["current_frequency_row"], column = 0,pady=(25,0),sticky='EW')
-        ttk.currentfrequencyLabel = Label(tabs[0], text="- Hz")
-        ttk.currentfrequencyLabel.grid(row=row_numbers["current_frequency_row"], column = 2,pady=(25,0),sticky='EW')
+        #ttk.setfrequencyLabel = Label(tabs[0], text="Current Frequency:").grid(row=row_numbers["current_frequency_row"], column = 0,pady=(25,0),sticky='EW')
+        #ttk.currentfrequencyLabel = Label(tabs[0], text="- Hz")
+        #ttk.currentfrequencyLabel.grid(row=row_numbers["current_frequency_row"], column = 2,pady=(25,0),sticky='EW')
         #Current PWM frequency setting
         ttk.setPWMfrequencyLabel = Label(tabs[0], text="Current PWM Frequency:").grid(row=row_numbers["current_pwmfrequency_row"], column = 0,sticky='EW')
         ttk.currentPWMfrequencyLabel = Label(tabs[0], text="- Hz")
@@ -164,7 +191,8 @@ class GUI:
         ttk.phase4info = Label(tabs[0], text="- °")
         ttk.phase4info.grid(row=row_numbers["current_phase4_row"],column=2,sticky='EW')
 
-
+        
+        
 
         #--Tab 2 Layout--
         frame = []
@@ -173,6 +201,7 @@ class GUI:
             frame[i].pack()
 
         ttk.titleLabel = Label(frame[0], text="Leg 1 settings", font = "Helvetica 16 bold italic").pack()
+
         #Leg settings
         #Current frequency setting
         ttk.tab2setfrequencyLabel = Label(frame[1], text="current Frequency:").pack(side=LEFT)
@@ -264,7 +293,6 @@ class GUI:
         ttk.tab5setAmplitudetab2Label = Label(frame[3], text="Current amplitude:").pack(side=LEFT)
         ttk.tab5ampinfo = Label(frame[3], text="- %")
         ttk.tab5ampinfo.pack(side=LEFT)
-        #show_current_data(tab5)
         #Current phase Leg 4
         ttk.tab5phase4 = Label(frame[4], text="Current phase shift:").pack(side=LEFT)
         ttk.tab5phase4info = Label(frame[4], text="- °")
@@ -274,29 +302,30 @@ class GUI:
     def updategeneral(self):
         error = "ERROR"
         message = "One or more incorrect inputs"
-        
         prepare_command = command.command("prepare")
         print(prepare_command())
         #self.connection.send(prepare_command)
-
-        try:
-            newfrequency = float(ttk.FreqEntry.get())
-            if( (newfrequency >= 0 and newfrequency <=80) or newfrequency == 400):
-                ttk.currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
-                ttk.tab2currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
-                ttk.tab3currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
-                ttk.tab4currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
-                ttk.tab5currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
+        
+        A.update()
+        
+        #try:
+        #    newfrequency = float(ttk.FreqEntry.get())
+        #    if( (newfrequency >= 0 and newfrequency <=80) or newfrequency == 400):
+        #        ttk.currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
+        #        ttk.tab2currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
+        #        ttk.tab3currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
+        #        ttk.tab4currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
+        #        ttk.tab5currentfrequencyLabel.configure(text="{} Hz".format(newfrequency))
                 
-                newfrequency = int(newfrequency*100)
-                freq_command = command.command("frequency", newfrequency)
-                print(freq_command())
+        #        newfrequency = int(newfrequency*100)
+        #        freq_command = command.command("frequency", newfrequency)
+        #        print(freq_command())
                 #self.connection.send(freq_command)
-                ttk.FreqEntry.delete(0,'end')
-            else:
-                raise
-        except:
-            messagebox.showerror(error,message)
+        #        ttk.FreqEntry.delete(0,'end')
+        #    else:
+        #        raise
+        #except:
+        #    messagebox.showerror(error,message)
 
         try:
             newPWMfrequency = float(ttk.PWMFreqEntry.get())
@@ -410,7 +439,7 @@ class GUI:
     def startbutton(self):
         if((ttk.var1.get()) or ttk.var2.get() or ttk.var3.get() or ttk.var4.get()):  
             ttk.start_button.configure(bg = 'green')
-            ttk.FreqEntry['state'] = NORMAL
+            #ttk.FreqEntry['state'] = NORMAL
             ttk.PWMFreqEntry['state'] = NORMAL
             ttk.AmpEntry['state'] = NORMAL
             ttk.leg4AmpEntry['state'] = NORMAL
@@ -443,8 +472,8 @@ class GUI:
         ttk.EnableLeg3['state'] = NORMAL
         ttk.EnableLeg4['state'] = NORMAL
 
-        ttk.FreqEntry.delete(0,'end')
-        ttk.FreqEntry['state'] = DISABLED
+        #ttk.FreqEntry.delete(0,'end')
+        #ttk.FreqEntry['state'] = DISABLED
         ttk.currentfrequencyLabel.configure(text="- Hz")
         ttk.tab2currentfrequencyLabel.configure(text="- Hz")
         ttk.tab3currentfrequencyLabel.configure(text="- Hz")
