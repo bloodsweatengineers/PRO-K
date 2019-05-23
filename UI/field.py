@@ -3,6 +3,7 @@ from tkinter import*
 from tkinter import messagebox
 import tkinter
 import error_handler
+import command
 
 class FIELD(object):
     def __init__(self, row, parameter, tab_nr,field_type,padding=(0,0),leg_nr=0):

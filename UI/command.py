@@ -16,7 +16,9 @@ class command:
                     'execute'       : [0x03,0],
                     'start'         : [0x04,0],
                     'gather'        : [0x40,1],
-                    'stop'          : [0x05,0]
+                    'stop'          : [0x05,0],
+                    'VFD'           : [0x06,0],
+                    'enable'        : [0x50,1]
                     }
 
     def __init__(self, com, value=0, channel=0):
