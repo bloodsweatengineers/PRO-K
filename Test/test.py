@@ -3,6 +3,7 @@ import sys
 import serial
 import time
 import crc8
+import serial.tools.list_ports
 
 string = list()
 command = list()
@@ -12,10 +13,6 @@ with open("Gen/token.csv", "r") as File:
     for row in reader:
         string.append(row['string'])
         command.append(row['binary'])
-
-print(string)
-print(command)
-
 
 def read_REPL():
 
@@ -30,6 +27,10 @@ def string_REPL():
         In = In.split(" ")
     
         command = In[0]
+
+        if command == "exit":
+            break
+
         value = ""
         if len(In) > 0:
             value = " " + In[1]
@@ -46,6 +47,10 @@ def binary_REPL():
         send = list()
         send.append(base) 
         com_str = input("command: ")
+    
+        if com_str == "exit":
+            break
+
         chan = input("channel(optional): ")
         val = input("value(optional): ")
 
@@ -76,15 +81,39 @@ def binary_REPL():
         ser.write(bytearray(send))
         print(ser.readline())
 
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+def print_help():
+    print("Options --")
+    print("\tbinary - Send binary commands to firmware")
+    print("\tstring - Send terminal commands to firmware")
+    print("\thelp - print this message")
+
+connected = False
+device = None
+while connected == False:
+        for i in serial.tools.list_ports.comports(True):
+            if(i.product == "Arduino Uno"):
+                print("Found device")
+                device = i.device
+                connected = True
+
+        if connected == False:
+            print("Please connect arduino and press enter")
+            In = input("")
+
+ser = serial.Serial(device, 9600, timeout=0.5)
 
 if not ser.is_open:
     print("Error failed to open serial device")
 
-Choose = input("Choose command type: ")
-if Choose.lower() == "binary":
-    binary_REPL()
-elif Choose.lower() == "string":
-    string_REPL()
-elif Choose.lower() == "read":
-    read_REPL()
+while True:
+    Choose = input("Choose option: ")
+    if Choose.lower() == "binary":
+        binary_REPL()
+    elif Choose.lower() == "string":
+        string_REPL()
+    elif Choose.lower() == "read":
+        read_REPL()
+    elif Choose.lower() == "help":
+        print_help()
+    elif Choose.lower() == "exit":
+        break
