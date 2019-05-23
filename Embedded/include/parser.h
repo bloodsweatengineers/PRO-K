@@ -4,6 +4,7 @@
 #include "token.h"
 #include "uart.h"
 #include "command_type.h"
+#include <util/crc16.h>
 
 struct parser {
 	enum command_type *command_type;
