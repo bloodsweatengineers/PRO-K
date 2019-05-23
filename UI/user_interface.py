@@ -17,6 +17,7 @@ import field
 import leg_data_tab
 import enable_leg
 
+
 class GUI:
     def __init__(self,master):
         self.master = master
@@ -29,42 +30,51 @@ class GUI:
             tabs.append(ttk.Frame(tab_control))
             tab_control.add(tabs[x], text = tabnames[x])
         tab_control.pack(expand = 1, fill = 'both')
+        
+        menu_bar = Menu(self.master)
+        menu_bar.add_command(label='Help')
+        menu_bar.add_command(label='About')
+        self.master.config(menu = menu_bar)
 
         #tab 1
         ttk.title_tab1 = Label(tabs[0], text = "Universal Four Leg General Settings", font = "Helvetica 16 bold italic").grid(row = 0, column = 0, columnspan = 4)
-        
-        self.enable_leg_1 = enable_leg.ENABLE_LEG(1,0,tabs[0],"leg 1")
-        self.enable_leg_2 = enable_leg.ENABLE_LEG(1,1,tabs[0],"leg 2")
-        self.enable_leg_3 = enable_leg.ENABLE_LEG(1,2,tabs[0],"leg 3")
-        self.enable_leg_4 = enable_leg.ENABLE_LEG(1,3,tabs[0],"leg 4")
+       
+        #Refresh button
+        self.refresh_button = Button(tabs[0], text="Refresh Arduino", command = self.refresh_button_event)
+        self.refresh_button.grid(row = 1, column = 1 , columnspan = 2)
+
+        self.enable_leg_1 = enable_leg.ENABLE_LEG(2,0,tabs[0],"leg 1")
+        self.enable_leg_2 = enable_leg.ENABLE_LEG(2,1,tabs[0],"leg 2")
+        self.enable_leg_3 = enable_leg.ENABLE_LEG(2,2,tabs[0],"leg 3")
+        self.enable_leg_4 = enable_leg.ENABLE_LEG(2,3,tabs[0],"leg 4")
 
         #startbutton
         self.start_button = Button(tabs[0], text = "START", command = self.start_button_event, bg = 'red')
-        self.start_button.grid(row = 2, column = 0, pady=(10,10))
+        self.start_button.grid(row = 3, column = 0, pady=(10,10))
         #updatebutton
         self.update_button = Button(tabs[0], text = "UPDATE", command = self.update_button_event)
-        self.update_button.grid(row = 2, column = 1, columnspan = 2, pady=(10,10))
+        self.update_button.grid(row = 3, column = 1, columnspan = 2, pady=(10,10))
         #stopbutton
         self.stop_button = Button(tabs[0], text = "STOP", command = self.stop_button_event)
-        self.stop_button.grid(row = 2, column = 3, pady=(10,10))
+        self.stop_button.grid(row = 3, column = 3, pady=(10,10))
 
-        self.frequency_entry = field.ENTRY_FIELD(3,'Frequency',tabs[0],'entry',(10,0))
-        self.pwm_frequency_entry = field.ENTRY_FIELD(4,'PWM frequency',tabs[0],'entry')
-        self.amplitude_entry = field.ENTRY_FIELD(5,'Amplitude legs 1-3',tabs[0],'entry')
-        self.amplitude_leg_4_entry = field.ENTRY_FIELD(6, 'Amplitude leg 4', tabs[0], 'entry')
-        self.phase_1_entry = field.ENTRY_FIELD(7,'Phaseshift 1',tabs[0],'entry',(25,0))
-        self.phase_2_entry = field.ENTRY_FIELD(8,'Phaseshift 2',tabs[0],'entry')
-        self.phase_3_entry = field.ENTRY_FIELD(9,'Phaseshift 3',tabs[0],'entry')
-        self.phase_4_entry = field.ENTRY_FIELD(10, 'Phaseshift 4',tabs[0],'entry')
+        self.frequency_entry = field.ENTRY_FIELD(4,'Frequency',tabs[0],'entry',(10,0))
+        self.pwm_frequency_entry = field.ENTRY_FIELD(5,'PWM frequency',tabs[0],'entry')
+        self.amplitude_entry = field.ENTRY_FIELD(6,'Amplitude legs 1-3',tabs[0],'entry')
+        self.amplitude_leg_4_entry = field.ENTRY_FIELD(7, 'Amplitude leg 4', tabs[0], 'entry')
+        self.phase_1_entry = field.ENTRY_FIELD(8,'Phaseshift 1',tabs[0],'entry',(25,0))
+        self.phase_2_entry = field.ENTRY_FIELD(9,'Phaseshift 2',tabs[0],'entry')
+        self.phase_3_entry = field.ENTRY_FIELD(10,'Phaseshift 3',tabs[0],'entry')
+        self.phase_4_entry = field.ENTRY_FIELD(11, 'Phaseshift 4',tabs[0],'entry')
 
-        self.frequency_display = field.DISPLAY_FIELD(11, 'Frequency',tabs[0],'display',(25,25))
-        self.pwm_frequency_display = field.DISPLAY_FIELD(12,'PWM frequency',tabs[0],'display')
-        self.amplitude_display = field.DISPLAY_FIELD(13,'Amplitude legs 1-3',tabs[0],'display')
-        self.amplitude_leg_4_display = field.DISPLAY_FIELD(14,'Amplitude leg 4',tabs[0],'display')
-        self.phase_1_display = field.DISPLAY_FIELD(15,'Phaseshift 1',tabs[0],'display',(25,0))
-        self.phase_2_display = field.DISPLAY_FIELD(16,'Phaseshift 2',tabs[0],'display')
-        self.phase_3_display = field.DISPLAY_FIELD(17,'Phaseshift 3',tabs[0],'display')
-        self.phase_4_display = field.DISPLAY_FIELD(18,'Phaseshift 4',tabs[0],'display')
+        self.frequency_display = field.DISPLAY_FIELD(12, 'Frequency',tabs[0],'display',(25,25))
+        self.pwm_frequency_display = field.DISPLAY_FIELD(13,'PWM frequency',tabs[0],'display')
+        self.amplitude_display = field.DISPLAY_FIELD(14,'Amplitude legs 1-3',tabs[0],'display')
+        self.amplitude_leg_4_display = field.DISPLAY_FIELD(15,'Amplitude leg 4',tabs[0],'display')
+        self.phase_1_display = field.DISPLAY_FIELD(16,'Phaseshift 1',tabs[0],'display',(25,0))
+        self.phase_2_display = field.DISPLAY_FIELD(17,'Phaseshift 2',tabs[0],'display')
+        self.phase_3_display = field.DISPLAY_FIELD(18,'Phaseshift 3',tabs[0],'display')
+        self.phase_4_display = field.DISPLAY_FIELD(19,'Phaseshift 4',tabs[0],'display')
 
         #tab 2 leg 1
         self.tab_2 = leg_data_tab.LEG_DATA_TAB(tabs[1],1)
@@ -75,6 +85,12 @@ class GUI:
         #tab 5 leg 4
         self.tab_5 = leg_data_tab.LEG_DATA_TAB(tabs[4],4)
 
+
+
+        self.connection = uart_connection.connection()
+        
+    def refresh_button_event(self):
+        self.connection = uart_connection.connection()
 
     def start_button_event(self):
         self.enable_all()
