@@ -63,7 +63,7 @@ def retrieve_bin_channel(binary, channel):
     string += "\t\tif(command&0x0F > 3) {\n"
     string += "\t\t\treturn -1;\n"
     string += "\t\t} else {\n"
-    string += "\t\t\treturn command&0x0F\n"
+    string += "\t\t\treturn command&0x0F;\n"
     string += "\t\t}\n"
     string += "\t}"
     return string
