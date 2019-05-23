@@ -4,6 +4,24 @@ import serial
 import time
 import crc8
 
+string = list()
+command = list()
+
+with open("Gen/token.csv", "r") as File:
+    reader = csv.DictReader(File)
+    for row in reader:
+        string.append(row['string'])
+        command.append(row['binary'])
+
+print(string)
+print(command)
+
+
+def read_REPL():
+
+    while True:
+        print(ser.readline())
+
 def string_REPL():
     start = "%"
     end = "\r\n"
@@ -22,27 +40,40 @@ def string_REPL():
         print(ser.readline())
 
 def binary_REPL():
+    base = 0x24
 
     while True:
-    
-        In = input("Input command(5 bytes): ")
-        In = In.split(" ")
+        send = list()
+        send.append(base) 
+        com_str = input("command: ")
+        chan = input("channel(optional): ")
+        val = input("value(optional): ")
 
-        if len(In) != 5:
-            print("Wrong number of arguments")
-            continue
+        index = string.index(com_str)
+        com = int(command[index], 0)
 
-        command = list()
-        for i in In:
-            command.append(int(i, 0))
+        if chan:
+            com += int(chan)
+
+        send.append(com)
+
+        if not val:
+            send.extend([0xFF,0xFF,0xFF])
+        else:
+            val = int(val)
+            result = list()
+            for i in range(0,3):
+                result.append(val % 256)
+                val = int(val/256)
+            result.reverse()
+            send.extend(result)
 
         hash = crc8.crc8()
-        hash.update(bytearray(command))
-        command.append(int.from_bytes(hash.digest(), 'little'))
+        hash.update(bytearray(send))
+        send.append(int.from_bytes(hash.digest(), 'little'))
 
-        send = bytearray(command)
-        print("Running command : {}".format(send))
-        ser.write(send)
+        print("Running command: {}".format(bytearray(send)))
+        ser.write(bytearray(send))
         print(ser.readline())
 
 ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
@@ -55,3 +86,5 @@ if Choose.lower() == "binary":
     binary_REPL()
 elif Choose.lower() == "string":
     string_REPL()
+elif Choose.lower() == "read":
+    read_REPL()
