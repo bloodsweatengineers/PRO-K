@@ -41,7 +41,9 @@ class GUI:
        
         #Refresh button
         self.refresh_button = Button(tabs[0], text="Refresh Arduino", command = self.refresh_button_event)
-        self.refresh_button.grid(row = 1, column = 1 , columnspan = 2)
+        self.refresh_button.grid(row = 1, column = 0)
+        self.connection_label = Label(tabs[0],text="Unconnected")
+        self.connection_label.grid(row=1,column=3)
 
         self.enable_leg_1 = enable_leg.ENABLE_LEG(2,0,tabs[0],"leg 1")
         self.enable_leg_2 = enable_leg.ENABLE_LEG(2,1,tabs[0],"leg 2")
@@ -88,9 +90,13 @@ class GUI:
 
 
         self.connection = uart_connection.connection()
+        if self.connection():
+            self.connection_label.configure(text="Connected")
         
     def refresh_button_event(self):
         self.connection = uart_connection.connection()
+        if self.connection():
+            self.connection_label.configure(text="Connected")
 
     def start_button_event(self):
         self.enable_all()
@@ -100,17 +106,20 @@ class GUI:
 
     def update_button_event(self):
         self.update_all_fields()
-    
+        freq_command = command.command("frequency",int(self.new_frequency))
+        print(freq_command())
+        self.connection.send(freq_command)
+
     def update_all_fields(self):
         if(self.enable_leg_1.get_data() or self.enable_leg_2.get_data() or self.enable_leg_3.get_data() or self.enable_leg_4.get_data()):
-            new_frequency = self.frequency_entry.get_data()
+            self.new_frequency = self.frequency_entry.get_data()
             new_pwm_frequency = self.pwm_frequency_entry.get_data()
             
-            self.frequency_display.update(new_frequency)
-            self.tab_2.update('Frequency',new_frequency)
-            self.tab_3.update('Frequency',new_frequency)
-            self.tab_4.update('Frequency',new_frequency)
-            self.tab_5.update('Frequency',new_frequency)
+            self.frequency_display.update(self.new_frequency)
+            self.tab_2.update('Frequency',self.new_frequency)
+            self.tab_3.update('Frequency',self.new_frequency)
+            self.tab_4.update('Frequency',self.new_frequency)
+            self.tab_5.update('Frequency',self.new_frequency)
 
             self.pwm_frequency_display.update(new_pwm_frequency)
             self.tab_2.update('PWM Frequency',new_pwm_frequency)

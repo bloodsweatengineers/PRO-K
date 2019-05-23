@@ -3,6 +3,21 @@ import sys
 import serial
 import time
 import crc8
+import serial.tools.list_ports
+
+string = list()
+command = list()
+
+with open("Gen/token.csv", "r") as File:
+    reader = csv.DictReader(File)
+    for row in reader:
+        string.append(row['string'])
+        command.append(row['binary'])
+
+def read_REPL():
+
+    while True:
+        print(ser.readline())
 
 def string_REPL():
     start = "%"
@@ -12,6 +27,10 @@ def string_REPL():
         In = In.split(" ")
     
         command = In[0]
+
+        if command == "exit":
+            break
+
         value = ""
         if len(In) > 0:
             value = " " + In[1]
@@ -22,36 +41,79 @@ def string_REPL():
         print(ser.readline())
 
 def binary_REPL():
+    base = 0x24
 
     while True:
+        send = list()
+        send.append(base) 
+        com_str = input("command: ")
     
-        In = input("Input command(5 bytes): ")
-        In = In.split(" ")
+        if com_str == "exit":
+            break
 
-        if len(In) != 5:
-            print("Wrong number of arguments")
-            continue
+        chan = input("channel(optional): ")
+        val = input("value(optional): ")
 
-        command = list()
-        for i in In:
-            command.append(int(i, 0))
+        index = string.index(com_str)
+        com = int(command[index], 0)
+
+        if chan:
+            com += int(chan)
+
+        send.append(com)
+
+        if not val:
+            send.extend([0xFF,0xFF,0xFF])
+        else:
+            val = int(val)
+            result = list()
+            for i in range(0,3):
+                result.append(val % 256)
+                val = int(val/256)
+            result.reverse()
+            send.extend(result)
 
         hash = crc8.crc8()
-        hash.update(bytearray(command))
-        command.append(int.from_bytes(hash.digest(), 'little'))
+        hash.update(bytearray(send))
+        send.append(int.from_bytes(hash.digest(), 'little'))
 
-        send = bytearray(command)
-        print("Running command : {}".format(send))
-        ser.write(send)
+        print("Running command: {}".format(bytearray(send)))
+        ser.write(bytearray(send))
         print(ser.readline())
 
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+def print_help():
+    print("Options --")
+    print("\tbinary - Send binary commands to firmware")
+    print("\tstring - Send terminal commands to firmware")
+    print("\thelp - print this message")
+
+connected = False
+device = None
+while connected == False:
+        for i in serial.tools.list_ports.comports(True):
+            if(i.product == "Arduino Uno"):
+                print("Found device")
+                device = i.device
+                connected = True
+
+        if connected == False:
+            print("Please connect arduino and press enter")
+            In = input("")
+
+ser = serial.Serial(device, 9600, timeout=0.5)
 
 if not ser.is_open:
     print("Error failed to open serial device")
 
-Choose = input("Choose command type: ")
-if Choose.lower() == "binary":
-    binary_REPL()
-elif Choose.lower() == "string":
-    string_REPL()
+while True:
+    Choose = input("Choose option: ")
+    if Choose.lower() == "binary":
+        binary_REPL()
+    elif Choose.lower() == "string":
+        string_REPL()
+    elif Choose.lower() == "read":
+        read_REPL()
+    elif Choose.lower() == "help":
+        print_help()
+    elif Choose.lower() == "exit":
+        break

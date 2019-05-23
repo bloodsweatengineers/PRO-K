@@ -10,8 +10,13 @@ class connection:
                 if(i.product == "Arduino Uno"):
                     A=i.device
             self.ser = serial.Serial(A, 9600, timeout=.5)
+            self.var = True
         except:
-            messagebox.showerror('ERROR','Please connect a microcontroller and press the refresh button')
+            messagebox.showerror("ERROR","Please connect a microcontroller and press refresh!")
+            self.var = False
+
+    def __call__(self):
+        return self.var
 
     def send(self, command):
         message = bytearray(command())
