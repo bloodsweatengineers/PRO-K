@@ -1,7 +1,8 @@
 import csv
 import sys
 import serial
-import time 
+import time
+import crc8
 
 def string_REPL():
     start = "%"
@@ -24,16 +25,20 @@ def binary_REPL():
 
     while True:
     
-        In = input("Input command(6 bytes): ")
+        In = input("Input command(5 bytes): ")
         In = In.split(" ")
 
-        if len(In) != 6:
+        if len(In) != 5:
             print("Wrong number of arguments")
             continue
 
         command = list()
         for i in In:
             command.append(int(i, 0))
+
+        hash = crc8.crc8()
+        hash.update(bytearray(command))
+        command.append(int.from_bytes(hash.digest(), 'little'))
 
         send = bytearray(command)
         print("Running command : {}".format(send))

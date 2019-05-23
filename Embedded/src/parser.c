@@ -18,7 +18,13 @@ struct token parser_parse_command(struct parser *parser) {
 }
 
 unsigned char calc_crc8(unsigned char *buffer, int buffer_index) {
-	return 0x00;
+	unsigned char crc = 0;
+
+	for(int i=0; i < buffer_index; i++) {
+		crc = _crc8_ccitt_update(crc, buffer[i]);
+	}
+
+	return crc;
 }
 
 struct token parser_parse_bin_command(struct parser *parser) {
