@@ -32,7 +32,7 @@ def string_REPL():
             break
 
         value = ""
-        if len(In) > 0:
+        if len(In) > 1:
             value = " " + In[1]
 
         message = start + command + value + end

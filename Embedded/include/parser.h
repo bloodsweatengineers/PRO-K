@@ -14,6 +14,14 @@ void parser_init(struct parser *parser, enum command_type *command_type);
 
 void parser_switch(struct parser *parser, enum command_type *command_type);
 
+enum parser_state {
+	BEGIN,
+	PARAMETER,
+	CHANNEL,
+	VALUE,
+	END
+};
+
 struct token parser_parse_command(struct parser *parser);
 struct token parser_parse_str_command(struct parser *parser);
 struct token parser_parse_bin_command(struct parser *parser);
