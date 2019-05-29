@@ -8,9 +8,10 @@ void main(void) {
 	cli();
 	struct config conf;
 	struct parser parser;		// deze erbij gemaakt voor parser_init
-	enum command_type command_type = STRING;	// deze erbij gemaakt voor parser_init
+	enum command_type command_type = BINARY;	// deze erbij gemaakt voor parser_init
 	
 	uart_init();
+	parser_init(&parser, &command_type);
 
 	DDRD = 0;
 	DDRB = 0;
@@ -39,16 +40,13 @@ void main(void) {
 	sei();
 
 	while(1) {
-
-		if(PINB&(1<<0) == 0 && command_type == STRING) {
-			command_type = BINARY;
-		} else if(PINB&(1<<0) > 0 && command_type == BINARY) {
+		if((PINB&(1<<0)) == 0 && command_type == BINARY) {
 			command_type = STRING;
+		} else if((PINB&(1<<0)) > 0 && command_type == STRING) {
+			command_type = BINARY;
 		}
 
-
 		if(UCSR0A & (1<<RXC0)) {
-
 			struct token token = parser_parse_command(&parser);
 
 			switch(token.tok) {
@@ -66,6 +64,9 @@ void main(void) {
 					phaseshift_conf(&conf, token.value, token.channel);
 					phaseshift_execute(&conf);
 					uart_transmit_str("OK\r\n");
+					break;
+				case REJECT:
+					uart_transmit_str("REJ\r\n");
 					break;
 			}
 		}

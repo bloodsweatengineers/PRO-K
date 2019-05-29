@@ -9,6 +9,7 @@ void parser_switch(struct parser *parser, enum command_type *command_type) {
 }
 
 struct token parser_parse_command(struct parser *parser) {
+
 	switch(*(parser->command_type)) {
 		case BINARY:
 			return parser_parse_bin_command(parser);
