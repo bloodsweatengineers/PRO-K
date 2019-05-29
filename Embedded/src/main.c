@@ -12,6 +12,7 @@ void main(void) {
 	
 	uart_init();
 	parser_init(&parser, &command_type);
+	conf_init(&conf);
 
 	DDRD = 0;
 	DDRB = 0;
@@ -47,6 +48,9 @@ void main(void) {
 				case FREQUENCY:
 					frequency_conf(&conf, token.value, token.channel);
 					frequency_execute(&conf);
+					char buf[30];
+					int32_to_str(buf, token.value);
+					uart_transmit_str(buf);
 					uart_transmit_str("OK\r\n");
 					break;
 				case AMPLITUDE:

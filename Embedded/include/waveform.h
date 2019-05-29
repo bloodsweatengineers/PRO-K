@@ -10,7 +10,7 @@
 
 #define F_CPU_10M ((F_CPU * 100))
 
-void frequency_conf(struct config *conf, uint32_t value, int8_t channel);
+void frequency_conf(struct config *conf, int32_t value, int8_t channel);
 void frequency_execute(struct config *conf);
 
 void phaseshift_conf(struct config *conf, uint8_t value, int8_t channel);

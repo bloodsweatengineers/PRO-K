@@ -53,14 +53,15 @@ struct token parser_parse_bin_command(struct parser *parser) {
 	buffer[buffer_index] = c;
 	buffer_index++;
 
-	int32_t value = 0;
+	uint32_t temp = 0;
 	for(int i=0; i<3; i++) {
 		c = uart_recieve();
 		buffer[buffer_index] = c;
 		buffer_index++;
-		value += c;
-		value <<= 8;
+		temp <<= 8;
+		temp += (uint8_t)c;
 	}
+	int32_t value = (int32_t) temp;
 
 	if(check_bin_value(c, value) == -1) {
 		return token_reject();
