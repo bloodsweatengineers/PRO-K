@@ -32,7 +32,7 @@ def retrieve_bin_command(token, binary, channel):
         string += "\t\t\tcase {}:\n".format(without_channel[i][1])
         string += "\t\t\t\treturn {};\n".format(without_channel[i][0])
     string += "\t\t}\n"
-    string += "\t\tswitch(command&0x0F) {\n"
+    string += "\t\tswitch(command&0xF0) {\n"
     for i in range(0, len(with_channel)):
         string += "\t\t\tcase {}:\n".format(with_channel[i][1])
         string += "\t\t\t\treturn {};\n".format(with_channel[i][0])

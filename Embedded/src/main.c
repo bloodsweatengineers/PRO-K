@@ -41,7 +41,6 @@ void main(void) {
 
 	while(1) {
 
-		if(UCSR0A & (1<<RXC0)) {
 			struct token token = parser_parse_command(&parser);
 
 			switch(token.tok) {
@@ -65,5 +64,4 @@ void main(void) {
 					break;
 			}
 		}
-	}
 }
