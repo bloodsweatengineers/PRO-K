@@ -40,11 +40,6 @@ void main(void) {
 	sei();
 
 	while(1) {
-		if((PINB&(1<<0)) == 0 && command_type == BINARY) {
-			command_type = STRING;
-		} else if((PINB&(1<<0)) > 0 && command_type == STRING) {
-			command_type = BINARY;
-		}
 
 		if(UCSR0A & (1<<RXC0)) {
 			struct token token = parser_parse_command(&parser);
