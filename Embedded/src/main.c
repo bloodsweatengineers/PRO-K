@@ -55,14 +55,17 @@ void main(void) {
 				case FREQUENCY:
 					frequency_conf(&conf, token.value, token.channel);
 					frequency_execute(&conf);
+					uart_transmit_str("OK\r\n");
 					break;
 				case AMPLITUDE:
 					amplitude_conf(&conf, token.value, token.channel);
 					amplitude_execute(&conf);
+					uart_transmit_str("OK\r\n");
 					break;
 				case PHASESHIFT:
 					phaseshift_conf(&conf, token.value, token.channel);
 					phaseshift_execute(&conf);
+					uart_transmit_str("OK\r\n");
 					break;
 			}
 		}
