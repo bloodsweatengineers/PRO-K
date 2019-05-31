@@ -9,6 +9,7 @@ from tkinter import messagebox
 import tkinter
 import serial
 import serial.tools.list_ports
+import time
 
 import command
 import uart_connection
@@ -34,15 +35,14 @@ class GUI:
         menu_bar = Menu(self.master)
         menu_bar.add_command(label='Help')
         menu_bar.add_command(label='About')
+        menu_bar.add_command(label='Close program',command=self.destroy_window)
         self.master.config(menu = menu_bar)
+
 
         #tab 1
         ttk.title_tab1 = Label(tabs[0], text = "Universal Four Leg General Settings", font = "Helvetica 16 bold italic").grid(row = 0, column = 0, columnspan = 4)
        
-        #Refresh button
-        self.refresh_button = Button(tabs[0], text="Refresh Arduino", command = self.refresh_button_event)
-        self.refresh_button.grid(row = 1, column = 0)
-        self.connection_label = Label(tabs[0],text="Unconnected")
+        self.connection_label = Label(tabs[0],text="Disconnected")
         self.connection_label.grid(row=1,column=3)
 
         self.enable_leg_1 = enable_leg.ENABLE_LEG(2,0,tabs[0],"leg 1")
@@ -56,9 +56,11 @@ class GUI:
         #updatebutton
         self.update_button = Button(tabs[0], text = "UPDATE", command = self.update_button_event)
         self.update_button.grid(row = 3, column = 1, columnspan = 2, pady=(10,10))
+        self.update_button['state'] = 'disabled'
         #stopbutton
         self.stop_button = Button(tabs[0], text = "STOP", command = self.stop_button_event)
         self.stop_button.grid(row = 3, column = 3, pady=(10,10))
+        self.stop_button['state'] = 'disabled'
 
         self.frequency_entry = field.ENTRY_FIELD(4,'Frequency',tabs[0],'entry',(10,0))
         self.pwm_frequency_entry = field.ENTRY_FIELD(5,'PWM frequency',tabs[0],'entry')
@@ -87,33 +89,98 @@ class GUI:
         #tab 5 leg 4
         self.tab_5 = leg_data_tab.LEG_DATA_TAB(tabs[4],4)
 
+        self.connection = uart_connection.connection()
+        self.check_connection()
 
 
-        self.connection = uart_connection.connection()
-        if self.connection():
-            self.connection_label.configure(text="Connected")
-        
-    def refresh_button_event(self):
-        self.connection = uart_connection.connection()
-        if self.connection():
-            self.connection_label.configure(text="Connected")
+    def destroy_window(self):
+        self.master.destroy()  
+
+    def check_connection(self):
+        try:
+            self.connection_available = self.connection()
+            if self.connection_available == True:
+                self.connection_label.configure(text="Connected")
+                self.connection_flag = True
+            elif self.conncetion_available == False:
+                self.connection_label.configure(text="Disconnected")
+                del self.connection
+                self.connection_flag = False
+            else:
+                raise
+        except:
+            self.connection_label.configure(text="Disconnected")
+            self.connection_flag = False
+        return 0
 
     def start_button_event(self):
-        self.enable_all()
-    
+        self.connection = uart_connection.connection() 
+        self.check_connection()
+        #start_command = command.command("start")
+        if self.connection_flag:
+            self.enable_all()
+            self.update_button['state'] = 'normal'
+            self.stop_button['state'] = 'normal'
+        #    self.connection.send(start_command)
+        else:
+            self.disable_all()
+            self.update_button['state'] = 'disabled'
+            self.stop_button['state'] = 'disabled'
+
+        return 0
+
     def stop_button_event(self):
+        self.connection = uart_connection.connection()
+        if self.check_connection():
+            stop_command = command.command("stop")
+            self.connection.send(stop_command)
         self.disable_all()
 
     def update_button_event(self):
         self.update_all_fields()
-        freq_command = command.command("frequency",int(self.new_frequency))
-        print(freq_command())
-        self.connection.send(freq_command)
+        if self.new_frequency != 0:
+            frequency_command = command.command("frequency",int(self.new_frequency)*100)
+            self.connection.send(frequency_command)
+        #amplitude_1_command = command.command("amplitude",int(self.new_amplitude),0)
+        #self.connection.send(amplitude_1_command)
+        #pwm_frequency_command = command.command("keyfrequency",int(self.new_pwm_frequency))
+        #self.connection.send(pwm_frequency_command)
+        
+        if self.enable_leg_1.get_data():
+            if self.new_amplitude != 0:
+                amplitude_1_command = command.command("amplitude",int(self.new_amplitude),0)
+                self.connection.send(amplitude_1_command)
+            if self.new_phase_1 != 0:
+                phase_1_command = command.command("phaseshift",int(self.new_phase_1),0)
+                self.connection.send(phase_1_command)
+        if self.enable_leg_2.get_data():
+            if self.new_amplitude != 0:
+                amplitude_2_command = command.command("amplitude",int(self.new_amplitude),1)
+                self.connection.send(amplitude_2_command)
+            if self.new_phase_2 != 0:
+                phase_2_command = command.command("phaseshift",int(self.new_phase_2),1)
+                self.connection.send(phase_2_command)
+        if self.enable_leg_3.get_data():
+            if self.new_amplitude != 0:
+                amplitude_3_command = command.command("amplitude",int(self.new_amplitude),2)
+                self.connection.send(amplitude_2_command)
+            if self.new_phase_3 != 0:
+                phase_3_command = command.command("phaseshift", int(self.new_phase_3),2)
+                self.connection.send(phase_3_command)
+        if self.enable_leg_4.get_data():
+            amplitude_4_command = command.command("amplitude",int(self.new_amplitude_leg_4),3)
+            self.connection.send(amplitude_4_command)
+            phase_4_command = command.command("phaseshift",int(self.new_phase_4),3)
+            self.connection.send(phase_4_command)
+    
+
 
     def update_all_fields(self):
         if(self.enable_leg_1.get_data() or self.enable_leg_2.get_data() or self.enable_leg_3.get_data() or self.enable_leg_4.get_data()):
             self.new_frequency = self.frequency_entry.get_data()
-            new_pwm_frequency = self.pwm_frequency_entry.get_data()
+            if self.new_frequency == "":
+                self.new_frequency = 0
+            self.new_pwm_frequency = self.pwm_frequency_entry.get_data()
             
             self.frequency_display.update(self.new_frequency)
             self.tab_2.update('Frequency',self.new_frequency)
@@ -121,40 +188,47 @@ class GUI:
             self.tab_4.update('Frequency',self.new_frequency)
             self.tab_5.update('Frequency',self.new_frequency)
 
-            self.pwm_frequency_display.update(new_pwm_frequency)
-            self.tab_2.update('PWM Frequency',new_pwm_frequency)
-            self.tab_3.update('PWM Frequency',new_pwm_frequency)
-            self.tab_4.update('PWM Frequency',new_pwm_frequency)
-            self.tab_5.update('PWM Frequency',new_pwm_frequency)
+            self.pwm_frequency_display.update(self.new_pwm_frequency)
+            self.tab_2.update('PWM Frequency',self.new_pwm_frequency)
+            self.tab_3.update('PWM Frequency',self.new_pwm_frequency)
+            self.tab_4.update('PWM Frequency',self.new_pwm_frequency)
+            self.tab_5.update('PWM Frequency',self.new_pwm_frequency)
 
         if(self.enable_leg_1.get_data() or self.enable_leg_2.get_data() or self.enable_leg_3.get_data()):
-            new_amplitude = self.amplitude_entry.get_data()
+            self.new_amplitude = self.amplitude_entry.get_data()
+            if self.new_amplitude == "":
+                self.new_amplitude = 0
 
-            self.amplitude_display.update(new_amplitude)
-            self.tab_2.update('Amplitude',new_amplitude)
-            self.tab_3.update('Amplitude',new_amplitude)
-            self.tab_4.update('Amplitude',new_amplitude)
+            self.amplitude_display.update(self.new_amplitude)
+            self.tab_2.update('Amplitude',self.new_amplitude)
+            self.tab_3.update('Amplitude',self.new_amplitude)
+            self.tab_4.update('Amplitude',self.new_amplitude)
 
-        if(self.enable_leg_4.get_data()):
-            new_amplitude_leg_4 = self.amplitude_leg_4_entry.get_data()
-            self.amplitude_leg_4_display.update(new_amplitude_leg_4)
-            self.tab_5.update('Amplitude',new_amplitude_leg_4)
         if(self.enable_leg_1.get_data()):
-            new_phase_1 = self.phase_1_entry.get_data()
-            self.phase_1_display.update(new_phase_1)
-            self.tab_2.update('Phaseshift',new_phase_1)
+            self.new_phase_1 = self.phase_1_entry.get_data()
+            if self.new_phase_1 == "":
+                self.new_phase_1 = 0
+            self.phase_1_display.update(self.new_phase_1)
+            self.tab_2.update('Phaseshift',self.new_phase_1)
         if(self.enable_leg_2.get_data()):
-            new_phase_2 = self.phase_2_entry.get_data()
-            self.phase_2_display.update(new_phase_2)
-            self.tab_3.update('Phaseshift',new_phase_2)
+            self.new_phase_2 = self.phase_2_entry.get_data()
+            if self.new_phase_2 == "":
+                self.new_phase_2 = 0
+            self.phase_2_display.update(self.new_phase_2)
+            self.tab_3.update('Phaseshift',self.new_phase_2)
         if(self.enable_leg_3.get_data()):
-            new_phase_3 = self.phase_3_entry.get_data()
-            self.phase_3_display.update(new_phase_3)
-            self.tab_4.update('Phaseshift',new_phase_3)
+            self.new_phase_3 = self.phase_3_entry.get_data()
+            if self.new_phase_3 == "":
+                self.new_phase_3 = 0
+            self.phase_3_display.update(self.new_phase_3)
+            self.tab_4.update('Phaseshift',self.new_phase_3)
         if(self.enable_leg_4.get_data()):
-            new_phase_4 = self.phase_4_entry.get_data()
-            self.phase_4_display.update(new_phase_4)
-            self.tab_5.update('Phaseshift',new_phase_4)
+            self.new_phase_4 = self.phase_4_entry.get_data()
+            self.phase_4_display.update(self.new_phase_4)
+            self.tab_5.update('Phaseshift',self.new_phase_4)
+            self.new_amplitude_leg_4 = self.amplitude_leg_4_entry.get_data()
+            self.amplitude_leg_4_display.update(self.new_amplitude_leg_4)
+            self.tab_5.update('Amplitude',self.new_amplitude_leg_4)
 
 
     def enable_all(self):
