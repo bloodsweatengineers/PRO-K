@@ -44,7 +44,7 @@ struct token parser_parse_bin_command(struct parser *parser) {
 
 	c = uart_recieve();
 	token.tok = retrieve_bin_command(c);
-	token.channel = retrieve_bin_channel(c);
+	token.channel = retrieve_bin_channel((uint8_t)c);
 
 	if(token.tok == REJECT || token.channel > 4) {
 		return token_reject();
@@ -61,11 +61,15 @@ struct token parser_parse_bin_command(struct parser *parser) {
 		temp <<= 8;
 		temp += (uint8_t)c;
 	}
-	int32_t value = (int32_t) temp;
 
-	if(check_bin_value(c, value) == -1) {
+	int8_t error = check_bin_value(token.tok, temp);
+	if(error == -1) {
 		return token_reject();
+	} else if (error == 1) {
+		token.get = 1;
 	}
+
+	int32_t value = (int32_t) temp;
 
 	token.value = value;
 
