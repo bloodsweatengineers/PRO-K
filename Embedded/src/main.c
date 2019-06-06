@@ -7,8 +7,8 @@ void main(void) {
 
 	cli();
 	struct config conf;
-	struct parser parser;		// deze erbij gemaakt voor parser_init
-	enum command_type command_type;	// deze erbij gemaakt voor parser_init
+	struct parser parser;		
+	enum command_type command_type;	
 	
 	uart_init();
 	conf_init(&conf);
@@ -35,26 +35,37 @@ void main(void) {
 	TCCR0B = 0;
 	TCCR0B |= 1<<CS00;
 
-	typedef enum{			//! alle states worden hier gedefineerd
-		execute_state,		//! alles wat ge-prepared is wordt uitgevoerd in deze state (alles in conf)
-		prepare_state,		//! alles wordt hier in conf gezet (behalve ping,info)
-		start_state,		//! na stop_state komt deze state en hier kunnen commands al 1 voor 1 worden ingevoerd
-		stop_state,		//! hier begint de statemachine altijd en er wordt niks gedaan hierbinnen
-	}system_state;			//! naam van de enum is system_state
+	//!define all states
+	/*!
+	 * execute_state takes all prepared values
+	 * prepare_state saves all values, they execute all at ones
+	 * start_state means that parameters can be send over
+	 * stop_state needs a start, stop_state is "waiting" 
+	 */
+	typedef enum{			
+		execute_state,		
+		prepare_state,		
+		start_state,		
+		stop_state,		
+	}system_state;			
 
-	system_state next_state = stop_state;	//! next_state krijgt als eerst stop_state toegekend zodat deze daar begint
+	system_state next_state = stop_state;	//! next_state starts at stop_state
 	parser_init(&parser, &command_type);
 
 	sei();
 
+	/*!Statemachine
+	 * the switch(next_state) looks for current state
+	 * the switch(tok.tok) looks for event
+	 */
 	while(1) {
 		struct token tok = parser_parse_command(&parser);
-		if(tok.tok == STOP){		//! als command stop wordt doorgegeven, ga naar stop_state
+		if(tok.tok == STOP){			//! if command = STOP, always go to stop_state
 			next_state = stop_state;
 		}
-		else{					//! geen STOP of REJECT -> ga statemachine bekijken
-			switch(next_state){		//! kijkt naar next_state en begint met stop_state
-				case stop_state:	//! kijkt alleen maar of er START gegeven wordt
+		else{					
+			switch(next_state){		
+				case stop_state:	//! this state looks only for START
 					switch(tok.tok){
 						case START:
 							next_state = start_state;
@@ -63,8 +74,10 @@ void main(void) {
 							next_state = stop_state;
 					}				
 					break;
-				case start_state:	//! hier kunnen commands 1 voor 1 gedaan worden en er kan naar prepare gegaan worden
+				//! commands can be send 1 by 1 and it's possible to go to prepare_state
+				case start_state:
 					switch(tok.tok){
+<<<<<<< HEAD
 						case PREPARE:			//! als command prepare gedaan wordt ga je in prepare_state (volgende cycle)
 							next_state = prepare_state;
 							break;
@@ -102,11 +115,54 @@ void main(void) {
 							break;
 
 						default: 					//! mocht er wat fout gaan ga dan naar stop_state volgende cycle	(misschien niet stop state maar iets anders dat beter is)
+=======
+						//! go to prepare_state
+						case PREPARE:
+							next_state = prepare_state;
+							break;
+						//! sets frequency directly
+						case FREQUENCY:		
+							frequency_conf(&conf, tok.value, -1);
+							frequency_execute(&conf);
+							break;
+						//! sets PWM frequency directly
+			/*			case PWM_FREQUENCY:	
+							pwmfrequency_conf(&conf, tok.value, -1);
+							pwmfrequency_execute(&conf);
+							break;
+			*/			//! sets amplitude directly
+						case AMPLITUDE:		
+							amplitude_conf(&conf, tok.value, tok.channel);	
+							amplitude_execute(&conf);
+							break;
+						//! sets phaseshift directly
+						case PHASESHIFT:		
+							phaseshift_conf(&conf, tok.value, tok.channel);	
+							phaseshift_execute(&conf);
+							break;
+						//! gives ping back
+						case PING: 		 
+		//					ping();		/*! deze functie nog maken (of ombouwen dat het klopt)*)/
+							break;
+						//! gather the data
+						case GATHER:	
+		//					gather_conf(&conf, samples);			/*! check of dit mogelijk is*)/
+		//					gather_execute(&conf);				/*! check of dit mogelijk is*)/
+							break;
+						//! gives some info back
+						case INFO:		
+		//					info();		/*! deze functie nog maken (of ombouwen dat het klopt)*)/
+							break;
+						//! if something else, go to stop_state
+						default: 		//! mocht er wat fout gaan ga dan naar stop_state volgende cycle
+>>>>>>> feature/main_verbeteren
 							next_state = stop_state;
 					}
 					break;
-				case prepare_state:				//! in deze state worden commands opgeslagen in conf en uitgevoerd als er naar de execute_state gegaan wordt
+				//! This state saves all parameters in conf
+				case prepare_state:			
 					switch(tok.tok){
+<<<<<<< HEAD
 						case FREQUENCY:		//! laad de frequentie in conf
 							frequency_conf(&conf, tok.value, -1);
 							break;
@@ -120,29 +176,46 @@ void main(void) {
 							break;
 
 						case PHASESHIFT:		//! laad de fase in conf (met channel)
+=======
+						//! loads frequency in conf
+						case FREQUENCY:		
+							frequency_conf(&conf, tok.value, -1);
+							break;
+						//! loads PWM frequency in conf
+			/*			case PWM_FREQUENCY:	
+							pwmfrequency_conf(&conf, tok.value, -1);
+							break;
+			*/			//! loads amplitude in conf
+						case AMPLITUDE:		
+							amplitude_conf(&conf, tok.value, tok.channel);	
+							break;
+						//! loads phaseshift in conf
+						case PHASESHIFT:	
+>>>>>>> feature/main_verbeteren
 							phaseshift_conf(&conf, tok.value, tok.channel);	
 							break;
-
-						case PING:		//! roep direct de ping op via functie Ping()
-		//					Ping();
+						//! gives a ping back
+						case PING:	
+		//					ping();
 							break;
-
-						case GATHER:		//! laad gather in conf met een aantal samples (als dit lukt)
-		//					Gather_conf(&conf, samples);	/*! check of dit mogelijk is*)/
+						//! gather some data if going to execute
+						case GATHER:		
+		//					gather_conf(&conf, samples);	/*! check of dit mogelijk is*)/
 							break;
-
-						case INFO:		//! vraag direct info op via Info()	(als dit lukt)
-		//					Info();				/*! moet nog gemaakt worden*)/
+						//! gives some info
+						case INFO:	
+		//					info();				/*! moet nog gemaakt worden*)/
 							break;
-
-						case EXECUTE: 		//! ga volgende cycle naar de execute_state
-		//					next_state = execute_state;
+						//! going to the execute state
+						case EXECUTE: 		
+							next_state = execute_state;
 							break;
-
-						default:					/*! als er iets gaat gaat, ga dan naar stop state (misschien nog aanpassen naar een andere state indien gewenst)*/
+						//! if something else, go to stop_state
+						default:			
 							next_state = stop_state;
 					}
 					break;
+<<<<<<< HEAD
 
 				case execute_state:				//! voer alles wat in de conf staat uit en ga naar start_state
 					frequency_execute(&conf);
@@ -150,6 +223,15 @@ void main(void) {
 					phaseshift_execute(&conf);
 					amplitude_execute(&conf);
 			//		Gather_execute(&conf);			/*! check of dit mogelijk is*/
+=======
+				//! the execute_state executes all parameters from conf and goes to start_state
+				case execute_state:			
+					frequency_execute(&conf);
+			//		pwmfrequency_execute(&conf);
+					phaseshift_execute(&conf);
+					amplitude_execute(&conf);
+			//		gather_execute(&conf);			/*! check of dit mogelijk is*/
+>>>>>>> feature/main_verbeteren
 	
 					next_state = start_state;
 					break;

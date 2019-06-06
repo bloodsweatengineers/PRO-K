@@ -4,8 +4,11 @@
 #include <stdint.h>
 #include <token_table.h>
 #include <string.h>
+<<<<<<< HEAD
 #include "uart.h"
 #include "utils.h"
+=======
+>>>>>>> feature/main_verbeteren
 
 struct token {
 	enum tok_t	tok;
