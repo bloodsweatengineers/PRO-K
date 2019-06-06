@@ -92,6 +92,8 @@ class GUI:
         self.connection = uart_connection.connection()
         self.check_connection()
 
+        self.input_values = [50, 62500, 100, 100, 0, 0, 0, 0]
+        self.new_values = [0,0,0,0,0,0,0,0]
 
     def destroy_window(self):
         self.master.destroy()  
@@ -138,19 +140,17 @@ class GUI:
 
     def update_button_event(self):
         self.update_all_fields()
+        #self.new_data()
+
         if self.new_frequency != 0:
             frequency_command = command.command("frequency",int(self.new_frequency)*100)
             self.connection.send(frequency_command)
-        #amplitude_1_command = command.command("amplitude",int(self.new_amplitude),0)
-        #self.connection.send(amplitude_1_command)
-        #pwm_frequency_command = command.command("keyfrequency",int(self.new_pwm_frequency))
-        #self.connection.send(pwm_frequency_command)
         
         if self.enable_leg_1.get_data():
             if self.new_amplitude != 0:
                 amplitude_1_command = command.command("amplitude",int(self.new_amplitude),0)
                 self.connection.send(amplitude_1_command)
-            if self.new_phase_1 != 0:
+            if self.new_phase_1 != None:
                 phase_1_command = command.command("phaseshift",int(self.new_phase_1),0)
                 self.connection.send(phase_1_command)
         if self.enable_leg_2.get_data():
@@ -168,65 +168,89 @@ class GUI:
                 phase_3_command = command.command("phaseshift", int(self.new_phase_3),2)
                 self.connection.send(phase_3_command)
         if self.enable_leg_4.get_data():
-            amplitude_4_command = command.command("amplitude",int(self.new_amplitude_leg_4),3)
-            self.connection.send(amplitude_4_command)
-            phase_4_command = command.command("phaseshift",int(self.new_phase_4),3)
-            self.connection.send(phase_4_command)
-    
+            if self.new_amplitude_leg_4 != 0:
+                amplitude_4_command = command.command("amplitude",int(self.new_amplitude_leg_4),3)
+                self.connection.send(amplitude_4_command)
+            if self.new_phase_4 != 0:
+                phase_4_command = command.command("phaseshift",int(self.new_phase_4),3)
+                self.connection.send(phase_4_command)
 
+    def new_data(self):
+        new_values = []
+        new_values[1] = self.new_frequency
+        new_values[2] = self.new_pwm_frequency
+        new_values[3] = self.new_amplitude
+        new_values[4] = self.new_amplitude_leg_4
+        new_values[5] = self.new_phase_1
+        new_values[6] = self.new_phase_2
+        new_values[7] = self.new_phase_3
+        new_values[8] = self.new_phase_4
+        print(new_values)
 
     def update_all_fields(self):
         if(self.enable_leg_1.get_data() or self.enable_leg_2.get_data() or self.enable_leg_3.get_data() or self.enable_leg_4.get_data()):
             self.new_frequency = self.frequency_entry.get_data()
             if self.new_frequency == "":
                 self.new_frequency = 0
-            self.new_pwm_frequency = self.pwm_frequency_entry.get_data()
-            
-            self.frequency_display.update(self.new_frequency)
-            self.tab_2.update('Frequency',self.new_frequency)
-            self.tab_3.update('Frequency',self.new_frequency)
-            self.tab_4.update('Frequency',self.new_frequency)
-            self.tab_5.update('Frequency',self.new_frequency)
 
-            self.pwm_frequency_display.update(self.new_pwm_frequency)
-            self.tab_2.update('PWM Frequency',self.new_pwm_frequency)
-            self.tab_3.update('PWM Frequency',self.new_pwm_frequency)
-            self.tab_4.update('PWM Frequency',self.new_pwm_frequency)
-            self.tab_5.update('PWM Frequency',self.new_pwm_frequency)
+            self.new_pwm_frequency = self.pwm_frequency_entry.get_data()
+            if self.new_frequency != 0:
+                self.frequency_display.update(self.new_frequency)
+                self.tab_2.update('Frequency',self.new_frequency)
+                self.tab_3.update('Frequency',self.new_frequency)
+                self.tab_4.update('Frequency',self.new_frequency)
+                self.tab_5.update('Frequency',self.new_frequency)
+
+            if self.new_pwm_frequency == "":
+                self.new_pwm_frequency = 0
+            if self.new_pwm_frequency != 0:
+                self.pwm_frequency_display.update(self.new_pwm_frequency)
+                self.tab_2.update('PWM Frequency',self.new_pwm_frequency)
+                self.tab_3.update('PWM Frequency',self.new_pwm_frequency)
+                self.tab_4.update('PWM Frequency',self.new_pwm_frequency)
+                self.tab_5.update('PWM Frequency',self.new_pwm_frequency)
 
         if(self.enable_leg_1.get_data() or self.enable_leg_2.get_data() or self.enable_leg_3.get_data()):
             self.new_amplitude = self.amplitude_entry.get_data()
             if self.new_amplitude == "":
                 self.new_amplitude = 0
-
-            self.amplitude_display.update(self.new_amplitude)
-            self.tab_2.update('Amplitude',self.new_amplitude)
-            self.tab_3.update('Amplitude',self.new_amplitude)
-            self.tab_4.update('Amplitude',self.new_amplitude)
+            if self.new_amplitude != 0:
+                self.amplitude_display.update(self.new_amplitude)
+                self.tab_2.update('Amplitude',self.new_amplitude)
+                self.tab_3.update('Amplitude',self.new_amplitude)
+                self.tab_4.update('Amplitude',self.new_amplitude)
 
         if(self.enable_leg_1.get_data()):
             self.new_phase_1 = self.phase_1_entry.get_data()
             if self.new_phase_1 == "":
-                self.new_phase_1 = 0
-            self.phase_1_display.update(self.new_phase_1)
-            self.tab_2.update('Phaseshift',self.new_phase_1)
+                self.new_phase_1 = None
+            if self.new_phase_1 != None:
+                self.phase_1_display.update(self.new_phase_1)
+                self.tab_2.update('Phaseshift',self.new_phase_1)
+        
         if(self.enable_leg_2.get_data()):
             self.new_phase_2 = self.phase_2_entry.get_data()
             if self.new_phase_2 == "":
                 self.new_phase_2 = 0
             self.phase_2_display.update(self.new_phase_2)
             self.tab_3.update('Phaseshift',self.new_phase_2)
+        
         if(self.enable_leg_3.get_data()):
             self.new_phase_3 = self.phase_3_entry.get_data()
             if self.new_phase_3 == "":
                 self.new_phase_3 = 0
             self.phase_3_display.update(self.new_phase_3)
             self.tab_4.update('Phaseshift',self.new_phase_3)
+        
         if(self.enable_leg_4.get_data()):
             self.new_phase_4 = self.phase_4_entry.get_data()
+            self.new_amplitude_leg_4 = self.amplitude_leg_4_entry.get_data()
+            if self.new_phase_4 == "":
+                self.new_phase_4 = 0
             self.phase_4_display.update(self.new_phase_4)
             self.tab_5.update('Phaseshift',self.new_phase_4)
-            self.new_amplitude_leg_4 = self.amplitude_leg_4_entry.get_data()
+            if self.new_amplitude_leg_4 == "":
+                self.new_amplitude_leg_4 = 0 
             self.amplitude_leg_4_display.update(self.new_amplitude_leg_4)
             self.tab_5.update('Amplitude',self.new_amplitude_leg_4)
 
