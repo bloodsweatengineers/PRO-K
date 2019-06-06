@@ -1,0 +1,15 @@
+\section{Uitgevoerde activiteiten}
+Tijdens het project zijn er aan verschillende activiteiten gewerkt die onderverdeelbaar zijn in drie subgroepen. De ontwikkelde software, het ontworpen communicatie protocol en het onderzoek naar de hardwarefouten in de printplaat.
+
+\subsection{Software}
+De hoofdactiviteit binnen het project is de ontwikkeling van software voor de ATMega328p microcontroller met behulp van de AVR Toolchain en voor de computer om de microcontroller aan te sturen. Alle activiteiten omtrent de geschreven software, wanneer het geschreven is en door wie het geschreven is, is allemaal te vinden op de git repository van het project \footnote{\href{https://github.com/bloodsweatengineers/PRO-K}{https://github.com/bloodsweatengineers/PRO-K}}\label{footnote}.
+\subsubsection{Microcontroller code}
+De code op de microcontroller is zoals genoemd geschreven in C met behulp van de AVR Toolchain. Omdat het communicatieprotocol zowel moet werken via een User Interface als via de terminal op de PC zijn er twee versies software ontwikkeld. Één versie van de microcontroller software is ontwikkeld op basis van string commandos en de andere versie van de software op basis van binaire commandos.
+\subsubsection{User interface code}
+Tijdens het project is er ook een User Interface ontwikkeld, om de microcontroller mee aan te sturen. Er is in het project voor gekozen om hiervoor Python te gebruiken. Bij de User Interface code zijn de belangrijkste Python3 packages die gebruikt zijn: Tkinter, hiermee is het grafische gedeelte van het User Interface opgebouwd en Pyserial, hiermee worden de commandos over de COM port van de computer verstuurd.
+
+\subsection{Communicatie protocol}
+Een andere belangrijke activiteit binnen het project is het ontwerp van het communicatie protocol. Het communicatie protocol is op te splitsen in string commando's en binaire commando. String commando's worden gebruikt om via de terminal de microcontroller aan te sturen. Binaire commando's worden gebruikt om via het User Interface de microcontroller aan te sturen. De commando's van de twee protcollen zijn ook te vinden in token.csv een bestand op de git repository.
+
+\subsection{Onderzoek naar hardware fouten}
+De laatste belangrijke activiteit die gedaan is, is het onderzoek doen naar fouten en bugs in de bestaande hardware van de Universal 4 Leg. Uit dit onderzoek naar fouten en bugs in de hardware volgt ook een aantal aanbevelingen aan de opdrachtgever en de opvolger van het project.
