@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <token_table.h>
+#include <string.h>
 
 struct token {
 	enum tok_t	tok;
