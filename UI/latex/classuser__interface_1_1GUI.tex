@@ -1,0 +1,363 @@
+\hypertarget{classuser__interface_1_1GUI}{}\section{user\+\_\+interface.\+G\+UI Class Reference}
+\label{classuser__interface_1_1GUI}\index{user\+\_\+interface.\+G\+UI@{user\+\_\+interface.\+G\+UI}}
+
+
+The \hyperlink{classuser__interface_1_1GUI}{G\+UI} class forms the main frame of the User Interface.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classuser__interface_1_1GUI_a56cf4f384dbb041483a69bbe54f3e08a}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, master)
+\begin{DoxyCompactList}\small\item\em The constructor takes one argument, master, which is the actual tkinter main frame of the user interface. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a1e7024c7b8168615d4d8579336d192df}{destroy\+\_\+window} (self)
+\begin{DoxyCompactList}\small\item\em The method destroy\+\_\+window destroys the \hyperlink{namespaceuser__interface}{user\+\_\+interface} object whenever the close program button in the menu is pressed. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a5787b976dce9ca32ce3dacf0b96b8ee7}{check\+\_\+connection} (self)
+\begin{DoxyCompactList}\small\item\em The check\+\_\+connection method checks if there is a connection with a microcontroller available. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a6c36b846f6241589929517ea0d7f0ecf}{start\+\_\+button\+\_\+event} (self)
+\begin{DoxyCompactList}\small\item\em The start\+\_\+button\+\_\+event method creates a serial connection if available. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a6cafdec7e2cc0ca9a25429bdc44fd96e}{stop\+\_\+button\+\_\+event} (self)
+\begin{DoxyCompactList}\small\item\em The stop\+\_\+button\+\_\+event method destroys the serial connection if it was present. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a866b8e4bf0bc892cc6ae44a68041e006}{update\+\_\+button\+\_\+event} (self)
+\begin{DoxyCompactList}\small\item\em The update\+\_\+button\+\_\+event method updates all the data labels if there is new data updated. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a974d67b11bf11a3c6d30ca8ca3e86910}{new\+\_\+data} (self)
+\begin{DoxyCompactList}\small\item\em The new\+\_\+data method stores new data in a list if new data was updated. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a944eaec52425551da4af2534fb43d721}{update\+\_\+all\+\_\+fields} (self)
+\begin{DoxyCompactList}\small\item\em The update\+\_\+all\+\_\+fields method updates all the data labels and entries. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a37f5777ca2d7aea9186d1447ada28faa}{enable\+\_\+all} (self)
+\begin{DoxyCompactList}\small\item\em The enable\+\_\+all method enables the data entries of the legs that are enabled through the enable leg checkbox. \end{DoxyCompactList}\item 
+def \hyperlink{classuser__interface_1_1GUI_a2130bcd9bdd457ba51cac0458a8d3f96}{disable\+\_\+all} (self)
+\begin{DoxyCompactList}\small\item\em The disable\+\_\+all method disables all the data entries, it sets the buttons to the standard setting. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a4072fa3d862758acf88931dbd66fca83}\label{classuser__interface_1_1GUI_a4072fa3d862758acf88931dbd66fca83}} 
+def \hyperlink{classuser__interface_1_1GUI_a4072fa3d862758acf88931dbd66fca83}{disable\+\_\+tabs} (self)
+\begin{DoxyCompactList}\small\item\em The disable\+\_\+tabs method cleans all the data labels in the tabs whenever stop is being pressed by the user. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_ae7866f22227ae9688999aa757c0fea18}\label{classuser__interface_1_1GUI_ae7866f22227ae9688999aa757c0fea18}} 
+{\bfseries master}
+\item 
+\hyperlink{classuser__interface_1_1GUI_a6f8c9e6abed97b6d338b8e4d9718dc7c}{connection\+\_\+label}
+\begin{DoxyCompactList}\small\item\em tabcontrol creates the tabs of the user interface. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_aa4b397197906ad84e30580a810a655dd}\label{classuser__interface_1_1GUI_aa4b397197906ad84e30580a810a655dd}} 
+{\bfseries enable\+\_\+leg\+\_\+1}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_abbddb06508058d258c7d95441dece56d}\label{classuser__interface_1_1GUI_abbddb06508058d258c7d95441dece56d}} 
+{\bfseries enable\+\_\+leg\+\_\+2}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a4fd7bdcf24220df0222b5ec6d336c545}\label{classuser__interface_1_1GUI_a4fd7bdcf24220df0222b5ec6d336c545}} 
+{\bfseries enable\+\_\+leg\+\_\+3}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_afbc5abc61f35db93402945f6ed493da7}\label{classuser__interface_1_1GUI_afbc5abc61f35db93402945f6ed493da7}} 
+{\bfseries enable\+\_\+leg\+\_\+4}
+\item 
+\hyperlink{classuser__interface_1_1GUI_a961853020e92ea16f2e0c4720bebeda7}{start\+\_\+button}
+\begin{DoxyCompactList}\small\item\em The start button is being created. \end{DoxyCompactList}\item 
+\hyperlink{classuser__interface_1_1GUI_a960ed29e7286a5936b9ece35a2f230a5}{update\+\_\+button}
+\begin{DoxyCompactList}\small\item\em The updatebutton is being created. \end{DoxyCompactList}\item 
+\hyperlink{classuser__interface_1_1GUI_a44c35c7063800207f87f992b1b7d27e1}{stop\+\_\+button}
+\begin{DoxyCompactList}\small\item\em The stopbutton is being created. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a389e4fe23f832186acb8243506efae87}\label{classuser__interface_1_1GUI_a389e4fe23f832186acb8243506efae87}} 
+{\bfseries frequency\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a70795a705a5e806094506585cdf42beb}\label{classuser__interface_1_1GUI_a70795a705a5e806094506585cdf42beb}} 
+{\bfseries pwm\+\_\+frequency\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a64d764fdabd5c403abcbce2bb2c8b823}\label{classuser__interface_1_1GUI_a64d764fdabd5c403abcbce2bb2c8b823}} 
+{\bfseries amplitude\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a283139c17a7028c3667b83afeaef3c34}\label{classuser__interface_1_1GUI_a283139c17a7028c3667b83afeaef3c34}} 
+{\bfseries amplitude\+\_\+leg\+\_\+4\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a352e1ed48894a50a45abc6a9224e2ef1}\label{classuser__interface_1_1GUI_a352e1ed48894a50a45abc6a9224e2ef1}} 
+{\bfseries phase\+\_\+1\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a7495500f8028d961aec13cf935336367}\label{classuser__interface_1_1GUI_a7495500f8028d961aec13cf935336367}} 
+{\bfseries phase\+\_\+2\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a3ad554ae9b728bf64199ffbe881dd13f}\label{classuser__interface_1_1GUI_a3ad554ae9b728bf64199ffbe881dd13f}} 
+{\bfseries phase\+\_\+3\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a5ec27b2c919b0dece2fcf086398de43d}\label{classuser__interface_1_1GUI_a5ec27b2c919b0dece2fcf086398de43d}} 
+{\bfseries phase\+\_\+4\+\_\+entry}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_aaf7572c79aad7f8fe250b5fb5cca2d3f}\label{classuser__interface_1_1GUI_aaf7572c79aad7f8fe250b5fb5cca2d3f}} 
+{\bfseries frequency\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a598635e0ce2536d493913d9192b10590}\label{classuser__interface_1_1GUI_a598635e0ce2536d493913d9192b10590}} 
+{\bfseries pwm\+\_\+frequency\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_ab339519e45fa45441941d2f8cca0c970}\label{classuser__interface_1_1GUI_ab339519e45fa45441941d2f8cca0c970}} 
+{\bfseries amplitude\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a6b22184033e43b0a0515b11056279295}\label{classuser__interface_1_1GUI_a6b22184033e43b0a0515b11056279295}} 
+{\bfseries amplitude\+\_\+leg\+\_\+4\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a1726bedfcc8f0f0ea5fc4df66ad71875}\label{classuser__interface_1_1GUI_a1726bedfcc8f0f0ea5fc4df66ad71875}} 
+{\bfseries phase\+\_\+1\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_af0c7710c2efc7f91d70e2bbdddeb4b75}\label{classuser__interface_1_1GUI_af0c7710c2efc7f91d70e2bbdddeb4b75}} 
+{\bfseries phase\+\_\+2\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_adb798257b09525e995cf586791bf9869}\label{classuser__interface_1_1GUI_adb798257b09525e995cf586791bf9869}} 
+{\bfseries phase\+\_\+3\+\_\+display}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_afbf653993b440e69569fc9048ef666af}\label{classuser__interface_1_1GUI_afbf653993b440e69569fc9048ef666af}} 
+{\bfseries phase\+\_\+4\+\_\+display}
+\item 
+\hyperlink{classuser__interface_1_1GUI_acefb21f84a9df9452809e47c3e51f2c8}{tab\+\_\+2}
+\begin{DoxyCompactList}\small\item\em Creating tab 2. \end{DoxyCompactList}\item 
+\hyperlink{classuser__interface_1_1GUI_ac33f7cc0401cc93451f1f781b3e2d483}{tab\+\_\+3}
+\begin{DoxyCompactList}\small\item\em Creating tab 3. \end{DoxyCompactList}\item 
+\hyperlink{classuser__interface_1_1GUI_aa6bbcd6a1d815a578bed66410c80e060}{tab\+\_\+4}
+\begin{DoxyCompactList}\small\item\em Creating tab 4. \end{DoxyCompactList}\item 
+\hyperlink{classuser__interface_1_1GUI_ab787838b77b2eee132c0ae6fddc6de0c}{tab\+\_\+5}
+\begin{DoxyCompactList}\small\item\em Creating tab 5. \end{DoxyCompactList}\item 
+\hyperlink{classuser__interface_1_1GUI_af53b0ba0804ffdcc87b9511efece0489}{connection}
+\begin{DoxyCompactList}\small\item\em Try to establish serial connection. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_aaead1d7b5a9648b2435b5f9c3a7fc5b3}\label{classuser__interface_1_1GUI_aaead1d7b5a9648b2435b5f9c3a7fc5b3}} 
+{\bfseries input\+\_\+values}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a585b388d070f19f034ee4c61037a1e21}\label{classuser__interface_1_1GUI_a585b388d070f19f034ee4c61037a1e21}} 
+{\bfseries new\+\_\+values}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_afed0b29e4e79dfe0e9f758c15d186091}\label{classuser__interface_1_1GUI_afed0b29e4e79dfe0e9f758c15d186091}} 
+{\bfseries connection\+\_\+available}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_aff964d008ce052e1d86f7d4b66c653ff}\label{classuser__interface_1_1GUI_aff964d008ce052e1d86f7d4b66c653ff}} 
+{\bfseries connection\+\_\+flag}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a5684514732a0a48b954c9b3acc396b76}\label{classuser__interface_1_1GUI_a5684514732a0a48b954c9b3acc396b76}} 
+{\bfseries conncetion\+\_\+available}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_af4ce5178b0003d72fcc99e7d5c51d672}\label{classuser__interface_1_1GUI_af4ce5178b0003d72fcc99e7d5c51d672}} 
+{\bfseries new\+\_\+frequency}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a5b1ab9f1bdbc8e5dc72459d385b864c1}\label{classuser__interface_1_1GUI_a5b1ab9f1bdbc8e5dc72459d385b864c1}} 
+{\bfseries new\+\_\+pwm\+\_\+frequency}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a0975c62a45275ef21a20f687ab7cecf6}\label{classuser__interface_1_1GUI_a0975c62a45275ef21a20f687ab7cecf6}} 
+{\bfseries new\+\_\+amplitude}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a1577861e6e142cc8a78b03fa0aeced5c}\label{classuser__interface_1_1GUI_a1577861e6e142cc8a78b03fa0aeced5c}} 
+{\bfseries new\+\_\+phase\+\_\+1}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a916db80d68e881fb7722a401e1e4b0e1}\label{classuser__interface_1_1GUI_a916db80d68e881fb7722a401e1e4b0e1}} 
+{\bfseries new\+\_\+phase\+\_\+2}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_ab708ec86f72d3e946dee006aadbc7e13}\label{classuser__interface_1_1GUI_ab708ec86f72d3e946dee006aadbc7e13}} 
+{\bfseries new\+\_\+phase\+\_\+3}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a8698af703cc3fc20bb710f91babf481f}\label{classuser__interface_1_1GUI_a8698af703cc3fc20bb710f91babf481f}} 
+{\bfseries new\+\_\+phase\+\_\+4}
+\item 
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a97c3ed54f517876b3304fb19fbfa83fe}\label{classuser__interface_1_1GUI_a97c3ed54f517876b3304fb19fbfa83fe}} 
+{\bfseries new\+\_\+amplitude\+\_\+leg\+\_\+4}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{classuser__interface_1_1GUI}{G\+UI} class forms the main frame of the User Interface. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a56cf4f384dbb041483a69bbe54f3e08a}\label{classuser__interface_1_1GUI_a56cf4f384dbb041483a69bbe54f3e08a}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{master }\end{DoxyParamCaption})}
+
+
+
+The constructor takes one argument, master, which is the actual tkinter main frame of the user interface. 
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a5787b976dce9ca32ce3dacf0b96b8ee7}\label{classuser__interface_1_1GUI_a5787b976dce9ca32ce3dacf0b96b8ee7}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!check\+\_\+connection@{check\+\_\+connection}}
+\index{check\+\_\+connection@{check\+\_\+connection}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{check\+\_\+connection()}{check\_connection()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+check\+\_\+connection (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The check\+\_\+connection method checks if there is a connection with a microcontroller available. 
+
+If it is, it changes the display to connected, if not it stays at disconnected. \mbox{\Hypertarget{classuser__interface_1_1GUI_a1e7024c7b8168615d4d8579336d192df}\label{classuser__interface_1_1GUI_a1e7024c7b8168615d4d8579336d192df}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!destroy\+\_\+window@{destroy\+\_\+window}}
+\index{destroy\+\_\+window@{destroy\+\_\+window}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{destroy\+\_\+window()}{destroy\_window()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+destroy\+\_\+window (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The method destroy\+\_\+window destroys the \hyperlink{namespaceuser__interface}{user\+\_\+interface} object whenever the close program button in the menu is pressed. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a2130bcd9bdd457ba51cac0458a8d3f96}\label{classuser__interface_1_1GUI_a2130bcd9bdd457ba51cac0458a8d3f96}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!disable\+\_\+all@{disable\+\_\+all}}
+\index{disable\+\_\+all@{disable\+\_\+all}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{disable\+\_\+all()}{disable\_all()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+disable\+\_\+all (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The disable\+\_\+all method disables all the data entries, it sets the buttons to the standard setting. 
+
+It also cleans all the data labels. \mbox{\Hypertarget{classuser__interface_1_1GUI_a37f5777ca2d7aea9186d1447ada28faa}\label{classuser__interface_1_1GUI_a37f5777ca2d7aea9186d1447ada28faa}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!enable\+\_\+all@{enable\+\_\+all}}
+\index{enable\+\_\+all@{enable\+\_\+all}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{enable\+\_\+all()}{enable\_all()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+enable\+\_\+all (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The enable\+\_\+all method enables the data entries of the legs that are enabled through the enable leg checkbox. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a974d67b11bf11a3c6d30ca8ca3e86910}\label{classuser__interface_1_1GUI_a974d67b11bf11a3c6d30ca8ca3e86910}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!new\+\_\+data@{new\+\_\+data}}
+\index{new\+\_\+data@{new\+\_\+data}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{new\+\_\+data()}{new\_data()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+new\+\_\+data (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The new\+\_\+data method stores new data in a list if new data was updated. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a6c36b846f6241589929517ea0d7f0ecf}\label{classuser__interface_1_1GUI_a6c36b846f6241589929517ea0d7f0ecf}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!start\+\_\+button\+\_\+event@{start\+\_\+button\+\_\+event}}
+\index{start\+\_\+button\+\_\+event@{start\+\_\+button\+\_\+event}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{start\+\_\+button\+\_\+event()}{start\_button\_event()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+start\+\_\+button\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The start\+\_\+button\+\_\+event method creates a serial connection if available. 
+
+If it is available it enables the update and start button. It also enables all the data entries. \mbox{\Hypertarget{classuser__interface_1_1GUI_a6cafdec7e2cc0ca9a25429bdc44fd96e}\label{classuser__interface_1_1GUI_a6cafdec7e2cc0ca9a25429bdc44fd96e}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!stop\+\_\+button\+\_\+event@{stop\+\_\+button\+\_\+event}}
+\index{stop\+\_\+button\+\_\+event@{stop\+\_\+button\+\_\+event}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{stop\+\_\+button\+\_\+event()}{stop\_button\_event()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+stop\+\_\+button\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The stop\+\_\+button\+\_\+event method destroys the serial connection if it was present. 
+
+It also disables all the data entries, cleans the data labels and disables the update and stop button. \mbox{\Hypertarget{classuser__interface_1_1GUI_a944eaec52425551da4af2534fb43d721}\label{classuser__interface_1_1GUI_a944eaec52425551da4af2534fb43d721}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!update\+\_\+all\+\_\+fields@{update\+\_\+all\+\_\+fields}}
+\index{update\+\_\+all\+\_\+fields@{update\+\_\+all\+\_\+fields}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{update\+\_\+all\+\_\+fields()}{update\_all\_fields()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+update\+\_\+all\+\_\+fields (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The update\+\_\+all\+\_\+fields method updates all the data labels and entries. 
+
+It also prepares the U\+S\+A\+RT message for being sent. \mbox{\Hypertarget{classuser__interface_1_1GUI_a866b8e4bf0bc892cc6ae44a68041e006}\label{classuser__interface_1_1GUI_a866b8e4bf0bc892cc6ae44a68041e006}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!update\+\_\+button\+\_\+event@{update\+\_\+button\+\_\+event}}
+\index{update\+\_\+button\+\_\+event@{update\+\_\+button\+\_\+event}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{update\+\_\+button\+\_\+event()}{update\_button\_event()}}
+{\footnotesize\ttfamily def user\+\_\+interface.\+G\+U\+I.\+update\+\_\+button\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The update\+\_\+button\+\_\+event method updates all the data labels if there is new data updated. 
+
+It also sends a message to the microcontroller with the command corresponding to the data which is being updated. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classuser__interface_1_1GUI_af53b0ba0804ffdcc87b9511efece0489}\label{classuser__interface_1_1GUI_af53b0ba0804ffdcc87b9511efece0489}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!connection@{connection}}
+\index{connection@{connection}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{connection}{connection}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+connection}
+
+
+
+Try to establish serial connection. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a6f8c9e6abed97b6d338b8e4d9718dc7c}\label{classuser__interface_1_1GUI_a6f8c9e6abed97b6d338b8e4d9718dc7c}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!connection\+\_\+label@{connection\+\_\+label}}
+\index{connection\+\_\+label@{connection\+\_\+label}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{connection\+\_\+label}{connection\_label}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+connection\+\_\+label}
+
+
+
+tabcontrol creates the tabs of the user interface. 
+
+Menubar creates the top menu of the \hyperlink{namespaceuser__interface}{user\+\_\+interface} \mbox{\Hypertarget{classuser__interface_1_1GUI_a961853020e92ea16f2e0c4720bebeda7}\label{classuser__interface_1_1GUI_a961853020e92ea16f2e0c4720bebeda7}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!start\+\_\+button@{start\+\_\+button}}
+\index{start\+\_\+button@{start\+\_\+button}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{start\+\_\+button}{start\_button}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+start\+\_\+button}
+
+
+
+The start button is being created. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a44c35c7063800207f87f992b1b7d27e1}\label{classuser__interface_1_1GUI_a44c35c7063800207f87f992b1b7d27e1}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!stop\+\_\+button@{stop\+\_\+button}}
+\index{stop\+\_\+button@{stop\+\_\+button}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{stop\+\_\+button}{stop\_button}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+stop\+\_\+button}
+
+
+
+The stopbutton is being created. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_acefb21f84a9df9452809e47c3e51f2c8}\label{classuser__interface_1_1GUI_acefb21f84a9df9452809e47c3e51f2c8}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!tab\+\_\+2@{tab\+\_\+2}}
+\index{tab\+\_\+2@{tab\+\_\+2}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{tab\+\_\+2}{tab\_2}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+tab\+\_\+2}
+
+
+
+Creating tab 2. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_ac33f7cc0401cc93451f1f781b3e2d483}\label{classuser__interface_1_1GUI_ac33f7cc0401cc93451f1f781b3e2d483}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!tab\+\_\+3@{tab\+\_\+3}}
+\index{tab\+\_\+3@{tab\+\_\+3}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{tab\+\_\+3}{tab\_3}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+tab\+\_\+3}
+
+
+
+Creating tab 3. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_aa6bbcd6a1d815a578bed66410c80e060}\label{classuser__interface_1_1GUI_aa6bbcd6a1d815a578bed66410c80e060}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!tab\+\_\+4@{tab\+\_\+4}}
+\index{tab\+\_\+4@{tab\+\_\+4}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{tab\+\_\+4}{tab\_4}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+tab\+\_\+4}
+
+
+
+Creating tab 4. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_ab787838b77b2eee132c0ae6fddc6de0c}\label{classuser__interface_1_1GUI_ab787838b77b2eee132c0ae6fddc6de0c}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!tab\+\_\+5@{tab\+\_\+5}}
+\index{tab\+\_\+5@{tab\+\_\+5}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{tab\+\_\+5}{tab\_5}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+tab\+\_\+5}
+
+
+
+Creating tab 5. 
+
+\mbox{\Hypertarget{classuser__interface_1_1GUI_a960ed29e7286a5936b9ece35a2f230a5}\label{classuser__interface_1_1GUI_a960ed29e7286a5936b9ece35a2f230a5}} 
+\index{user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}!update\+\_\+button@{update\+\_\+button}}
+\index{update\+\_\+button@{update\+\_\+button}!user\+\_\+interface\+::\+G\+UI@{user\+\_\+interface\+::\+G\+UI}}
+\subsubsection{\texorpdfstring{update\+\_\+button}{update\_button}}
+{\footnotesize\ttfamily user\+\_\+interface.\+G\+U\+I.\+update\+\_\+button}
+
+
+
+The updatebutton is being created. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+user\+\_\+interface.\+py\end{DoxyCompactItemize}

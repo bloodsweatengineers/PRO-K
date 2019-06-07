@@ -1,9 +1,21 @@
+# Kerim Kilic
+# 16024141
+# De Haagse Hogeschool
+# PRO-K: PWM Controller
+
+
 from tkinter import Label, Entry, Button, Tk, ttk
 from tkinter import*
 from tkinter import messagebox
 import tkinter
 
+##  @package leg_data_tab
+#   This module creates the data which is displayed in the different tabs.   
+
+
+##  LEG_DATA_TAB creates the labels corresponding to the data which is displayed into the different tabs.
 class LEG_DATA_TAB:
+    ##  The constructor takes tabnr and legnr as arguments. It creates the data labels in the tab specified and for the leg specified.
     def __init__(self, tabnr, legnr):
         self.tabnr = tabnr
         self.legnr = legnr
@@ -30,7 +42,8 @@ class LEG_DATA_TAB:
         self.phase_label = Label(self.frame[4], text= "Current phase shift:").pack(side=LEFT)
         self.phase_data_label = Label(self.frame[4], text="- °")
         self.phase_data_label.pack(side=LEFT)
-
+    
+    ##  The update method updates datalabels if the update button is succesfully processed.
     def update(self, parameter, value):
         self.new_value = value
         self.parameter = parameter
@@ -42,7 +55,7 @@ class LEG_DATA_TAB:
             self.amplitude_data_label.configure(text="{} %".format(self.new_value))
         elif parameter == 'Phaseshift':
             self.phase_data_label.configure(text ="{} °".format(self.new_value))
-
+    ##  The stop method deletes the contents of data labels whenever the stop button is pressed.
     def stop(self):
             self.frequency_data_label.configure(text="- Hz")
             self.pwm_frequency_data_label.configure(text="- Hz")
