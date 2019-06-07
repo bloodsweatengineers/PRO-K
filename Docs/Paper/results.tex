@@ -1,0 +1,56 @@
+\section{Results}
+
+In this section the testresults of the developed software will be discussed. With the developed software the user is able to manipulate parameters of the four legs of the Universal 4 Leg using both the graphical user interface as the terminal.
+
+\subsection{Terminal}
+The terminal can be used to send commands of the communication protocol over USART to the microcontroller. In Figure \ref{terminal} an example of a terminal is shown where commands are being sent to the microcontroller over USART. If a command is sent over with the correct syntax, the microcontroller respons with an acknowledgement OK, if the syntax is correct. If the syntax is incorrect, the microcontroller responds with REJ, rejecting the command.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/terminal.png}
+\caption{Terminal example}
+\label{terminal}
+\end{figure}
+
+\subsection{Measurements}
+In Figure \ref{measurement_100_50hz} a measurement with three legs enabled is shown. The frequency is set to 50 Hz, the amplitude is set to 100\% and a phasedifference between legs will be 120 degrees. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.65\linewidth]{pictures/three_phase_ampl100_50hz.png}
+
+\caption{Three phase 50 Hz 100\% amplitude measurement}
+\label{measurement_100_50hz}
+\end{figure}
+
+
+The user is able to easily change parameters from the terminal or graphical user interface. In Figure \ref{measurement_50_50hz} a measurement is shown where the amplitude is halved using the amplitude command.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.65\linewidth]{pictures/three_phase_ampl50_50hz.png}
+\caption{Three phase 50 Hz 50\% amplitude measurement}
+\label{measurement_50_50hz}
+\end{figure}
+
+
+
+The frequency can also be changed easily. In Figure \ref{measurement_100_400hz} a measurement is shown where the frequency is increased to 400 Hz using the frequency command of the communication protocol.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.65\linewidth]{pictures/three_phase_ampl100_400hz.png}
+\caption{Three phase 400 Hz 100\% amplitude measurement}
+\label{measurement_100_400hz}
+\end{figure}
+
+\subsection{Graphical User Interface}
+The user interface can also be used to send commands over USART to the microcontroller. In Figure \ref{GUI} the Graphical User Interface is shown. Entries where parameters can be entered are shown and underneath it are the current settings of the legs. Whenever a parameter is entered in the entry and u pdate is pressed a message to the microcontroller with the parameter and value is sent.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/GUI.png}
+\caption{Graphical User Interface example}
+\label{GUI}
+\end{figure}
+

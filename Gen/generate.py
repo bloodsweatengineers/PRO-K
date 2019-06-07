@@ -32,7 +32,7 @@ def retrieve_bin_command(token, binary, channel):
         string += "\t\t\tcase {}:\n".format(without_channel[i][1])
         string += "\t\t\t\treturn {};\n".format(without_channel[i][0])
     string += "\t\t}\n"
-    string += "\t\tswitch(command&0x0F) {\n"
+    string += "\t\tswitch(command&0xF0) {\n"
     for i in range(0, len(with_channel)):
         string += "\t\t\tcase {}:\n".format(with_channel[i][1])
         string += "\t\t\t\treturn {};\n".format(with_channel[i][0])
@@ -53,6 +53,7 @@ def retrieve_bin_channel(binary, channel):
     string += "\t\tswitch(command) {\n"
     for i in without_channel:
         string += "\t\t\tcase {}:\n".format(i)
+    string += '\t\t\t\tuart_transmit_str("-1");\n'
     string += "\t\t\t\treturn -1;\n"
     string += "\t\t\tdefault:\n"
     string += "\t\t\t\tbreak;\n"
@@ -60,7 +61,10 @@ def retrieve_bin_channel(binary, channel):
 
     string += "\n"
 
-    string += "\t\tif(command&0x0F > 3) {\n"
+    string += "\t\tif((command&0x0F) > 3) {\n"
+    string += '\t\t\tchar buf[10];\n'
+    string += '\t\t\tint32_to_str(buf,command&0x0F);\n'
+    string += '\t\t\tuart_transmit_str(buf);\n'
     string += "\t\t\treturn -1;\n"
     string += "\t\t} else {\n"
     string += "\t\t\treturn command&0x0F;\n"

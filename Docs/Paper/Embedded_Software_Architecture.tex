@@ -1,0 +1,56 @@
+\section{Embedded software architecture}
+A large part of the project pertains the control and generation of PWM waveforms described by
+user input. To that end, the embedded software must be able to perform its generation duties whilst
+recieving or outputting paramters/data. There are multiple ways of achieving said multitasking such as
+polling or interrupt-driven execution. Since the required hardware does not have the ability to prioritise
+specific interrupts, a pure interrupt-driven approach was ruled out, instead, it was chosen to focus on a dual apporach. The routines with a deadline such as the waveform generation would work with interrupts while the routines without a deadline such as user interaction would work with a polling system.
+
+\subsection{Polling state}
+The interactivity between the user and device is implemented using serial communication.
+This means that beside controlling the board itself, the microcontroller needs to reserve
+time to get user input. As described above, the general approach used in this project is
+the hybrid interrupt-driven/polling approach. The waveform is generated and output using
+interrupts, whilst the user interaction is done using polling.
+
+Polling consists of checking if a change has been made every once in a while. This
+is usually done in the main loop of the program. Every time the system loops a routine
+checks a value again and if nothing has changed, it continues. 
+
+There are 2 ways to poll changes without interrupts, using blocking or non-blocking routines.
+When a polling routine is the only routine that needs to poll, blocking routines are
+very easy to use and reliable, however, as soon as multiple routines need to poll, a single
+routine can't block the microcontroller. This means that more complex projects need to have
+non-blocking routines. A computer implements a sort of hybrid between blocking and non-blocking.
+It is possible to get a blocking program on a mainstream personal use computer, however, the kernel
+just switches between programs(processes) when a program is blocking.
+
+\subsubsection{Implementation}
+The implementation of non-blocking polling routines in embedded firmware, differs a little
+from the implementation of its blocking routine brother. The base principle is to act with
+a part of the data/change, instead of waiting for the whole data package. An example being
+the user interaction. In a blocking routine the parser would either read or parse the entire
+command in one go, effectively waiting every time no data is present in the buffer.
+A non-blocking routine would read or parse per data character, and would remember an internal
+state of the parser so as to remember its progress.
+
+The implementation of the non-blocking polling routines uses a single read/parse whilst
+holding the state of the routine.
+
+\subsection{Input and output formatting}
+Since the program needs to work in binary as well as string mode, the software needs to
+be able to switch between the 2. This is done by switching a button on the board.
+
+\subsection{Waveform generation}
+The waveform generation for the program has several stages. These stages are used
+to relieve the CPU, and provide methods for changing parameters during runtime.
+\subsubsection{Stage 1: Setting parameters}
+The parameters are set to static variables that can be accessed by the Main timer interrupts
+and the PWM timer interrupts. The amplitude-changed lookup table is also generated during this
+point. This table assures a speedup inside the main interrupt allowing the software to generate
+waveforms up to 400Hz.
+\subsubsection{Stage 2: Main timer interrupts}
+The main timer interrupt Uses all parameter functions and sets a few parameters that change
+depending on the look-up table. These parameters have to be limited otherwise, the interrupt
+will take too much time and limit the frequency to a frequency lower than 400Hz.
+\subsubsection{Stage 3: PWM timer interrupts}
+The PWM Timer interrupts are only lightly used. In normal mode, no interrupt service routine is used, instead, an output pin is toggled when an interrupt is triggered.

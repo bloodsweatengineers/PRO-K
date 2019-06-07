@@ -1,0 +1,159 @@
+\documentclass[a4paper, 11pt, openany]{report}
+\usepackage{listings}			% Used to include VHDL-code and fragments
+\usepackage[dutch]{babel}		% Dutch hyphenation patterns and dutch names 
+\usepackage{pslatex}			% Times, helvetica and courier
+\usepackage[T1]{fontenc}		% Nicer font-encoding
+\usepackage{hyperref}			% Gives clickable references in pdf-file
+\usepackage{graphicx}			% Used to include .pdf, .jpg and .png-files
+\usepackage{tabularx}			% Used for evenly spread tables
+\usepackage{eso-pic}			% Absolute positioning, used for lines-to-track appendix and front- and backpage
+\usepackage{datetime}			% Used for some data-references
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=up]{caption}	% Nicer captions
+\usepackage{nonfloat}			% Captions for non-floating figures and tables
+\usepackage{nextpage}			% Advanced nextpage commands
+\usepackage{keystroke}			% "real" keys
+\usepackage[nottoc,notlot,notlof]{tocbibind}		% Include Bibliography in ToC
+\usepackage{multirow}			% Span text over multiple rows
+\usepackage{verbatim}			% For comment-environment
+\usepackage[left=3.5cm, right=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+\usepackage{a4wide}             % Voor wat beter gevulde A4-tjeshttps://www.overleaf.com/1358935774swrwfwrydwrx
+\usepackage[utf8x]{inputenc}     
+\usepackage{graphicx}           % To add pictures
+\usepackage{caption}            % For better captions
+\usepackage{pdfpages}           % To add PDF pages
+\usepackage{color}              % For colored text
+\usepackage{subcaption}      
+% For subcaptions patterns
+\usepackage[utf8x]{inputenc}  % unicode
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{lipsum} 
+\usepackage{amssymb}  
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{eso-pic}            % For the custom titlepage
+\setlength{\parindent}{0cm}     % To stop paragraph indents
+\usepackage{titlesec}           % To not waste space with a new chapter
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption} 
+\usepackage{wrapfig}
+\usepackage[export]{adjustbox}
+\usepackage{siunitx}
+\usepackage[titletoc]{appendix}
+\usepackage{wasysym}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{pdflscape}
+%\usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{mathrsfs}
+\usepackage{pgfgantt}
+\usepackage{cases}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{fixltx2e}
+\usepackage{layouts}
+\usepackage{xcolor}
+\usepackage[official]{eurosym}
+\usepackage{graphicx,wrapfig,lipsum}
+
+\usepackage{fullpage}
+
+\definecolor{Mauve}{rgb}{0.58, 0, 0.82}
+\definecolor{dkgreen}{rgb}{0, 0.6, 0}
+\definecolor{gray}{rgb}{0.5 , 0.5, 0.5}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{tiffanyblue}{rgb}{0.04, 0.73, 0.71}
+
+\titlespacing*{\chapter}{0pt}{-20pt}{0pt}
+\titleformat{\chapter}[display]{\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{5pt}{\huge}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Naam van het document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\datum{\leavevmode\hbox{\the\year\tweegetallen\month\tweegetallen\day}}
+\def\tweegetallen#1{\ifnum#1<10 0\fi\the#1}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Settings for hyperref-package
+
+\hypersetup{	colorlinks	= false,		%
+		pdfborder	= 0 0 0}		%
+
+
+% settings for listing arduino code
+ % adds the arduino language
+
+%% Define an Arduino style fore use later %%
+\lstdefinestyle{myArduino}{
+  language=Arduino,
+  %% Add other words needing highlighting below %%
+  morekeywords=[1]{},                  % dark green
+  morekeywords=[2]{FILE_WRITE},        % light blue
+  morekeywords=[3]{SD, File},          % bold orange
+  morekeywords=[4]{open, exists},      % orange
+  %% The lines below add a nifty box around the code %%
+  frame=shadowbox,                    
+  rulesepcolor=\color{arduinoBlue},
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End of settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+   
+   	\pagestyle{fancy}{
+    \fancyhf{}
+    \fancyfoot[L]{\documentname}
+	\fancyfoot[R]{Pagina's \pageref{LastPage}}
+    \pagenumbering{gobble}
+    \input{voorpagina}
+	\pagenumbering{roman}
+	}
+	
+	\pagestyle{fancy}{
+    \fancyhf{}
+    \fancyfoot[L]{\documentname}
+	\fancyfoot[R]{Pagina \thepage \hspace{1pt} of \pageref{eind1}}	
+	}
+	
+	\phantomsection
+	\pdfbookmark[0]{Inhoudsopgave}{toc}
+	
+	\tableofcontents
+	\label{eind1}
+	\newpage
+	
+	\pagestyle{fancy}{
+    \fancyhf{}
+    \fancyfoot[L]{\documentname}
+	\fancyfoot[R]{Pagina \thepage \hspace{1pt} of \pageref{LastPage}}
+	
+    \pagenumbering{arabic}
+	\input{inleiding.tex}
+	\input{uitgevoerde_activiteiten.tex}
+	\input{eindresultaten.tex}
+	\input{afwijking_planning_resultaten.tex}
+	\input{problemen_leerpunten.tex}
+	\input{kosten_baten.tex}
+	\input{aanbevelingen.tex}
+	\input{risicos.tex}
+	}
+	 
+\end{document}

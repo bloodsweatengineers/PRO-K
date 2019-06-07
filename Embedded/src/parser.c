@@ -9,6 +9,7 @@ void parser_switch(struct parser *parser, enum command_type *command_type) {
 }
 
 struct token parser_parse_command(struct parser *parser) {
+
 	switch(*(parser->command_type)) {
 		case BINARY:
 			return parser_parse_bin_command(parser);
@@ -42,29 +43,33 @@ struct token parser_parse_bin_command(struct parser *parser) {
 	buffer_index++;
 
 	c = uart_recieve();
-	uint8_t command = (uint8_t) command;
 	token.tok = retrieve_bin_command(c);
-	token.channel = retrieve_bin_channel(c);
+	token.channel = retrieve_bin_channel((uint8_t)c);
 
-	if(token.tok == REJECT || token.channel > 3) {
+	if(token.tok == REJECT || token.channel > 4) {
 		return token_reject();
 	}
 
 	buffer[buffer_index] = c;
 	buffer_index++;
 
-	int32_t value = 0;
+	uint32_t temp = 0;
 	for(int i=0; i<3; i++) {
 		c = uart_recieve();
 		buffer[buffer_index] = c;
 		buffer_index++;
-		value += c;
-		value <<= 8;
+		temp <<= 8;
+		temp += (uint8_t)c;
 	}
 
-	if(check_bin_value(command, value) == -1) {
+	int8_t error = check_bin_value(token.tok, temp);
+	if(error == -1) {
 		return token_reject();
+	} else if (error == 1) {
+		token.get = 1;
 	}
+
+	int32_t value = (int32_t) temp;
 
 	token.value = value;
 

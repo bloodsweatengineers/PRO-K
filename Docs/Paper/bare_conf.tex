@@ -1,0 +1,82 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{graphicx}
+
+\ifCLASSINFOpdf
+
+\else
+ 
+\fi
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+
+\title{Pulse Width Modulation Controller Software}
+
+
+\author{\IEEEauthorblockN{Kerim Kilic}
+\IEEEauthorblockA{De Haagse Hogeschool}
+\and
+\IEEEauthorblockN{Dennis van den Berg}
+\IEEEauthorblockA{De Haagse Hogeschool}
+\and
+\IEEEauthorblockN{Folkert Kevelam}
+\IEEEauthorblockA{De Haagse Hogeschool}}
+
+
+\maketitle
+
+
+\begin{abstract}
+This paper presents the high level design of the software which is used to generate sinusoidal waves from the Universal 4 Leg. The Universal 4 Leg is a sophisticated piece of hardware which can be configured as a inverter. Using this software, the different parameters of the sinusoidal wave can be manipulated.
+\end{abstract}
+
+
+\IEEEpeerreviewmaketitle
+
+
+
+\section{Introduction}
+DC voltage has shown great promise in transfering power with less losses than AC voltage. Most of todays appliances are powered by AC voltage. In order to use the voltage of a DC grid for AC applications the Universal 4 Leg inverter is used. With the Universal 4 Leg and the software which has been developed in the past months, it is now possible to power various AC Loads from DC grids. With the software which is being described in this paper, the various parameters of the AC output voltages can be manipulated, thus allowing to drive various loads. 
+
+\hfill Delft
+ 
+\hfill June 07, 2019
+
+\section{Communication protocol}
+The communication protocol for both the User Interface as well as for the terminal version of the software is made up of different commands. Some commands require a channel, where the channel is the specific leg the user wants to manipulate. The microcontroller always sends an acknowledgement to the computer, which indicates if the command is accepted or rejected. If the command is accepted the microcontroller will send 'OK' as the acknowledgement. If the command is rejected the microcontroller will send 'REJ' as the acknowledgement.
+
+\subsection{User Interface}\label{UI_communication}
+The communication between the microcontroller and user interface is made up of messages of 6 bytes each. The first byte represents the start byte which in our case is 0x24, which is also in ASCII equal to the Dollar sign (\$). The second byte represents the command that is being sent over (e.g. the frequency). The third, fourth and fifth byte represent the value that is being sent over the USART communication. The last byte represents the CRC checksum. If the value is N/A, for instance in the case of the command start, then the bytes representing the value will have the value of 0xFF FF FF.
+
+\subsection{Terminal}
+In order for the software to also work with terminals like, the Arduino serial monitor or the serial plotter, the terminal communication uses string messages. The syntax for this version of the protocol is:
+\\ \{Command\}\_\{Channel\} \{Value\}\textbackslash r \textbackslash n. Where command, channel and value can be substituted for an actual value (e.g. frequency\_1 10).
+
+\input{Embedded_Software_Architecture}
+
+\section{Computer software archictecture}
+
+The architecture of the Python software can be separated in three parts. The first part covers the graphical aspect of the user interface. The second part covers the communication over USART to the microcontroller. The last part acts as the entry point for the python software.
+
+\subsection{Graphics}
+For the graphical part the Python package Tkinter is being used in multiple files. The main file for the graphical part is the file user\_interface.py. This file also acts as the main frame for the User Interface. This file contains the GUI class, which essentially is the main window for our graphical user interface. From this GUI class different objects from different classes from different files are being created in order to form the User Interface as it is. The leg\_data\_tab.py file has a class which creates the different tabs in the UI to show the different settings of the individual legs. The enable\_leg.py file contains a class which is responsible for creating checkbuttons to enable different legs of the Universal 4 Leg. The field file contains a class and two subclasses. The first subclass is responsible for creating entry points for data, for instance to set the frequency or amplitude. The second subclass is responsible for creating data displays, where the current settings of the Universal 4 Legs are being displayed. To make sure that the user puts in correct characters and correct values, there is a error\_handler.py file. This file contains a class which checks if the individual entries contain prohibited characters. All of these files and classes combined forms the Graphical User Interface.
+
+\subsection{Communication}
+The communication part of the Python software is separated into two files. The command file contains a class which encodes the specific command and value given in the user\_interface.py file into a binary representation as explained in section \ref{UI_communication} in this paper. This binary representation can then be send to the class in the uart\_communication.py file. The class in this file sets up the communication between the microcontroller and computer. It gives an error message if there is no microcontroller present. It has functions to send commands over USART to the microcontroller.
+
+\subsection{Main}
+The main code of the computer software is found in the file main.py. In this file an object of the class GUI is created. This file also loops and refreshes the user interface.
+
+\input{results}
+
+\section{Conclusion}
+The developed software allows to use both the terminal and a specifically designed User Interface to send commands to the microcontroller. In the last few months a lot of work has been done to handling the commands. Also some attention went to the waveform of the signal and the commands manipulating the waveform. Besides the terminal some work has been put in the graphical user interface. This interface is build around Python package Tkinter. The interface code is split up in three parts, the graphics, the communication and the entry point. Where the graphics handle the graphical part of the user interface, the communication handles the communication between the PC and the microcontroller and the entry point refreshes the user interface. Both the terminal and UI code has been tested using an elementary low-pass rolloff filter to test the parameter manipulation.
+
+\section*{Acknowledgment}
+The authors gratefully acknowledge the contributions of W. Muhammad, F. Theinert, D. Zuidervliet and P. van Duijssen to the development and support in development of the software.
+\end{document}
+
+

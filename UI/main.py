@@ -1,10 +1,15 @@
+# Kerim Kilic
+# 16024141
+# De Haagse Hogeschool
+# PRO-K: PWM Controller
+
+
 import user_interface
 from tkinter import Tk
+##  @package main
+#   This module acts as the main for the user interface. The only function it has is looping the user interface
 
 root = Tk()
-this_gui = user_interface.GUI(root)
+gui = user_interface.GUI(root)
 
-while True:
-    root.update_idletasks()
-    root.update()
-
+root.mainloop()

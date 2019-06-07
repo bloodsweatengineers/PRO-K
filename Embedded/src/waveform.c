@@ -105,15 +105,15 @@ ISR(TIMER1_COMPA_vect) {
 	index++;
 }
 
-void frequency_conf(struct config *conf, uint32_t value, int8_t channel) {
+void frequency_conf(struct config *conf, int32_t value, int8_t channel) {
 
 	uint8_t possible_prescalers[] = {0,3,6,8,10};
-	uint8_t size = sizeof(possible_prescalers)/sizeof(uint8_t);
+	uint8_t size = 5;
 
 	uint8_t index = 1;
 	uint32_t clicks = F_CPU_10M / (value << 8);
 
-	while (clicks > UINT16_MAX) {
+	while (clicks > (uint32_t)UINT16_MAX) {
 		clicks >>= possible_prescalers[index];
 		index++;
 	}
