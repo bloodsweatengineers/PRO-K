@@ -6,6 +6,12 @@ BUILDDIR 	=build
 OBJDIR 		=Embedded/obj
 SOURCEDIR 	=Embedded/src
 HEADERDIR 	=Embedded/include
+
+PDFDIR 		=Docs/PDF
+PAPERDIR 	=Docs/Paper
+RAPPORTDIR  =Docs/Eindrapportage
+MANUALDIR 	=Docs/Manual
+
 GENDIR 		=Gen
 GENFILE 	=generate.py
 GENERATED_H =token_table.h
@@ -31,7 +37,23 @@ TEST_SOURCE =Test/test.c
 TEST_OBJ 	=build/test 
 TEST 		=build/test.hex
 
-all : directories generator $(HEX_NAME_PATH)
+CUR 		=$(shell pwd)
+
+all : directories generator docs $(HEX_NAME_PATH)
+
+docs: eindrapportage
+
+.ONESHELL:
+eindrapportage:
+	cd $(RAPPORTDIR)
+	pdflatex main.tex
+	pdflatex main.tex
+	mv main.pdf $(CUR)/$(PDFDIR)/EindRapportage.pdf
+	cd $(CUR)
+
+#paper:
+
+#manual:
 
 generator:
 	python3 $(GENDIR)/$(GENFILE) $(GENDIR) token.csv
@@ -41,6 +63,7 @@ generator:
 directories:
 	$(MKDIR) $(BUILDDIR)
 	$(MKDIR) $(OBJDIR)
+	$(MKDIR) $(PDFDIR)
 
 $(HEX_NAME_PATH) : $(NAME_PATH)
 	$(COPY) -O ihex $< $@
@@ -52,7 +75,9 @@ $(OBJDIR)/%.c.o : $(SOURCEDIR)/%.c
 	$(CC) -c -o $@ $< $(MCUFLAGS) $(CFLAGS) $(LDFLAGS) $(HEADERS)
 
 clean:
+	pwd
 	rm -rf $(OBJDIR)/* $(BUILDDIR)/*
+	rm -rf ./*.aux ./*.log ./*.out ./*.toc
 
 install:
 	avrdude -vvv -c arduino -P /dev/ttyACM0 -p m328p -U flash:w:$(HEX_NAME_PATH)
