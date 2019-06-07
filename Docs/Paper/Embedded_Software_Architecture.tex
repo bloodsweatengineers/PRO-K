@@ -41,3 +41,16 @@ Since the program needs to work in binary as well as string mode, the software n
 be able to switch between the 2. This is done by switching a button on the board.
 
 \subsection{Waveform generation}
+The waveform generation for the program has several stages. These stages are used
+to relieve the CPU, and provide methods for changing parameters durin runtime.
+\subsubsection{Stage 1: Setting parameters}
+The parameters are set to static variables that can be accessed by the Main timer interrupts
+and the PWM timer interrupts. The amplitude-changed lookup table is also generated during this
+point. This table assures a speedup inside the main interrupt allowing the software to generate
+waveforms up to 400Hz.
+\subsubsection{Stage 2: Main timer interrupts}
+The main timer interrupt Uses all parameter functions and sets a few parameters that change
+depending on the look-up table. These parameters have to be limited otherwise, the interrupt
+will take too much time and limit the frequency to a frequency lower than 400Hz.
+\subsubsection{Stage 3: PWM timer interrupts}
+The PWM Timer interrupts are only lightly used. In normal mode, no interrupt service routine is used, instead, an output pin is toggled when an interrupt is triggered.
