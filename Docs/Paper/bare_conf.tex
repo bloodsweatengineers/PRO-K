@@ -60,25 +60,6 @@ Hier komt iets over het algoritme
 
 \input{Embedded_Software_Architecture}
 
-%\section{Embedded software architecture}
-
-%\subsection{Statemachine}
-%The statemachine is created so that the user input is processed correctly. The user should always give a start %command first before anything can happen. Then, the user can immediately adjust one parameter or the user does a %prepare. When using prepare, the user can adjust multiple parameters and the command execute loads all these %parameters from the config.
-
-%When execute, then the user will always end up in the start\_state. The execute\_state is no real state (just as %config), because there is continuing with the next state.
-
-%Finally, from each state there is the opportunity to attend the stop\_state, if there is a stop command. It is %also possible to call functions from start\_state and prepare\_state. These functions are not shown in the %statemachine, but there are in the code. These functions are: enable, VFD, ping, info and gather. In the %functions there is briefly something done, and then go back to the original state. This can be the start\_state %or the prepare\_state.
-
-%\subsection{Waveform}
-%Iets over de waveform
-
-%\subsection{Parser}
-%Iets over de parser
-
-%(vertaling staat hier onder en er moet wat bij komen) Bij de parser is het belangrijk dat er als eerst gekeken %wordt of het commando vanuit de terminal komt of vanuit de GUI. Doordat hiernaar gekeken wordt wordt de juiste %manier gekozen en zo kan er bepaald worden of er een binary of een string command is.
-
-%It is important to have as first look at the command. Because, it can come from the terminal or from the GUI. %is important to check that and than can it be determined if the commands is a binary or string command.
-
 \section{Computer software archictecture}
 
 The architecture of the Python software can be separated in three parts. The first part covers the graphical aspect of the user interface. The second part covers the communication over USART to the microcontroller. The last part acts as the main for the python software.
@@ -99,6 +80,7 @@ Het project heeft twee mogelijke manieren om de commando's te verzenden. De ene 
 
 Binnen dit project is er gewerkt aan de afhandeling van de commando's. Ook is er aandacht besteed aan 
 
+\input{results}
 
 
 \section*{Acknowledgment}

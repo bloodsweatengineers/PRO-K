@@ -7,7 +7,7 @@
 from tkinter import messagebox
 import field
 ##  @package error_handler
-#   This module is responsible for the error handling of the user interface input.
+#   This module is responsible for the error handling of the user interface input. Error handling includes checking if the user puts in prohibited characters or values.
 
 
 ##  The ERROR_HANDLER Class returns an error message whenever the user puts in prohibited characters or values.

@@ -1,0 +1,110 @@
+\hypertarget{classcommand_1_1command}{}\section{command.\+command Class Reference}
+\label{classcommand_1_1command}\index{command.\+command@{command.\+command}}
+
+
+The command class encodes binary commands into the correct format according to the syntax of the communication protocol.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classcommand_1_1command_a6743be48c00372cbe1dd3cfa23f6d183}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, com, value=0, channel=0)
+\begin{DoxyCompactList}\small\item\em The constructor can take three arguments. \end{DoxyCompactList}\item 
+def \hyperlink{classcommand_1_1command_ad1ad605342adbcf9a8554de183bec046}{\+\_\+\+\_\+call\+\_\+\+\_\+} (self)
+\begin{DoxyCompactList}\small\item\em The call method creates the message with the startbyte being \$ and the binary representation of the command, value and the C\+RC checksum. \end{DoxyCompactList}\item 
+def \hyperlink{classcommand_1_1command_a66e801fbaee5caa92e17dd9faa15c0c2}{calc\+\_\+value} (self)
+\begin{DoxyCompactList}\small\item\em The calc\+\_\+value method creates a representation of the value in bytes. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classcommand_1_1command_a5476bbc05d74cc511a0987fb0df72b3c}\label{classcommand_1_1command_a5476bbc05d74cc511a0987fb0df72b3c}} 
+def \hyperlink{classcommand_1_1command_a5476bbc05d74cc511a0987fb0df72b3c}{crc} (self, message)
+\begin{DoxyCompactList}\small\item\em The C\+RC method calculates the C\+RC checksum. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcommand_1_1command_af3d0d08baaceb9267e6175555560c287}\label{classcommand_1_1command_af3d0d08baaceb9267e6175555560c287}} 
+{\bfseries value}
+\item 
+\mbox{\Hypertarget{classcommand_1_1command_aa4a718c78d7f588a2dac81ba8c5f5e35}\label{classcommand_1_1command_aa4a718c78d7f588a2dac81ba8c5f5e35}} 
+{\bfseries type}
+\item 
+\mbox{\Hypertarget{classcommand_1_1command_a105a8e6d367d6286188ba52575b08d44}\label{classcommand_1_1command_a105a8e6d367d6286188ba52575b08d44}} 
+{\bfseries command}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+dictionary \hyperlink{classcommand_1_1command_a5b96dc7d87263930faa4fa46cdd79412}{command\+\_\+type}
+\begin{DoxyCompactList}\small\item\em command\+\_\+type is a dictionary with the binary representation of the command, including if it is channel dependent or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The command class encodes binary commands into the correct format according to the syntax of the communication protocol. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcommand_1_1command_a6743be48c00372cbe1dd3cfa23f6d183}\label{classcommand_1_1command_a6743be48c00372cbe1dd3cfa23f6d183}} 
+\index{command\+::command@{command\+::command}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!command\+::command@{command\+::command}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def command.\+command.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{com,  }\item[{}]{value = {\ttfamily 0},  }\item[{}]{channel = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+The constructor can take three arguments. 
+
+Com being the command, value being the value which is set to 0 if there is no value and channel being the channel, which is set to 0 if there is no channel. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcommand_1_1command_ad1ad605342adbcf9a8554de183bec046}\label{classcommand_1_1command_ad1ad605342adbcf9a8554de183bec046}} 
+\index{command\+::command@{command\+::command}!\+\_\+\+\_\+call\+\_\+\+\_\+@{\+\_\+\+\_\+call\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+call\+\_\+\+\_\+@{\+\_\+\+\_\+call\+\_\+\+\_\+}!command\+::command@{command\+::command}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+call\+\_\+\+\_\+()}{\_\_call\_\_()}}
+{\footnotesize\ttfamily def command.\+command.\+\_\+\+\_\+call\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The call method creates the message with the startbyte being \$ and the binary representation of the command, value and the C\+RC checksum. 
+
+\mbox{\Hypertarget{classcommand_1_1command_a66e801fbaee5caa92e17dd9faa15c0c2}\label{classcommand_1_1command_a66e801fbaee5caa92e17dd9faa15c0c2}} 
+\index{command\+::command@{command\+::command}!calc\+\_\+value@{calc\+\_\+value}}
+\index{calc\+\_\+value@{calc\+\_\+value}!command\+::command@{command\+::command}}
+\subsubsection{\texorpdfstring{calc\+\_\+value()}{calc\_value()}}
+{\footnotesize\ttfamily def command.\+command.\+calc\+\_\+value (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+The calc\+\_\+value method creates a representation of the value in bytes. 
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcommand_1_1command_a5b96dc7d87263930faa4fa46cdd79412}\label{classcommand_1_1command_a5b96dc7d87263930faa4fa46cdd79412}} 
+\index{command\+::command@{command\+::command}!command\+\_\+type@{command\+\_\+type}}
+\index{command\+\_\+type@{command\+\_\+type}!command\+::command@{command\+::command}}
+\subsubsection{\texorpdfstring{command\+\_\+type}{command\_type}}
+{\footnotesize\ttfamily dictionary command.\+command.\+command\+\_\+type\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=  \{\textcolor{stringliteral}{'frequency'}     : [0x01,0],
+                    \textcolor{stringliteral}{'amplitude'}     : [0x10,1],
+                    \textcolor{stringliteral}{'keyfrequency'}  : [0x20,0],
+                    \textcolor{stringliteral}{'phaseshift'}    : [0x30,1],
+                    \textcolor{stringliteral}{'info'}          : [0x00,0],
+                    \textcolor{stringliteral}{'ping'}          : [0xFF,0],
+                    \textcolor{stringliteral}{'prepare'}       : [0x02,0],
+                    \textcolor{stringliteral}{'execute'}       : [0x03,0],
+                    \textcolor{stringliteral}{'start'}         : [0x04,0],
+                    \textcolor{stringliteral}{'gather'}        : [0x40,1],
+                    \textcolor{stringliteral}{'stop'}          : [0x05,0],
+                    \textcolor{stringliteral}{'VFD'}           : [0x06,0],
+                    \textcolor{stringliteral}{'enable'}        : [0x50,1]
+                    \}
+\end{DoxyCode}
+
+
+command\+\_\+type is a dictionary with the binary representation of the command, including if it is channel dependent or not. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+command.\+py\end{DoxyCompactItemize}

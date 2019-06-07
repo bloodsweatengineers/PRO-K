@@ -15,6 +15,7 @@ import command
 #   This module is responsible for generating entry fields where the user can put in values and display fields where the data is being displayed
 
 ##  The FIELD Class is the parent class to ENTRY_FIELD and DISPLAY_FIELD. 
+#
 class FIELD(object):
     ##  The constructor takes a row for the geometrical location of the display. It takes a parameter which indicates the parameter of the field. tab_nr indicates in which tab the field should be generated. Field_type indicates if it should be a entry or a display field. Padding and leg_nr are additional arguments, padding creates a keepout zone between the fields if necessary and leg_nr the leg of which the argument belongs to.
     def __init__(self, row, parameter, tab_nr,field_type,padding=(0,0),leg_nr=0):
@@ -31,7 +32,8 @@ class FIELD(object):
                 'Phaseshift 4': '°'}
         self.parameter_unit = unit[self.parameter]
 
-    ##  The ENTRY_FIELD class inherits from FIELD. It creates a field at a specific location and tab specified.
+##  The ENTRY_FIELD class inherits from FIELD. It creates a field at a specific location and tab specified.
+#
 class ENTRY_FIELD(FIELD):
     ##  The constructor inherits from FIELD and creates Entries and labels corresponding to the entries.
     def __init__(self, row, parameter, tab_nr,field_type,padding=(0,0),leg_nr=0):
@@ -64,7 +66,8 @@ class ENTRY_FIELD(FIELD):
         self.parameter_entry.delete(0,'end')
         self.parameter_entry['state'] = DISABLED
 
-    ##  The DISPLAY_FIELD class inherits from FIELD. It creates a field at a specific location and tab specified.
+##  The DISPLAY_FIELD class inherits from FIELD. It creates a field at a specific location and tab specified.
+#
 class DISPLAY_FIELD(FIELD):
     ##  The constructor inherits from FIELD and creates parameter and data labels.
     def __init__(self, row, parameter, tab_nr,field_type,padding=(0,0),leg_nr=0):
