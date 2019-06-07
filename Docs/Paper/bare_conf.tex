@@ -95,9 +95,13 @@ The main code of the computer software is found in the file main.py. In this fil
 \section{Conclusion}
 The developed software allows to use both the terminal and a specifically designed User Interface to send commands to the microcontroller.
 
-Het project heeft twee mogelijke manieren om de commando's te verzenden. De ene manier is via de gemaakte UI en de andere manier is via de terminal. De terminal stuurt commando's via binairy en de UI stuurt via string. Via deze twee manieren worden er commando's gestuurd naar de Arduino en deze stuurt de 4 legs aan. 
+Het project heeft twee mogelijke manieren om de commando's te verzenden. De ene manier is via de gemaakte UI en de andere manier is via de terminal. De terminal stuurt commando's via binairy en de UI stuurt via string. Via deze twee manieren worden er commando's gestuurd naar de Arduino en deze stuurt de 4 legs aan. Wanneer er een commando's verzonden wordt komt er altijd een acknoedgement die een OK kan bevatten of een REJ.  
 
-Binnen dit project is er gewerkt aan de afhandeling van de commando's. Ook is er aandacht besteed aan 
+Binnen dit project is er gewerkt aan de afhandeling van de commando's. Ook is er aandacht besteed aan de waveform van het signaal. De commando's die doorkomen manipuleren deze waveform
+
+Verder is er gewerkt aan de UI. Deze Python code is opgedeeld in drie delen. graphics, communication en main. De graphics is Tkinter gebruikt. De graphics gebruikt een class met verschillende functies. De GUI heeft een plek waar waardes ingevuld kunnen worden en een plek waar de huidige parameters worden weergegeven. Verder wordt er bij de communicatie gebruikt gemaakt van de binary representation. Wanneer er geen communicatie mogelijk is verschijnt er een foutmelding. De main loops and refreshes the user interface. 
+
+Tot slot is de werkende code getest met een simpel low pass filter. Hiermee is gekeken of er een sinus uit kwam. Vervolgens is er gekeken wat de sinus weergaf wanneer er parameters werden aangepast. In eerste instantie is er met de terminal getest. Later is er ook met de GUI getest.
 
 
 
