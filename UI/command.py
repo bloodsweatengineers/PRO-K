@@ -3,9 +3,15 @@
 # De Haagse Hogeschool
 # PRO-K: PWM Controller
 
+##  @package command
+#   This module encodes commands into the right format
+
 import crc8
 
+##  The command class encodes binary commands into the correct format according to the syntax of the communication protocol.
+#
 class command:
+    ##  command_type is a dictionary with the binary representation of the command, including if it is channel dependent or not.
     command_type = {'frequency'     : [0x01,0],
                     'amplitude'     : [0x10,1],
                     'keyfrequency'  : [0x20,0],
@@ -21,6 +27,7 @@ class command:
                     'enable'        : [0x50,1]
                     }
 
+    ##  The constructor can take three arguments. Com being the command, value being the value which is set to 0 if there is no value and channel being the channel, which is set to 0 if there is no channel.
     def __init__(self, com, value=0, channel=0):
         self.value = value
         self.type = command.command_type[com]
@@ -28,6 +35,7 @@ class command:
         if self.type[1]:
             self.command += channel
 
+    ##  The call method creates the message with the startbyte being $ and the binary representation of the command, value and the CRC checksum.
     def __call__(self):
         packet = list()
         packet.append(ord("$"))
@@ -36,6 +44,7 @@ class command:
         packet.append(self.crc(packet))
         return packet
 
+    ##  The calc_value method creates a representation of the value in bytes.
     def calc_value(self):
         value = self.value
         result = list()
@@ -46,7 +55,7 @@ class command:
             value = int(value/256)
         result.reverse()
         return result
-
+    ##  The CRC method calculates the CRC checksum
     def crc(self,message):
         hash = crc8.crc8()
         hash.update(bytearray(message))
