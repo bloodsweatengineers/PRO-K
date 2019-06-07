@@ -1,0 +1,7 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="error_handler.ERROR\l_HANDLER",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classerror__handler_1_1ERROR__HANDLER.html",tooltip="The ERROR_HANDLER Class returns an error message whenever the user puts in prohibited characters or v..."];
+}

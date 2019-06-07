@@ -1,0 +1,7 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="enable_leg.ENABLE_LEG",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classenable__leg_1_1ENABLE__LEG.html",tooltip="The ENABLE_LEG class creates the checkboxes which are, in our case, present at the top of the UI..."];
+}
