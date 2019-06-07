@@ -29,7 +29,6 @@ class GUI:
         self.master = master
         self.master.title("Universal Four Leg")
         
-        ##  tabcontrol creates the tabs of the user interface.
         tab_control = ttk.Notebook(self.master)
         tabs = []
         tabnames = ['general', 'leg 1', 'leg 2', 'leg 3', 'leg 4']
@@ -38,7 +37,6 @@ class GUI:
             tab_control.add(tabs[x], text = tabnames[x])
         tab_control.pack(expand = 1, fill = 'both')
 
-        ##  Menubar creates the top menu of the user_interface
         menu_bar = Menu(self.master)
         menu_bar.add_command(label='Help')
         menu_bar.add_command(label='About')
@@ -56,14 +54,11 @@ class GUI:
         self.enable_leg_3 = enable_leg.ENABLE_LEG(2,2,tabs[0],"leg 3")
         self.enable_leg_4 = enable_leg.ENABLE_LEG(2,3,tabs[0],"leg 4")
 
-        ##  The start button is being created.
         self.start_button = Button(tabs[0], text = "START", command = self.start_button_event, bg = 'red')
         self.start_button.grid(row = 3, column = 0, pady=(10,10))
-        ##  The updatebutton is being created.
         self.update_button = Button(tabs[0], text = "UPDATE", command = self.update_button_event)
         self.update_button.grid(row = 3, column = 1, columnspan = 2, pady=(10,10))
         self.update_button['state'] = 'disabled'
-        ##  The stopbutton is being created.
         self.stop_button = Button(tabs[0], text = "STOP", command = self.stop_button_event)
         self.stop_button.grid(row = 3, column = 3, pady=(10,10))
         self.stop_button['state'] = 'disabled'
@@ -86,16 +81,11 @@ class GUI:
         self.phase_3_display = field.DISPLAY_FIELD(18,'Phaseshift 3',tabs[0],'display')
         self.phase_4_display = field.DISPLAY_FIELD(19,'Phaseshift 4',tabs[0],'display')
 
-        ##  Creating tab 2.
         self.tab_2 = leg_data_tab.LEG_DATA_TAB(tabs[1],1)
-        ##  Creating tab 3.
         self.tab_3 = leg_data_tab.LEG_DATA_TAB(tabs[2],2)
-        ##  Creating tab 4.
         self.tab_4 = leg_data_tab.LEG_DATA_TAB(tabs[3],3)
-        ##  Creating tab 5.
         self.tab_5 = leg_data_tab.LEG_DATA_TAB(tabs[4],4)
 
-        ## Try to establish serial connection.
         self.connection = uart_connection.connection()
         self.check_connection()
 

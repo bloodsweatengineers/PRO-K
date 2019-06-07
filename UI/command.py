@@ -4,7 +4,7 @@
 # PRO-K: PWM Controller
 
 ##  @package command
-#   This module encodes commands into the right format
+#   This module is responsible to encode commands, which are being created in different parts in the user interface code into the right format.
 
 import crc8
 
