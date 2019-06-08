@@ -3,7 +3,7 @@ A large part of the project pertains the control and generation of PWM waveforms
 user input. To that end, the embedded software must be able to perform its generation duties whilst
 recieving or outputting paramters/data. There are multiple ways of achieving said multitasking such as
 polling or interrupt-driven execution. Since the required hardware does not have the ability to prioritise
-specific interrupts, a pure interrupt-driven approach was ruled out, instead, it was chosen to focus on a dual apporach. The routines with a deadline such as the waveform generation would work with interrupts while the routines without a deadline such as user interaction would work with a polling system.
+specific interrupts, a pure interrupt-driven approach was ruled out, instead, it was chosen to focus on a dual apporach. The routines with a deadline such as the waveform generation would work with interrupts while the routines without a deadline such as user interaction would work with a polling system. The doxygen documentation for the Embedded Software can be found in the Technical Appendices.
 
 \subsection{Polling state}
 The interactivity between the user and device is implemented using serial communication.

@@ -57,9 +57,9 @@ In order for the software to also work with terminals like, the Arduino serial m
 
 \input{Embedded_Software_Architecture}
 
-\section{Computer software archictecture}
+\section{Computer software architecture}
 
-The architecture of the Python software can be separated in three parts. The first part covers the graphical aspect of the user interface. The second part covers the communication over USART to the microcontroller. The last part acts as the entry point for the python software.
+The architecture of the Python software can be separated in three parts. The first part covers the graphical aspect of the user interface. The second part covers the communication over USART to the microcontroller. The last part acts as the entry point for the python software. The doxygen documentation for the Computer Software can be found in the technical appendices.
 
 \subsection{Graphics}
 For the graphical part the Python package Tkinter is being used in multiple files. The main file for the graphical part is the file user\_interface.py. This file also acts as the main frame for the User Interface. This file contains the GUI class, which essentially is the main window for our graphical user interface. From this GUI class different objects from different classes from different files are being created in order to form the User Interface as it is. The leg\_data\_tab.py file has a class which creates the different tabs in the UI to show the different settings of the individual legs. The enable\_leg.py file contains a class which is responsible for creating checkbuttons to enable different legs of the Universal 4 Leg. The field file contains a class and two subclasses. The first subclass is responsible for creating entry points for data, for instance to set the frequency or amplitude. The second subclass is responsible for creating data displays, where the current settings of the Universal 4 Legs are being displayed. To make sure that the user puts in correct characters and correct values, there is a error\_handler.py file. This file contains a class which checks if the individual entries contain prohibited characters. All of these files and classes combined forms the Graphical User Interface.
