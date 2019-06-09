@@ -1,3 +1,9 @@
+/*! \file waveform.h
+ *
+ *  \brief This file contains all the definitions for the waveform
+ *  generation
+ */
+
 #ifndef __PRO_K_WAVEFORM_H__
 #define __PRO_K_WAVEFORM_H__
 
