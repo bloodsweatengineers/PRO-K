@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{siunitx}
+\usepackage{listings}
 
 \title{User Manual technical documentation}
 
@@ -31,7 +32,9 @@ of system the user is using, and send as USB commands to the Arduino Nano. The A
 intreprets the USB commands and translates them to UART commands.
 
 The syntax for sending a command is as follows: \\
-%\{command\}_\{channel(optional)\} \{value\}\r\n
+\begin{lstlisting}
+{command}_{channel} {value}\r\n
+\end{lstlisting}
 
 Where command is a valid command listed in section \ref{sec:Commands}. The channel
 may be an optional argument as it isn't always necessary. The value argument
@@ -49,8 +52,11 @@ for finding errors in send commands.
 
 \section{Commands}
 \label{sec:Commands}
+This sections holds all the different commands and their binary representation.
+It also holds the range in which value are accepted for the given command, and whether
+users may use specific channels.\newline
 \begin{tabular}{c c c c}
-	\hline \\
+	\hline
 	Command & Binary Representation & Has channels & value range\\
 	\hline \hline \\
 	frequency & 0x01 & No & (0.01 - 80)/400\si{\hertz}\\
