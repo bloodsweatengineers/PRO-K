@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\usepackage{siunitx}
+\usepackage{listings}
+
+\title{User Manual technical documentation}
+
+\author{Folkert Kevelam \and Kerim Kilic \and Dennis van den Berg}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\pagenumbering{roman}
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+This manual servers as an introduction and technical reference of the communication
+API of the PWM controller software. The PWM controller is reachable via 2 different
+communication methods. One being terminal communication with a UART/USART connection
+and the other being the graphical user interface, where the actual commands are hidden
+behind a more user-friendly interface. This manual is therefore split into 2 different
+parts.
+
+\section{Terminal communication}
+Terminal communication can be achieved using a VCOM port and a working USB controller.
+The user sends commands through the VCOM port which is then intrpreted by the kernel
+of system the user is using, and send as USB commands to the Arduino Nano. The Arduino Nano
+intreprets the USB commands and translates them to UART commands.
+
+The syntax for sending a command is as follows: \\
+\begin{lstlisting}
+{command}_{channel} {value}\r\n
+\end{lstlisting}
+
+Where command is a valid command listed in section \ref{sec:Commands}. The channel
+may be an optional argument as it isn't always necessary. The value argument
+decides the kind of command it is, if no value is send by the user the firmware
+will interpret it as a request for information and return the value of the specific
+parameter and specific channel if applicable. The value send needs to be between
+certain ranges, those ranges can also be found in the command section \ref{sec:Commands}
+
+Finally, the firmware always sends a return code. This is always an `OK` or `REJ`.
+All messages are terminated using the carriage return and newline characters.
+The `REJ` return code may also add a numeric error code, which can be useful
+for finding errors in send commands.
+
+\section{Graphical User Interface}
+
+\section{Commands}
+\label{sec:Commands}
+This sections holds all the different commands and their binary representation.
+It also holds the range in which value are accepted for the given command, and whether
+users may use specific channels.\newline
+\begin{tabular}{c c c c}
+	\hline
+	Command & Binary Representation & Has channels & value range\\
+	\hline \hline \\
+	frequency & 0x01 & No & (0.01 - 80)/400\si{\hertz}\\
+	amplitude & 0x1X & Yes & 0 - 100 \si{\percent}\\
+	phaseshift & 0x3X & Yes & 0 - 360 \si{\degree}\\
+	pwm\_frequency & 0x20 & No & 1,4,16,64,256,1024 \\
+	start & 0x04 & No & N/A \\
+	stop & 0x05 & No & N/A \\
+	info & 0x00 & No & N/A \\
+	ping & 0xFF & No & N/A \\
+	prepare & 0x02 & No & N/A \\
+	execute & 0x03 & No & N/A \\
+	gather & 0x40 & Yes & 0-256 samples \\
+	vfd & 0x06 & No & N/A \\
+	enable & 0x50 & Yes & true or false \\
+	\hline
+\end{tabular}
+
+\end{document}
