@@ -139,7 +139,7 @@ class GUI:
     ##  The stop_button_event method destroys the serial connection if it was present. It also disables all the data entries, cleans the data labels and disables the update and stop button.
     def stop_button_event(self):
         self.connection = uart_connection.connection()
-        if self.check_connection():
+        if self.connection_flag:
             stop_command = command.command("stop")
             self.connection.send(stop_command)
         self.disable_all()
@@ -152,7 +152,12 @@ class GUI:
             if self.new_frequency != None:
                 frequency_command = command.command("frequency",int(self.new_frequency)*100)
                 self.connection.send(frequency_command)
-        
+
+        if self.new_pwm_frequency != 0:
+            if self.new_pwm_frequency != None:
+                pwm_frequency_command = command.command("keyfrequency",int(self.new_pwm_frequency))
+                self.connection.send(pwm_frequency_command)
+
         if self.enable_leg_1.get_data():
             if self.new_amplitude != 0:
                 if self.new_amplitude != None:
@@ -198,6 +203,8 @@ class GUI:
 
 
             self.new_pwm_frequency = self.pwm_frequency_entry.get_data()
+            if self.new_pwm_frequency == "":
+                self.new_pwm_frequency = 0
 
             if self.new_frequency != 0:
                 self.frequency_display.update(self.new_frequency)

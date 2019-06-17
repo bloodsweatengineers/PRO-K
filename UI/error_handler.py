@@ -55,8 +55,8 @@ class ERROR_HANDLER:
     def pwm_frequency_error(self):
         error_handler = False
         try:
-            self.value = float(self.value)
-            if( (self.value >= 1 and self.value <= 1024)):
+            self.value = int(self.value)
+            if(self.value == 0 or self.value == 1 or self.value == 8 or self.value == 64 or self.value == 256 or self.value == 1024):
                 error_handler = True
             else:
                 raise

@@ -25,14 +25,13 @@ class LEG_DATA_TAB:
             self.frame[i].pack()
 
         title_label = Label(self.frame[0], text="leg {} settings".format(self.legnr), font="Helvetica 16 bold italic").pack()
-
         #Current frequency setting
         self.frequency_label = Label(self.frame[1], text = "Current frequency:").pack(side=LEFT)
         self.frequency_data_label = Label(self.frame[1], text = "- Hz")
         self.frequency_data_label.pack(side=LEFT)
         #Current PWM frequency setting
         self.pwm_frequency_label = Label(self.frame[2], text = "Current PWM frequency prescaler:").pack(side=LEFT)
-        self.pwm_frequency_data_label = Label(self.frame[2], text="- Hz")
+        self.pwm_frequency_data_label = Label(self.frame[2], text="-")
         self.pwm_frequency_data_label.pack(side=LEFT)
         #current amplitude setting
         self.amplitude_label = Label(self.frame[3], text = "Current amplitude:").pack(side=LEFT)
@@ -50,7 +49,7 @@ class LEG_DATA_TAB:
         if parameter == 'Frequency':
             self.frequency_data_label.configure(text="{} Hz".format(self.new_value))
         elif parameter == 'PWM Frequency':
-            self.pwm_frequency_data_label.configure(text="{} Hz".format(self.new_value))
+            self.pwm_frequency_data_label.configure(text="{}".format(self.new_value))
         elif parameter == 'Amplitude':
             self.amplitude_data_label.configure(text="{} %".format(self.new_value))
         elif parameter == 'Phaseshift':
@@ -58,6 +57,6 @@ class LEG_DATA_TAB:
     ##  The stop method deletes the contents of data labels whenever the stop button is pressed.
     def stop(self):
             self.frequency_data_label.configure(text="- Hz")
-            self.pwm_frequency_data_label.configure(text="- Hz")
+            self.pwm_frequency_data_label.configure(text="-")
             self.amplitude_data_label.configure(text="- %")
             self.phase_data_label.configure(text ="- °")

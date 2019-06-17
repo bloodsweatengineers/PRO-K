@@ -25,7 +25,7 @@ class FIELD(object):
         self.tab_nr = tab_nr
         self.field_type = field_type
         self.padding = padding
-        unit = {'Frequency': 'Hz', 'PWM frequency': 'Hz', 'Amplitude legs 1-3': '%', 'Amplitude leg 4': '%',
+        unit = {'Frequency': 'Hz', 'PWM frequency': 'Clock Prescaler', 'Amplitude legs 1-3': '%', 'Amplitude leg 4': '%',
                 'Phaseshift 1': '°',
                 'Phaseshift 2': '°',
                 'Phaseshift 3': '°',
