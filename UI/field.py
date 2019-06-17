@@ -43,6 +43,22 @@ class ENTRY_FIELD(FIELD):
         parameter_label.grid(row=self.row, column=0, pady=self.padding, sticky='E')
         self.parameter_entry = Entry(self.tab_nr, bd=5, state= 'disabled')
         self.parameter_entry.grid(row=self.row, column=2, pady=self.padding)
+        if self.parameter == 'Frequency':
+            value_label = Label(self.tab_nr,text = '0.5 - 80, 400').grid(row=self.row,column=3)
+        if self.parameter == 'PWM frequency':
+            value_label = Label(self.tab_nr,text = '1, 8, 64, 256, 1024').grid(row=self.row,column=3)
+        if self.parameter == 'Amplitude legs 1-3':
+            value_label = Label(self.tab_nr, text = '0 - 100').grid(row=self.row,column=3)
+        if self.parameter == 'Amplitude leg 4':
+            value_label = Label(self.tab_nr, text = '0 - 100').grid(row=self.row,column=3)
+        if self.parameter == 'Phaseshift 1':
+            value_label = Label(self.tab_nr, text = '0 - 360').grid(row=self.row,column=3)
+        if self.parameter == 'Phaseshift 2':
+            value_label = Label(self.tab_nr, text = '0 - 360').grid(row=self.row,column=3)
+        if self.parameter == 'Phaseshift 3':
+            value_label = Label(self.tab_nr, text = '0 - 360').grid(row=self.row,column=3)
+        if self.parameter == 'Phaseshift 4':
+            value_label = Label(self.tab_nr, text = '0 - 360').grid(row=self.row,column=3)
 
     ##  The start method enables a checkbutton if the checkbutton is enabled and disables it if the checkbutton is disabled.
     def start(self, checkbutton_status=0):

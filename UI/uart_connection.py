@@ -25,7 +25,7 @@ class connection:
             self.ser = serial.Serial(A,9600, timeout = 0.5)
             self.var = True
         except:
-            messagebox.showerror("ERROR","Please connect a microcontroller and press refresh!")
+            messagebox.showerror("ERROR","Please connect a microcontroller and press Start!")
             self.var = False
     ##  The call method returns a boolean which represents if the microcontrolller is connected.
     def __call__(self):

@@ -56,7 +56,7 @@ class ERROR_HANDLER:
         error_handler = False
         try:
             self.value = float(self.value)
-            if( (self.value >= 0 and self.value <= 65200)):
+            if( (self.value >= 1 and self.value <= 1024)):
                 error_handler = True
             else:
                 raise

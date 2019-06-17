@@ -31,7 +31,7 @@ class LEG_DATA_TAB:
         self.frequency_data_label = Label(self.frame[1], text = "- Hz")
         self.frequency_data_label.pack(side=LEFT)
         #Current PWM frequency setting
-        self.pwm_frequency_label = Label(self.frame[2], text = "Current PWM frequency:").pack(side=LEFT)
+        self.pwm_frequency_label = Label(self.frame[2], text = "Current PWM frequency prescaler:").pack(side=LEFT)
         self.pwm_frequency_data_label = Label(self.frame[2], text="- Hz")
         self.pwm_frequency_data_label.pack(side=LEFT)
         #current amplitude setting
