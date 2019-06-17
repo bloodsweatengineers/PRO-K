@@ -92,6 +92,7 @@ static uint8_t wave[256] = {
 */
 
 uint8_t static phaseshift[4] = {0, 0, 0, 0};
+uint8_t static amplitude[2] = {100, 100};
 
 ISR(TIMER1_COMPA_vect) {
 
@@ -105,7 +106,7 @@ ISR(TIMER1_COMPA_vect) {
 	index++;
 }
 
-void frequency_conf(struct config *conf, int32_t value, int8_t channel) {
+void frequency_conf(struct config *conf, int32_t value) {
 
 	uint8_t possible_prescalers[] = {0,3,6,8,10};
 	uint8_t size = 5;
@@ -156,4 +157,28 @@ void amplitude_conf(struct config *conf, uint8_t value, int8_t channel) {
 }
 
 void amplitude_execute(struct config *conf) {
+}
+
+void pwm_frequency_conf(struct config *conf, int32_t value) {
+
+}
+
+void pwm_frequency_execute(struct config *conf) {
+
+}
+
+void execute_all(struct config *conf) {
+
+}
+
+void enable_conf(struct config *conf, uint8_t channel) {
+
+}
+
+void enable_execute(struct config *conf) {
+
+}
+
+void vfd_conf(struct config *conf) {
+
 }
