@@ -12,7 +12,7 @@ void conf_init(struct config *conf) {
 		conf->amplitude[i] = 100;
 		conf->phaseshift[i] = 0;
 		conf->phaseshift_clicks[i] = 0;
-		conf->enable[i] = 0;
+		conf->enable[i] = 1;
 	}
 }
 
