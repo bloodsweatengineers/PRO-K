@@ -81,7 +81,7 @@ void main(void) {
 						uart_transmit_str("OK \r\n");
 						break;
 					case STOP:
-						next_state = STOP;
+						next_state = stop_state;
 						uart_transmit_str("OK \r\n");
 						break;
 					case INFO:
@@ -126,7 +126,7 @@ void main(void) {
 							uart_transmit_str("OK \r\n");
 							break;
 						case STOP:
-							next_state = STOP;
+							next_state = stop_state;
 							uart_transmit_str("OK \r\n");
 							break;
 						case INFO:
