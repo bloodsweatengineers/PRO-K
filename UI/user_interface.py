@@ -150,7 +150,7 @@ class GUI:
 
         if self.new_frequency != 0:
             if self.new_frequency != None:
-                frequency_command = command.command("frequency",int(self.new_frequency)*100)
+                frequency_command = command.command("frequency",float(self.new_frequency)*100)
                 self.connection.send(frequency_command)
 
         if self.new_pwm_frequency != 0:
@@ -161,9 +161,10 @@ class GUI:
         if self.enable_leg_1.get_data():
             if self.new_amplitude != 0:
                 if self.new_amplitude != None:
-                    amplitude_1_command = command.command("amplitude",int(self.new_amplitude),0)
+                    amplitude_1_command = command.command("amplitude",int(self.new_amplitude),1)
                     self.connection.send(amplitude_1_command)
             if self.new_phase_1 != 0:
+                print(self.new_phase_1)
                 phase_1_command = command.command("phaseshift",int(self.new_phase_1),0)
                 self.connection.send(phase_1_command)
         if self.enable_leg_2.get_data():
@@ -177,7 +178,7 @@ class GUI:
         if self.enable_leg_3.get_data():
             if self.new_amplitude != 0:
                 if self.new_amplitude != None:
-                    amplitude_3_command = command.command("amplitude",int(self.new_amplitude),2)
+                    amplitude_3_command = command.command("amplitude",int(self.new_amplitude),1)
                     self.connection.send(amplitude_2_command)
             if self.new_phase_3 != 0:
                 phase_3_command = command.command("phaseshift", int(self.new_phase_3),2)
@@ -185,7 +186,7 @@ class GUI:
         if self.enable_leg_4.get_data():
             if self.new_amplitude_leg_4 != 0:
                 if self.new_amplitude != None:
-                    amplitude_4_command = command.command("amplitude",int(self.new_amplitude_leg_4),3)
+                    amplitude_4_command = command.command("amplitude",int(self.new_amplitude_leg_4),2)
                 self.connection.send(amplitude_4_command)
             if self.new_phase_4 != 0:
                 phase_4_command = command.command("phaseshift",int(self.new_phase_4),3)
