@@ -70,28 +70,28 @@ void main(void) {
 						}
 						break;
 					case AMPLITUDE:
-						if(amplitude_conf(&conf, tok.value, tok.channel) == -1){
-                                                        uart_transmit_str("REJ \r\n");
-                                                }
-                                                else{
+						if(amplitude_conf(&conf, tok.value, tok.channel) == -1)
+						{
+							uart_transmit_str("REJ \r\n");
+						}else{
 							amplitude_execute(&conf);
 							uart_transmit_str("OK \r\n");
 						}
 						break;
 					case PHASESHIFT:
-						if(phaseshift_conf(&conf, tok.value, tok.channel) == -1){
-                                                        uart_transmit_str("REJ \r\n");
-                                                }
-                                                else{
+						if(phaseshift_conf(&conf, tok.value, tok.channel) == -1)
+						{
+							uart_transmit_str("REJ \r\n");
+						}else{
 							phaseshift_execute(&conf);
 							uart_transmit_str("OK \r\n");
 						}
 						break;
 					case PWM_FREQUENCY:
-						if(pwm_frequency_conf(&conf, tok.value, tok.channel) == -1){
-                                                        uart_transmit_str("REJ \r\n");
-                                                }
-                                                else{
+						if(pwm_frequency_conf(&conf, tok.value, tok.channel) == -1)
+						{
+							uart_transmit_str("REJ \r\n");
+						}else{
 							pwm_frequency_execute(&conf);
 							uart_transmit_str("OK \r\n");
 						}
@@ -104,7 +104,7 @@ void main(void) {
 						uart_transmit_str("OK \r\n");
 						break;
 					case PING:
-						uart_transmit_str("OK \r\n");
+						uart_transmit_str("OK START STATE\r\n");
 						break;
 					case PREPARE:
 						next_state = prepare_state;
@@ -115,10 +115,10 @@ void main(void) {
 						uart_transmit_str("OK \r\n");
 						break;
 					case ENABLE:
-						if(enable_conf(&conf, tok.value, tok.channel) == -1){
-                                                        uart_transmit_str("REJ \r\n");
-                                                }
-                                                else{
+						if(enable_conf(&conf, tok.value, tok.channel) == -1)
+						{
+							uart_transmit_str("REJ \r\n");
+						}else{
 							enable_execute(&conf);
 							uart_transmit_str("OK \r\n");
 						}
@@ -130,34 +130,34 @@ void main(void) {
 				case prepare_state:
 					switch(tok.tok) {
 						case FREQUENCY:
-							if(frequency_conf(&conf, tok.value, tok.channel) == -1){
-                                                     		uart_transmit_str("REJ \r\n");
-                                                	}
-                                                	else{
+							if(frequency_conf(&conf, tok.value, tok.channel) == -1)
+							{
+								uart_transmit_str("REJ \r\n");
+							}else{
 								uart_transmit_str("OK \r\n");
 							}
 							break;
 						case AMPLITUDE:
-							if(amplitude_conf(&conf, tok.value, tok.channel) == -1){
-                                                                uart_transmit_str("REJ \r\n");
-                                                        }
-                                                        else{
+							if(amplitude_conf(&conf, tok.value, tok.channel) == -1)
+							{
+								uart_transmit_str("REJ \r\n");
+							}else{
 								uart_transmit_str("OK \r\n");
 							}
 							break;
 						case PHASESHIFT:
-							if(phaseshift_conf(&conf, tok.value, tok.channel) == -1){
-                                                                uart_transmit_str("REJ \r\n");
-                                                        }
-                                                        else{
+							if(phaseshift_conf(&conf, tok.value, tok.channel) == -1)
+							{
+								uart_transmit_str("REJ \r\n");
+							}else{
 								uart_transmit_str("OK \r\n");
 							}
 							break;
 						case PWM_FREQUENCY:
-							if(pwm_frequency_conf(&conf, tok.value, tok.channel) == -1){
-                                                                uart_transmit_str("REJ \r\n");
-                                                        }
-                                                        else{
+							if(pwm_frequency_conf(&conf, tok.value, tok.channel) == -1)
+							{
+								uart_transmit_str("REJ \r\n");
+							}else{
 								uart_transmit_str("OK \r\n");
 							}
 							break;
@@ -169,11 +169,10 @@ void main(void) {
 							uart_transmit_str("OK \r\n");
 							break;
 						case PING:
-							uart_transmit_str("OK \r\n");
+							uart_transmit_str("OK PREPARE STATE \r\n");
 							break;
 						case PREPARE:
-							next_state = prepare_state;
-							uart_transmit_str("OK \r\n");
+							uart_transmit_str("REJ \r\n");
 							break;
 						case EXECUTE:
 							next_state = start_state;
@@ -181,18 +180,18 @@ void main(void) {
 							uart_transmit_str("OK \r\n");
 							break;
 						case ENABLE:
-							if(enable_conf(&conf, tok.value, tok.channel) == -1){
-                                                                uart_transmit_str("REJ \r\n");
-                                                        }
-                                                        else{
+							if(enable_conf(&conf, tok.value, tok.channel) == -1)
+							{
+								uart_transmit_str("REJ \r\n");
+							}else{
 								uart_transmit_str("OK \r\n");
 							}
 							break;
 						case VFD:
-							if(vfd_conf(&conf, tok.value, tok.channel) == -1){
-                                                                uart_transmit_str("REJ \r\n");
-                                                        }
-                                                        else{
+							if(vfd_conf(&conf, tok.value, tok.channel) == -1)
+							{
+								uart_transmit_str("REJ \r\n");
+							}else{
 								uart_transmit_str("OK \r\n");
 							}
 							break;
@@ -204,6 +203,8 @@ void main(void) {
 					if(tok.tok == START) {
 						next_state = start_state;
 						uart_transmit_str("OK \r\n");
+					} else if(tok.tok == PING) {
+						uart_transmit_str("OK STOP STATE \r\n");
 					} else {
 						uart_transmit_str("REJ \r\n");
 					}

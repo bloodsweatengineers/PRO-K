@@ -1,14 +1,15 @@
 #include "conf.h"
+#include "uart.h"
 
 void conf_init(struct config *conf) {
-	conf->frequency = 0;
-	conf->frequency_prescaler_index = 0;
-	conf->frequency_clicks = 0;
+	conf->frequency = 5000;
+	conf->frequency_prescaler_index = 1;
+	conf->frequency_clicks = 1250;
 	conf->pwm_frequency_prescaler_index = 0;
 	conf->vfd_enable = 0;
 	
 	for(int i=0; i<4; i++) {
-		conf->amplitude[i] = 0;
+		conf->amplitude[i] = 100;
 		conf->phaseshift[i] = 0;
 		conf->phaseshift_clicks[i] = 0;
 		conf->enable[i] = 0;
@@ -16,7 +17,7 @@ void conf_init(struct config *conf) {
 }
 
 int frequency_conf(struct config *conf, int32_t value, int8_t channel) {
-	if((value < 1 || value > 8000) || value != 40000) {
+	if((value < 1 || value > 8000) && value != 40000) {
 		return -1;
 	}
 
@@ -101,27 +102,31 @@ int pwm_frequency_conf(struct config *conf, int32_t value, int8_t channel) {
 			return -1;
 	}
 
+	conf->pwm_frequency_prescaler_index = index;
+
 	return 0;
 }
 
 int enable_conf(struct config *conf, int32_t value, int8_t channel) {
 	
-	if(value < 0 || value > 1 || channel < -1 || channel > 3) {
+	if(value < 0 || value > 1 || channel < 0 || channel > 4) {
 		return -1;
 	}
 
-	if(channel == -1) {
+	if(channel == 0) {
 		for(int i=0; i<4; i++) {
 			conf->enable[i] = value;
 		}
 	} else {
-		conf->enable[channel] = value;
+		uart_transmit_str("enabling single conf");
+		conf->enable[channel-1] = value;
 	}
 }
 
 int vfd_conf(struct config *conf, int32_t value, int8_t channel) {
 
-	if(value != -1 || channel != -1) {
+	if(channel != -1) {
+		uart_transmit_str("Wrong channel");
 		return -1;
 	}
 
