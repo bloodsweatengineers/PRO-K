@@ -2,9 +2,9 @@
 #include "uart.h"
 
 void conf_init(struct config *conf) {
-	conf->frequency = 5000;
-	conf->frequency_prescaler_index = 1;
-	conf->frequency_clicks = 1250;
+	conf->frequency = 0;
+	conf->frequency_prescaler_index = 0;
+	conf->frequency_clicks = 0;
 	conf->pwm_frequency_prescaler_index = 0;
 	conf->vfd_enable = 0;
 	
