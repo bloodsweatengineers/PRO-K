@@ -53,7 +53,6 @@ def retrieve_bin_channel(binary, channel):
     string += "\t\tswitch(command) {\n"
     for i in without_channel:
         string += "\t\t\tcase {}:\n".format(i)
-    string += '\t\t\t\tuart_transmit_str("-1");\n'
     string += "\t\t\t\treturn -1;\n"
     string += "\t\t\tdefault:\n"
     string += "\t\t\t\tbreak;\n"

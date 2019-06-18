@@ -8,7 +8,7 @@ void main(void) {
 	cli();
 	struct config conf;
 	struct parser parser;		
-	enum command_type command_type = STRING;	
+	enum command_type command_type = BINARY;	
 	
 	uart_init();
 	conf_init(&conf);
