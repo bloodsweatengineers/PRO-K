@@ -48,7 +48,6 @@ class command:
     def calc_value(self):
         value = self.value
         result = list()
-        print(value)
         if value == None:
             return [0xFF,0xFF,0xFF]
         for i in range(0,3):

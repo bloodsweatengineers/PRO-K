@@ -124,11 +124,13 @@ class GUI:
         self.connection = uart_connection.connection() 
         self.check_connection()
         start_command = command.command("start")
+
         if self.connection_flag:
             self.enable_all()
             self.update_button['state'] = 'normal'
             self.stop_button['state'] = 'normal'
             self.connection.send(start_command)
+
         else:
             self.disable_all()
             self.update_button['state'] = 'disabled'
