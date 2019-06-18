@@ -72,7 +72,7 @@ int amplitude_conf(struct config *conf, int32_t value, int8_t channel) {
 	if(channel == -1) {
 		conf->amplitude[0] = value;
 		conf->amplitude[1] = value;
-	} else if(channel >= 0 && channel <= 1) {
+	} else if(channel >= 1 && channel <= 2) {
 		conf->amplitude[channel] = value;
 	} else {
 		return -1;
