@@ -93,6 +93,8 @@ void phaseshift_execute(struct config *conf) {
 void amplitude_execute(struct config *conf) {
 	amplitude[0] = conf->amplitude[0];
 	amplitude[1] = conf->amplitude[1];
+	
+	calc_amplitude();
 }
 
 void pwm_frequency_execute(struct config *conf) {
