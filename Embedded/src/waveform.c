@@ -106,40 +106,10 @@ ISR(TIMER1_COMPA_vect) {
 	index++;
 }
 
-void frequency_conf(struct config *conf, int32_t value) {
-
-	uint8_t possible_prescalers[] = {0,3,6,8,10};
-	uint8_t size = 5;
-
-	uint8_t index = 1;
-	uint32_t clicks = F_CPU_10M / (value << 8);
-
-	while (clicks > (uint32_t)UINT16_MAX) {
-		clicks >>= possible_prescalers[index];
-		index++;
-	}
-
-	conf->frequency = value;
-	conf->frequency_prescaler_index = index;
-	conf->frequency_clicks = clicks;
-}
-
 void frequency_execute(struct config *conf) {
 	OCR1A = conf->frequency_clicks;
 	TCCR1B &= 0xF8;
 	TCCR1B |= (conf->frequency_prescaler_index & 0x07);
-}
-
-void phaseshift_conf(struct config *conf, uint8_t value, int8_t channel) {
-	if(channel < 0) {
-		for(int i=0; i<4; i++) {
-			conf->phaseshift[i] = value;
-			conf->phaseshift_clicks[i] = ((uint16_t)value<<8) / 360;
-		}
-	} else {
-		conf->phaseshift[channel] = value;
-		conf->phaseshift_clicks[channel] = ((uint16_t)value<<8) / 360;
-	}
 }
 
 void phaseshift_execute(struct config *conf) {
@@ -148,19 +118,7 @@ void phaseshift_execute(struct config *conf) {
 	}
 } 
 
-void amplitude_conf(struct config *conf, uint8_t value, int8_t channel) {
-	cli();
-	for(int i=0; i<256; i++) {
-		amplitude_corrected_wave[i] = (value*(wave[i] - 128) + 12800)/100;
-	}
-	sei();
-}
-
 void amplitude_execute(struct config *conf) {
-}
-
-void pwm_frequency_conf(struct config *conf, int32_t value) {
-
 }
 
 void pwm_frequency_execute(struct config *conf) {
@@ -171,14 +129,6 @@ void execute_all(struct config *conf) {
 
 }
 
-void enable_conf(struct config *conf, uint8_t channel) {
-
-}
-
 void enable_execute(struct config *conf) {
-
-}
-
-void vfd_conf(struct config *conf) {
 
 }

@@ -61,7 +61,7 @@ void main(void) {
 			case start_state:
 				switch(tok.tok) {
 					case FREQUENCY:
-						frequency_conf(&conf, tok.value);
+						frequency_conf(&conf, tok.value, tok.channel);
 						frequency_execute(&conf);
 						uart_transmit_str("OK \r\n");
 						break;
@@ -76,7 +76,7 @@ void main(void) {
 						uart_transmit_str("OK \r\n");
 						break;
 					case PWM_FREQUENCY:
-						pwm_frequency_conf(&conf, tok.value);
+						pwm_frequency_conf(&conf, tok.value, tok.channel);
 						pwm_frequency_execute(&conf);
 						uart_transmit_str("OK \r\n");
 						break;
@@ -99,7 +99,7 @@ void main(void) {
 						uart_transmit_str("OK \r\n");
 						break;
 					case ENABLE:
-						enable_conf(&conf, tok.channel);
+						enable_conf(&conf, tok.value, tok.channel);
 						enable_execute(&conf);
 						uart_transmit_str("OK \r\n");
 						break;
@@ -110,7 +110,7 @@ void main(void) {
 				case prepare_state:
 					switch(tok.tok) {
 						case FREQUENCY:
-							frequency_conf(&conf, tok.value);
+							frequency_conf(&conf, tok.value, tok.channel);
 							uart_transmit_str("OK \r\n");
 							break;
 						case AMPLITUDE:
@@ -122,7 +122,7 @@ void main(void) {
 							uart_transmit_str("OK \r\n");
 							break;
 						case PWM_FREQUENCY:
-							pwm_frequency_conf(&conf, tok.value);
+							pwm_frequency_conf(&conf, tok.value, tok.channel);
 							uart_transmit_str("OK \r\n");
 							break;
 						case STOP:
@@ -145,11 +145,11 @@ void main(void) {
 							uart_transmit_str("OK \r\n");
 							break;
 						case ENABLE:
-							enable_conf(&conf, tok.channel);
+							enable_conf(&conf, tok.value, tok.channel);
 							uart_transmit_str("OK \r\n");
 							break;
 						case VFD:
-							vfd_conf(&conf);
+							vfd_conf(&conf, tok.value, tok.channel);
 							uart_transmit_str("OK \r\n");
 							break;
 						default:
