@@ -2,6 +2,7 @@
 
 \usepackage{siunitx}
 \usepackage{listings}
+\usepackage{graphicx}
 
 \title{User Manual technical documentation}
 
@@ -16,7 +17,7 @@
 \newpage
 
 \pagenumbering{arabic}
-
+\newpage
 \section{Introduction}
 This manual servers as an introduction and technical reference of the communication
 API of the PWM controller software. The PWM controller is reachable via 2 different
@@ -47,9 +48,45 @@ Finally, the firmware always sends a return code. This is always an `OK` or `REJ
 All messages are terminated using the carriage return and newline characters.
 The `REJ` return code may also add a numeric error code, which can be useful
 for finding errors in send commands.
-
+\newpage
 \section{Graphical User Interface}
 
+The Graphical User Interface can be used by running the main.py Python3 script.
+It opens a window similar like Figure \ref{GUI}. In this window on the top there 
+is a small menu of three items: Help, About and Close program. 
+`Help' opens an additional window with some help on how to use the User Interface.
+`About' opens an additional window with some information on the User Interface Software 
+that is been running and `Close program' closes the window of the User Interface. 
+Under that menu there are five tabs. 
+
+\subsubsection{General Settings}
+Tab General is the tab where the general settings of the Universal 4 Leg can be configured. 
+First of all there is a indication at the right which indicates if there is an microcontroller connected. 
+`Connected' being that there is a microcontroller connected and `Disconnected' being that the 
+microcontoller is disconnected. Under this indication are four checkboxes. 
+The User first needs to check the checkboxes of the legs they wants to use.
+When pressing `start' the startbutton should become green and the checkboxes should become grey as showed in Figure \ref{GUI}. 
+After the user has pressed `start', they can start changing the parameters of the Universal 4 Leg 
+easily by filling in data in the entries and pressing `Update'. 
+Whenever `Update' is pressed, a message to the microcontroller is being sent with all the parameters that need to change. 
+under the Entries, the current settings on the microcontroller are being displayed. 
+Whenever the user changes some parameters, it also is being displayed here. 
+Whenever the user wants to stop the program, they can press the `Stop' button. 
+After the `stop' button is being pressed, 
+the `start' button should go Red. 
+The checkboxes can be checked again and the entries will become read-only and the data at the bottom will be deleted.
+
+\subsubsection{Data tabs}
+Tabs 2 to 5 are the data tabs, which wil show the current settings of each individual leg of the Universal 4 Leg.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{pictures/GUI.png}
+\caption{Graphical User Interface example}
+\label{GUI}
+\end{figure}
+
+\clearpage
+\newpage
 \section{Commands}
 \label{sec:Commands}
 This sections holds all the different commands and their binary representation.

@@ -4,6 +4,7 @@ import serial
 import time
 import crc8
 import serial.tools.list_ports
+import re
 
 string = list()
 command = list()
@@ -54,8 +55,12 @@ def binary_REPL():
         chan = input("channel(optional): ")
         val = input("value(optional): ")
 
-        index = string.index(com_str)
-        com = int(command[index], 0)
+        try:
+            index = string.index(com_str)
+            com = int(command[index], 0)
+        except:
+            print("command not found");
+            continue
 
         if chan:
             com += int(chan)
@@ -89,9 +94,11 @@ def print_help():
 
 connected = False
 device = None
+arduino = re.compile("A|arduino U|uno");
+ft232 = re.compile("FT232R");
 while connected == False:
         for i in serial.tools.list_ports.comports(True):
-            if(i.product == "Arduino Uno"):
+            if(arduino.match(i.product) or ft232.match(i.product)):
                 print("Found device")
                 device = i.device
                 connected = True

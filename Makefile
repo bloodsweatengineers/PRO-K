@@ -39,7 +39,7 @@ TEST 		=build/test.hex
 
 CUR 		=$(shell pwd)
 
-all : directories generator docs $(HEX_NAME_PATH)
+all : directories generator $(HEX_NAME_PATH)
 
 docs: eindrapportage
 

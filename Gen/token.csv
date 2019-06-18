@@ -11,4 +11,4 @@ nr,token,string,binary,channel,value
 10,EXECUTE,execute,0x03,-1,0
 11,GATHER,gather,0x40,1,1
 12,VFD,vfd,0x06,-1,0
-13,ENABLE,enable,0x50,1,0
+13,ENABLE,enable,0x50,1,1

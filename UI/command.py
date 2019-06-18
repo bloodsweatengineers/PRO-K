@@ -29,7 +29,7 @@ class command:
 
     ##  The constructor can take three arguments. Com being the command, value being the value which is set to 0 if there is no value and channel being the channel, which is set to 0 if there is no channel.
     def __init__(self, com, value=0, channel=0):
-        self.value = value
+        self.value = int(value)
         self.type = command.command_type[com]
         self.command = self.type[0]
         if self.type[1]:
@@ -48,7 +48,7 @@ class command:
     def calc_value(self):
         value = self.value
         result = list()
-        if not value:
+        if value == None:
             return [0xFF,0xFF,0xFF]
         for i in range(0,3):
             result.append(value % 256)
