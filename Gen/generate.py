@@ -66,7 +66,10 @@ def retrieve_bin_channel(binary, channel):
     string += '\t\t\tuart_transmit_str(buf);\n'
     string += "\t\t\treturn -1;\n"
     string += "\t\t} else {\n"
-    string += "\t\t\treturn command&0x0F;\n"
+    string += "\t\t\tif(command&0x0F == 0) {\n"
+    string += "\t\t\t\treturn -1;"
+    string += "\t\t\t};"
+    string += "\t\t\treturn command&0x0F;"
     string += "\t\t}\n"
     string += "\t}"
     return string

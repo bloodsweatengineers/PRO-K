@@ -109,24 +109,22 @@ int pwm_frequency_conf(struct config *conf, int32_t value, int8_t channel) {
 
 int enable_conf(struct config *conf, int32_t value, int8_t channel) {
 	
-	if(value < 0 || value > 1 || channel < 0 || channel > 4) {
+	if(value < 0 || value > 1 || channel < -1 || channel > 3) {
 		return -1;
 	}
 
-	if(channel == 0) {
+	if(channel == -1) {
 		for(int i=0; i<4; i++) {
 			conf->enable[i] = value;
 		}
 	} else {
-		uart_transmit_str("enabling single conf");
-		conf->enable[channel-1] = value;
+		conf->enable[channel] = value;
 	}
 }
 
 int vfd_conf(struct config *conf, int32_t value, int8_t channel) {
 
 	if(channel != -1) {
-		uart_transmit_str("Wrong channel");
 		return -1;
 	}
 
