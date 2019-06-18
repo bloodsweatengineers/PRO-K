@@ -33,7 +33,5 @@ class connection:
     ##  The send method sends a binary formatted command over serial communication to the microcontroller.
     def send(self, command):
         message = bytearray(command())
-        print(message)
         self.ser.write(message)
         a = self.ser.readline()
-        print(a)
