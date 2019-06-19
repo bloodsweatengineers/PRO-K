@@ -54,6 +54,10 @@ void main(void) {
 
 	sei();
 
+	if(PINB & 0x1) {
+		command_type = STRING;
+	}
+
 	while(1) {
 
 		struct token tok = parser_parse_command(&parser);
@@ -102,7 +106,7 @@ void main(void) {
 						uart_transmit_str("OK \r\n");
 						break;
 					case INFO:
-						uart_transmit_str("OK \r\n");
+						uart_transmit_str("OK VERSION: 0.1.0\r\n");
 						break;
 					case PING:
 						uart_transmit_str("OK START STATE\r\n");
@@ -167,7 +171,7 @@ void main(void) {
 							uart_transmit_str("OK \r\n");
 							break;
 						case INFO:
-							uart_transmit_str("OK \r\n");
+							uart_transmit_str("OK VERSION: 0.1.0\r\n");
 							break;
 						case PING:
 							uart_transmit_str("OK PREPARE STATE \r\n");
