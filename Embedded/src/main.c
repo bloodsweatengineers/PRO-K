@@ -25,16 +25,14 @@ void main(void) {
 	TIMSK1 |= (1<<OCIE1A);
 
 	TCCR2A = 0;
-	TCCR2A |= (1 <<COM2A1 | 1<<COM2B1 | 1<<WGM20 | 1<<WGM21);
+	TCCR2A |= (0 <<COM2A1 | 0<<COM2B1 | 1<<WGM20 | 1<<WGM21);
 	TCCR2B = 0;
 	TCCR2B |= 1<<CS20;
 
 	TCCR0A = 0;
-	TCCR0A |= (1 <<COM0A1 | 1<<COM0B1 | 1<<WGM00 | 1<<WGM01);
+	TCCR0A |= (0 <<COM0A1 | 0<<COM0B1 | 1<<WGM00 | 1<<WGM01);
 	TCCR0B = 0;
 	TCCR0B |= 1<<CS00;
-
-	execute_all(&conf);
 
 	//!define all states
 	/*!
@@ -103,6 +101,8 @@ void main(void) {
 						break;
 					case STOP:
 						next_state = stop_state;
+						TCCR0A &= ~(1 << COM0A1 | 1<< COM0B1);
+						TCCR2A &= ~(1 << COM2A1 | 1<< COM2B1);
 						uart_transmit_str("OK \r\n");
 						break;
 					case INFO:
@@ -207,6 +207,7 @@ void main(void) {
 				case stop_state:
 					if(tok.tok == START) {
 						next_state = start_state;
+						execute_all(&conf);
 						uart_transmit_str("OK \r\n");
 					} else if(tok.tok == PING) {
 						uart_transmit_str("OK STOP STATE \r\n");
