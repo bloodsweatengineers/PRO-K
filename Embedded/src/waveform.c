@@ -50,10 +50,9 @@ static uint8_t amplitude_corrected_wave_2[256] = {
 
 uint8_t static phaseshift[4] = {0, 0, 0, 0};
 uint8_t static amplitude[2] = {0, 0};
-uint16_t static amplitude_target = 0;
+uint8_t static vfd_enable = 0;
 uint16_t static target = 0;
-uint8_t static fre_incr = 0;
-uint8_t static amp_incr = 0;
+uint16_t static current = 0;
 
 void calc_amplitude() {
 	for(int i=0; i<256; i++) {
@@ -75,10 +74,30 @@ ISR(TIMER1_COMPA_vect) {
 	OCR2B = amplitude_corrected_wave_2[(index + phaseshift[3]) % 256];
 
 	index++;
+
+	if(vfd_enable) {
+		if(current < target) {
+			current++;
+		} else if(current > target) {
+			current--;
+		} else if(current == target) {
+			vfd_enable = 0;
+		}
+
+		OCR1A = current;
+	}
 }
 
 void frequency_execute(struct config *conf) {
-	OCR1A = conf->frequency_clicks;
+	if(conf->vfd_enable) {
+		target = conf->frequency_clicks;
+		current = OCR1A;
+		vfd_enable = 1;
+	}else {
+		OCR1A = conf->frequency_clicks;
+	}
+
+	conf->vfd_enable = 0;
 
 	TCCR1B &= 0xF8;
 	TCCR1B |= (conf->frequency_prescaler_index & 0x07);

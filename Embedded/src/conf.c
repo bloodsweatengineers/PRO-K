@@ -127,6 +127,6 @@ int vfd_conf(struct config *conf, int32_t value, int8_t channel) {
 		return -1;
 	}
 
-	conf->vfd_enable ^= 1;
+	conf->vfd_enable = 1 ;
 	return 0;
 }
