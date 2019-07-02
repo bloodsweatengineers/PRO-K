@@ -121,9 +121,10 @@ class GUI:
         return 0
     ##  The start_button_event method creates a serial connection if available. If it is available it enables the update and start button. It also enables all the data entries.
     def start_button_event(self):
-        self.connection = uart_connection.connection() 
-        self.check_connection()
-        start_command = command.command("start")
+        if self.connection.is_open == False:
+            self.connection = uart_connection.connection() 
+            self.check_connection()
+            start_command = command.command("start")
 
         if self.connection_flag:
             self.enable_all()
