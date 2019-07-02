@@ -19,15 +19,7 @@ class connection:
         return 0
     ##  The constructors checks if there is a arduino present and connects to it if it is. If there is no Arduino present it displays a error message.
     def __init__(self):
-        FTDI = re.compile("USB Serial Port")
-        FTDI_linux = re.compile("FT232R USB UART")
-        Arduino = re.compile("Arduino Uno")
-        try:
-            self.ser = serial.Serial("COM3",9600, timeout = 0.5)
-            self.var = True
-        except:
-            messagebox.showerror("ERROR","Please connect a microcontroller and press Start!")
-            self.var = False
+        self.ser = serial.Serial("COM3", 9600, timeout = 0.5)
     ##  The call method returns a boolean which represents if the microcontrolller is connected.
     def __call__(self):
         return self.var
