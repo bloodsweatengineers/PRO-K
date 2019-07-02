@@ -27,10 +27,10 @@ class connection:
                 if(FTDI.match(i.description)):
                     A=i.device
                     break
-                if(FTDI_linux.match(i.description)):
+                elif(FTDI_linux.match(i.description)):
                     A=i.device
                     break
-                if(Arduino.match(i.description)):
+                elif(Arduino.match(i.description)):
                     A=i.device
                     break
             self.ser = serial.Serial(A,9600, timeout = 0.5)
