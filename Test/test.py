@@ -94,10 +94,24 @@ def print_help():
 
 connected = False
 device = None
+FTDI = re.compile("USB Serial Port")
+FTDI_linux = re.compile("FT232R USB UART")
+Arduino = re.compile("Arduino Uno")
 while connected == False:
         a = serial.tools.list_ports.comports(True)
         for i in a:
-            print(i.product)
+            if(FTDI.match(i.description)):
+                connected = True
+                device = i.device
+                continue
+            if(FTDI_linux.match(i.description)):
+                connected = True
+                device = i.device
+                continue
+            if(Arduino.match(i.description)):
+                connected = True
+                device = i.device
+                continue
 
         if connected == False:
             print("Please connect arduino and press enter")

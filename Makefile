@@ -80,7 +80,7 @@ clean:
 	rm -rf ./*.aux ./*.log ./*.out ./*.toc
 
 install:
-	avrdude -vvv -c arduino -P /dev/ttyACM0 -p m328p -U flash:w:$(HEX_NAME_PATH)
+	avrdude -vvv -c arduino -P /dev/ttyUSB0 -p m328p -U flash:w:$(HEX_NAME_PATH)
 
 test:
 	$(CC) -o $(TEST_OBJ) $(TEST_SOURCE) $(MCUFLAGS) $(CFLAGS) $(LDFLAGS)

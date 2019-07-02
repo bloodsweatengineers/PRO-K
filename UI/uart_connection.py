@@ -5,6 +5,7 @@
 
 
 import serial
+import re
 import command
 import serial.tools.list_ports
 from tkinter import messagebox
@@ -19,8 +20,15 @@ class connection:
     ##  The constructors checks if there is a arduino present and connects to it if it is. If there is no Arduino present it displays a error message.
     def __init__(self):
         try:
+            FTDI = re.compile("USB Serial Port")
+            FTDI_linux = re.compile("FT232R USB UART")
+            Arduino = re.compile("Arduino Uno")
             for i in serial.tools.list_ports.comports(True):
-                if(i.product == "Arduino Uno"):
+                if(FTDI.match(i.description)):
+                    A=i.device
+                if(FTDI_linux.match(i.description)):
+                    A=i.device
+                if(Arduino.match(i.description)):
                     A=i.device
             self.ser = serial.Serial(A,9600, timeout = 0.5)
             self.var = True
