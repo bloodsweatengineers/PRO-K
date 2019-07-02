@@ -52,10 +52,6 @@ void main(void) {
 
 	sei();
 
-	if(PINB & 0x1) {
-		command_type = STRING;
-	}
-
 	while(1) {
 
 		struct token tok = parser_parse_command(&parser);

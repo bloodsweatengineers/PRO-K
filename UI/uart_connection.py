@@ -19,17 +19,20 @@ class connection:
         return 0
     ##  The constructors checks if there is a arduino present and connects to it if it is. If there is no Arduino present it displays a error message.
     def __init__(self):
+        FTDI = re.compile("USB Serial Port")
+        FTDI_linux = re.compile("FT232R USB UART")
+        Arduino = re.compile("Arduino Uno")
         try:
-            FTDI = re.compile("USB Serial Port")
-            FTDI_linux = re.compile("FT232R USB UART")
-            Arduino = re.compile("Arduino Uno")
             for i in serial.tools.list_ports.comports(True):
                 if(FTDI.match(i.description)):
                     A=i.device
+                    break
                 if(FTDI_linux.match(i.description)):
                     A=i.device
+                    break
                 if(Arduino.match(i.description)):
                     A=i.device
+                    break
             self.ser = serial.Serial(A,9600, timeout = 0.5)
             self.var = True
         except:
