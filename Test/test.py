@@ -95,20 +95,10 @@ def print_help():
 connected = False
 device = None
 while connected == False:
-        a = serial.tools.list_ports.grep("FT232R", True)
-        b = next(a)
-        if b:
-                print("Found device")
-                device = b.device
-                connected = True
-                continue
-        a = serial.tools.list_ports.grep("FT232R", True)
-        b = next(a)
-        if b:
-                print("Found device")
-                device = b.device
-                connected = True       
-                continue
+        a = serial.tools.list_ports.comports(True)
+        for i in a:
+            print(i.product)
+
         if connected == False:
             print("Please connect arduino and press enter")
             In = input("")
