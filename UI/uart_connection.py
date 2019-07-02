@@ -21,10 +21,10 @@ class connection:
     def __init__(self):
         self.ser = serial.Serial("COM3", 9600, timeout = 0.5)
         if self.ser.is_open == True:
-            self.Var = True
+            self.var = True
             print("Is open")
         else:
-            self.Var = False
+            self.var = False
     ##  The call method returns a boolean which represents if the microcontrolller is connected.
     def __call__(self):
         return self.var
