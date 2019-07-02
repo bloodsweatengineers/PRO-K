@@ -20,7 +20,11 @@ class connection:
     ##  The constructors checks if there is a arduino present and connects to it if it is. If there is no Arduino present it displays a error message.
     def __init__(self):
         self.ser = serial.Serial("COM3", 9600, timeout = 0.5)
-        self.var = True
+        if self.ser.is_open == True:
+            self.Var = True
+            print("Is open")
+        else:
+            self.Var = False
     ##  The call method returns a boolean which represents if the microcontrolller is connected.
     def __call__(self):
         return self.var
