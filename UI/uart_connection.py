@@ -23,18 +23,7 @@ class connection:
         FTDI_linux = re.compile("FT232R USB UART")
         Arduino = re.compile("Arduino Uno")
         try:
-            for i in serial.tools.list_ports.comports(True):
-                if(FTDI.match(i.description)):
-                    A=i
-                    break
-                elif(FTDI_linux.match(i.description)):
-                    A=i
-                    break
-                elif(Arduino.match(i.description)):
-                    A=i
-                    break
-            print(A.description)
-            self.ser = serial.Serial(A.device,9600, timeout = 0.5)
+            self.ser = serial.Serial("COM3".device,9600, timeout = 0.5)
             self.var = True
         except:
             messagebox.showerror("ERROR","Please connect a microcontroller and press Start!")
