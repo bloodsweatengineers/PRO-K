@@ -94,15 +94,21 @@ def print_help():
 
 connected = False
 device = None
-arduino = re.compile("A|arduino U|uno");
-ft232 = re.compile("FT232R");
 while connected == False:
-        for i in serial.tools.list_ports.comports(True):
-            if(arduino.match(i.product) or ft232.match(i.product)):
+        a = serial.tools.list_ports.grep("FT232R", True)
+        b = next(a)
+        if b:
                 print("Found device")
-                device = i.device
+                device = b.device
                 connected = True
-
+                continue
+        a = serial.tools.list_ports.grep("FT232R", True)
+        b = next(a)
+        if b:
+                print("Found device")
+                device = b.device
+                connected = True       
+                continue
         if connected == False:
             print("Please connect arduino and press enter")
             In = input("")
